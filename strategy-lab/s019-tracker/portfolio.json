@@ -1,0 +1,218 @@
+{
+  "strategy": "S019 高频10日换仓",
+  "buy_date": "2026-07-21",
+  "note": "以2026-07-21收盘价建仓，模拟盘跟踪",
+  "capital": 1000000,
+  "sell_date_expected": "2026-08-04",
+  "positions": [
+    {
+      "code": "002008.SZ",
+      "name": "大族激光",
+      "industry": "专用机械",
+      "lots": 4,
+      "shares": 400,
+      "buy_price": 100.89,
+      "cost": 40356.0,
+      "cur_price": 100.89
+    },
+    {
+      "code": "301308.SZ",
+      "name": "江波龙",
+      "industry": "半导体",
+      "lots": 1,
+      "shares": 100,
+      "buy_price": 421.86,
+      "cost": 42186.0,
+      "cur_price": 421.86
+    },
+    {
+      "code": "603115.SH",
+      "name": "海星股份",
+      "industry": "铝",
+      "lots": 7,
+      "shares": 700,
+      "buy_price": 69.9,
+      "cost": 48930.0,
+      "cur_price": 69.9
+    },
+    {
+      "code": "600487.SH",
+      "name": "亨通光电",
+      "industry": "通信设备",
+      "lots": 8,
+      "shares": 800,
+      "buy_price": 59.96,
+      "cost": 47968.0,
+      "cur_price": 59.96
+    },
+    {
+      "code": "603936.SH",
+      "name": "博敏电子",
+      "industry": "元器件",
+      "lots": 35,
+      "shares": 3500,
+      "buy_price": 14.04,
+      "cost": 49140.0,
+      "cur_price": 14.04
+    },
+    {
+      "code": "688112.SH",
+      "name": "鼎阳科技",
+      "industry": "电器仪表",
+      "lots": 9,
+      "shares": 900,
+      "buy_price": 53.04,
+      "cost": 47736.0,
+      "cur_price": 53.04
+    },
+    {
+      "code": "688525.SH",
+      "name": "佰维存储",
+      "industry": "半导体",
+      "lots": 1,
+      "shares": 100,
+      "buy_price": 270.97,
+      "cost": 27097.0,
+      "cur_price": 270.97
+    },
+    {
+      "code": "688308.SH",
+      "name": "欧科亿",
+      "industry": "机械基件",
+      "lots": 4,
+      "shares": 400,
+      "buy_price": 101.68,
+      "cost": 40672.0,
+      "cur_price": 101.68
+    },
+    {
+      "code": "688551.SH",
+      "name": "科威尔",
+      "industry": "专用机械",
+      "lots": 12,
+      "shares": 1200,
+      "buy_price": 39.58,
+      "cost": 47496.0,
+      "cur_price": 39.58
+    },
+    {
+      "code": "600563.SH",
+      "name": "法拉电子",
+      "industry": "元器件",
+      "lots": 3,
+      "shares": 300,
+      "buy_price": 130.48,
+      "cost": 39144.0,
+      "cur_price": 130.48
+    },
+    {
+      "code": "688536.SH",
+      "name": "思瑞浦",
+      "industry": "半导体",
+      "lots": 1,
+      "shares": 100,
+      "buy_price": 258.97,
+      "cost": 25897.0,
+      "cur_price": 258.97
+    },
+    {
+      "code": "688312.SH",
+      "name": "燕麦科技",
+      "industry": "专用机械",
+      "lots": 10,
+      "shares": 1000,
+      "buy_price": 47.86,
+      "cost": 47860.0,
+      "cur_price": 47.86
+    },
+    {
+      "code": "002929.SZ",
+      "name": "润建股份",
+      "industry": "通信设备",
+      "lots": 9,
+      "shares": 900,
+      "buy_price": 52.08,
+      "cost": 46872.0,
+      "cur_price": 52.08
+    },
+    {
+      "code": "688531.SH",
+      "name": "日联科技",
+      "industry": "专用机械",
+      "lots": 3,
+      "shares": 300,
+      "buy_price": 131.0,
+      "cost": 39300.0,
+      "cur_price": 131.0
+    },
+    {
+      "code": "688456.SH",
+      "name": "有研粉材",
+      "industry": "铜",
+      "lots": 6,
+      "shares": 600,
+      "buy_price": 78.0,
+      "cost": 46800.0,
+      "cur_price": 78.0
+    },
+    {
+      "code": "300749.SZ",
+      "name": "顶固集创",
+      "industry": "家居用品",
+      "lots": 29,
+      "shares": 2900,
+      "buy_price": 17.15,
+      "cost": 49735.0,
+      "cur_price": 17.15
+    },
+    {
+      "code": "605198.SH",
+      "name": "安德利",
+      "industry": "软饮料",
+      "lots": 10,
+      "shares": 1000,
+      "buy_price": 49.52,
+      "cost": 49520.0,
+      "cur_price": 49.52
+    },
+    {
+      "code": "300975.SZ",
+      "name": "商络电子",
+      "industry": "元器件",
+      "lots": 18,
+      "shares": 1800,
+      "buy_price": 27.05,
+      "cost": 48690.0,
+      "cur_price": 27.05
+    },
+    {
+      "code": "601126.SH",
+      "name": "四方股份",
+      "industry": "电气设备",
+      "lots": 11,
+      "shares": 1100,
+      "buy_price": 44.84,
+      "cost": 49324.0,
+      "cur_price": 44.84
+    },
+    {
+      "code": "688800.SH",
+      "name": "瑞可达",
+      "industry": "元器件",
+      "lots": 8,
+      "shares": 800,
+      "buy_price": 60.0,
+      "cost": 48000.0,
+      "cur_price": 60.0
+    }
+  ],
+  "total_cost": 882723.0,
+  "cash": 117277.0,
+  "history": [
+    {
+      "date": "2026-07-21",
+      "nav": 1.0,
+      "note": "建仓"
+    }
+  ]
+}

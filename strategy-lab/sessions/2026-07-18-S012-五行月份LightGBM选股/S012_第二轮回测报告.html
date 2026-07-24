@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S012 五行月份择时 · 第二轮回测报告</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f5f0; color: #2c2c2a; line-height: 1.6; padding: 32px 20px; }
+.wrap { max-width: 980px; margin: 0 auto; }
+h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; }
+.sub { color: #5f5e5a; font-size: 14px; margin-bottom: 28px; }
+.card { background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 14px;
+  padding: 22px 24px; margin-bottom: 22px; }
+h2 { font-size: 17px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+h2 .tag { font-size: 12px; font-weight: 500; padding: 2px 9px; border-radius: 20px; }
+.tag-a { background: #E1F5EE; color: #0F6E56; }
+.tag-b { background: #FCEBEB; color: #A32D2D; }
+.desc { color: #5f5e5a; font-size: 13.5px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid #eee; }
+th:first-child, td:first-child { text-align: left; }
+th { color: #5f5e5a; font-weight: 500; font-size: 12px; }
+.grp-base td { background: #f7f6f2; font-weight: 500; }
+.grp-无杠杆 td:first-child { color: #0F6E56; }
+.grp-带杠杆 td:first-child { color: #A32D2D; }
+.up { color: #d33; } .down { color: #1a9e60; }
+.chart-box { position: relative; width: 100%; height: 320px; margin: 8px 0; }
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.metric { background: #f7f6f2; border-radius: 10px; padding: 14px 16px; }
+.metric .l { font-size: 12px; color: #5f5e5a; }
+.metric .v { font-size: 26px; font-weight: 600; margin-top: 2px; }
+.verdict-box { border-radius: 10px; padding: 16px 18px; font-size: 14px; margin-top: 14px; }
+.v-fail { background: #FCEBEB; color: #791f1f; border: 1px solid #F09595; }
+.v-warn { background: #FAEEDA; color: #633806; border: 1px solid #FAC775; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #5f5e5a; margin-bottom: 10px; }
+.legend span { display: flex; align-items: center; gap: 5px; }
+.dot { width: 11px; height: 3px; border-radius: 2px; display: inline-block; }
+.concl { font-size: 14px; }
+.concl li { margin: 8px 0 8px 18px; }
+.big-verdict { font-size: 15px; font-weight: 500; padding: 18px 20px; border-radius: 12px;
+  background: #2c2c2a; color: #fff; margin-bottom: 22px; }
+.big-verdict b { color: #FAC775; }
+.foot { color: #888780; font-size: 12px; text-align: center; margin-top: 24px; }
+</style></head><body><div class="wrap">
+<h1>S012 · 五行月份择时 第二轮回测报告</h1>
+<div class="sub">基于 S009-LightGBM 选股引擎 113 期真实收益 · 温和加权 vs 随机对照 · 2017-01 ~ 2026-07</div>
+
+<div class="big-verdict" id="bigVerdict"></div>
+
+<div class="card">
+<h2>实验一 · 五行月份仓位加权回测 <span class="tag tag-a">温和版·不清仓</span></h2>
+<div class="desc">首轮已证明"弱月清仓"是负优化。本轮改用"仓位系数加权"——旺月满仓/加仓，弱月减仓但不清仓（剩余持现金年化3%），不打断复利。水月按老大决策统一归入旺月。</div>
+<div class="legend" id="curveLegend"></div>
+<div class="chart-box"><canvas id="navChart" role="img" aria-label="各方案净值曲线对比"></canvas></div>
+<table id="cmpTable"><thead><tr>
+<th>方案</th><th>累计收益</th><th>年化</th><th>最大回撤</th><th>夏普</th><th>胜率</th><th>年化Δ</th><th>回撤Δ</th>
+</tr></thead><tbody></tbody></table>
+<div class="concl" style="margin-top:14px;color:#5f5e5a;font-size:13px;">
+Δ 为相对基线(S009原版)的变化。红色=对策略更有利方向（涨/回撤收窄），绿色=不利。
+</div>
+</div>
+
+<div class="card">
+<h2>实验二 · 随机对照实验 <span class="tag tag-b">科学性判决</span></h2>
+<div class="desc">蒙特卡洛 N=2000：从113期里随机抽65期当"旺月"，重复2000次得到随机分布，看真实五行旺月收益落在随机分布的哪个分位。>90%分位才算统计显著。</div>
+<div class="metrics">
+<div class="metric"><div class="l">旺月均月收益 · 分位</div><div class="v" id="mP"></div></div>
+<div class="metric"><div class="l">旺-弱收益差 · 分位</div><div class="v" id="dP"></div></div>
+<div class="metric"><div class="l">旺月年化 · 分位</div><div class="v" id="aP"></div></div>
+</div>
+<div class="chart-box"><canvas id="histChart" role="img" aria-label="随机对照收益分布直方图"></canvas></div>
+<div class="verdict-box v-fail" id="v2verdict"></div>
+</div>
+
+<div class="card">
+<h2>综合结论</h2>
+<ul class="concl" id="conclList"></ul>
+</div>
+
+<div class="foot">S012 第二轮 · 泓锦 · 数据复用 S009 v1.5（无重训） · 生成于回测当日</div>
+</div>
+<script>
+const D = {"xlabels": ["起点", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05"], "curves": [{"label": "基线(=S009原版)", "data": [1.0, 0.990989, 1.077368, 1.07303, 1.007025, 1.020334, 1.112439, 1.1613, 1.212516, 1.210043, 1.192843, 1.185187, 1.240081, 1.27692, 1.336908, 1.526404, 1.603134, 1.596134, 1.490046, 1.535953, 1.493261, 1.512033, 1.518067, 1.727395, 1.698081, 1.75378, 2.196186, 2.482516, 2.207632, 2.261852, 2.347253, 2.080508, 2.316877, 2.324504, 2.507571, 2.429979, 2.477504, 1.984498, 2.388028, 2.227787, 2.659628, 2.849264, 3.317384, 3.723498, 3.867654, 3.721027, 3.571818, 3.969736, 4.115227, 4.129609, 4.564053, 4.727304, 4.973493, 5.015146, 4.983485, 5.509308, 6.066337, 6.363272, 6.041672, 6.868415, 7.096151, 6.957343, 7.384614, 7.823157, 6.823139, 8.514445, 9.211079, 9.589517, 9.393085, 8.902738, 9.857877, 10.530046, 10.384616, 11.175986, 11.329231, 11.145629, 10.695569, 10.56396, 10.849926, 11.406234, 10.952985, 11.0212, 10.908574, 11.101034, 11.000748, 11.441613, 12.328705, 14.221925, 14.847349, 14.009914, 13.777993, 15.211222, 14.445032, 18.770323, 17.829611, 18.260053, 18.536693, 18.306616, 18.703979, 19.136695, 19.031463, 18.941063, 20.504838, 21.137391, 22.196501, 21.724293, 22.449472, 22.919115, 23.495828, 24.350818, 24.747882, 23.070842, 25.379587, 25.36639], "color": "#888780"}, {"label": "无杠杆·旺1.0弱0.7", "data": [1.0, 0.990989, 1.077368, 1.07303, 1.02762, 1.037887, 1.131577, 1.181279, 1.218621, 1.217783, 1.206567, 1.202038, 1.257713, 1.295076, 1.338623, 1.528362, 1.60519, 1.601472, 1.495028, 1.541089, 1.512245, 1.526671, 1.532065, 1.68108, 1.652552, 1.691718, 2.118469, 2.394667, 2.12951, 2.181811, 2.264189, 2.006885, 2.167972, 2.174572, 2.296062, 2.248028, 2.291995, 1.835904, 2.209219, 2.060976, 2.460481, 2.635919, 3.068987, 3.444692, 3.540594, 3.449254, 3.354988, 3.619104, 3.751744, 3.764857, 4.044891, 4.189573, 4.407758, 4.444673, 4.416613, 4.882624, 5.231803, 5.414935, 5.227371, 5.731959, 5.922013, 5.806173, 6.162747, 6.528728, 5.949371, 7.424089, 8.031513, 8.361487, 8.24778, 7.952491, 8.555609, 8.9703, 8.846411, 9.520561, 9.618987, 9.463102, 9.080982, 9.009481, 9.253368, 9.727816, 9.464426, 9.512689, 9.45168, 9.575403, 9.488898, 9.869176, 10.412101, 12.011005, 12.5392, 11.831952, 11.636086, 12.846506, 12.403056, 15.011935, 14.496395, 14.752101, 14.975595, 14.789718, 15.110743, 15.460331, 15.375314, 15.302281, 16.565638, 17.076671, 17.688256, 17.437934, 17.858303, 18.133033, 18.589314, 19.076581, 19.308439, 18.000003, 19.801299, 19.791002], "color": "#1D9E75"}, {"label": "带杠杆·旺1.3弱0.7", "data": [1.0, 0.986825, 1.097205, 1.08986, 1.043738, 1.054166, 1.176334, 1.241783, 1.281039, 1.280157, 1.268367, 1.263606, 1.337845, 1.387558, 1.434215, 1.696396, 1.804775, 1.800595, 1.642384, 1.705766, 1.67384, 1.689807, 1.695778, 1.860716, 1.816949, 1.860012, 2.467262, 2.881833, 2.462795, 2.537831, 2.658692, 2.262032, 2.4436, 2.451039, 2.587975, 2.533834, 2.594558, 1.91958, 2.424206, 2.209196, 2.762678, 3.014724, 3.654217, 4.230434, 4.348211, 4.236037, 4.120268, 4.44463, 4.649904, 4.664241, 5.011173, 5.236873, 5.58377, 5.636409, 5.581921, 6.339425, 6.792787, 7.030559, 6.787033, 7.442171, 7.752092, 7.543641, 8.134887, 8.751036, 7.974471, 10.532531, 11.637426, 12.241994, 12.075516, 11.643185, 12.526206, 13.133352, 12.878373, 14.1354, 14.281535, 13.9598, 13.206609, 13.102625, 13.544587, 14.427621, 14.036979, 14.10856, 14.018076, 14.201572, 14.014048, 14.723699, 15.533683, 18.611998, 19.648845, 18.179423, 17.761651, 20.137621, 19.442488, 23.532052, 22.723913, 23.124747, 23.54642, 23.132101, 23.751059, 24.430701, 24.220378, 24.035449, 26.580027, 27.607171, 28.595896, 28.19121, 28.870803, 29.314948, 30.231088, 31.023511, 31.400573, 28.588502, 32.265937, 32.197008], "color": "#E24B4A"}], "rows": [{"name": "基线(=S009原版)", "grp": "基线", "total": 2436.6, "ann": 40.97, "mdd": -20.9, "sharpe": 1.457, "win": 64.6, "d_ann": 0.0, "d_mdd": 0.0}, {"name": "无杠杆·旺1.0弱0.8", "grp": "无杠杆", "total": 2054.3, "ann": 38.54, "mdd": -22.2, "sharpe": 1.467, "win": 64.6, "d_ann": -2.43, "d_mdd": -1.3}, {"name": "无杠杆·旺1.0弱0.7", "grp": "无杠杆", "total": 1879.1, "ann": 37.3, "mdd": -23.3, "sharpe": 1.465, "win": 64.6, "d_ann": -3.67, "d_mdd": -2.4}, {"name": "无杠杆·旺1.0弱0.6", "grp": "无杠杆", "total": 1714.3, "ann": 36.04, "mdd": -24.4, "sharpe": 1.458, "win": 64.6, "d_ann": -4.93, "d_mdd": -3.5}, {"name": "无杠杆·分档(木1.0火0.95水0.9金0.75土0.7)", "grp": "无杠杆", "total": 1821.4, "ann": 36.87, "mdd": -21.2, "sharpe": 1.473, "win": 64.6, "d_ann": -4.1, "d_mdd": -0.3}, {"name": "带杠杆·旺1.2弱0.8", "grp": "带杠杆", "total": 2892.0, "ann": 43.46, "mdd": -29.1, "sharpe": 1.432, "win": 64.6, "d_ann": 2.49, "d_mdd": -8.2}, {"name": "带杠杆·旺1.3弱0.7", "grp": "带杠杆", "total": 3119.7, "ann": 44.58, "mdd": -33.4, "sharpe": 1.404, "win": 64.6, "d_ann": 3.61, "d_mdd": -12.5}, {"name": "带杠杆·分档(木1.3火1.2水1.1金0.8土0.7)", "grp": "带杠杆", "total": 3000.9, "ann": 44.01, "mdd": -29.3, "sharpe": 1.425, "win": 64.6, "d_ann": 3.04, "d_mdd": -8.4}], "hist_centers": [1.18, 1.28, 1.38, 1.48, 1.59, 1.69, 1.79, 1.89, 1.99, 2.09, 2.19, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.01, 3.11, 3.21, 3.31, 3.41, 3.51, 3.61, 3.72, 3.82, 3.92, 4.02, 4.12, 4.22, 4.32, 4.43, 4.53, 4.63, 4.73, 4.83, 4.93, 5.03, 5.14], "hist_vals": [2, 2, 1, 0, 1, 6, 9, 16, 15, 36, 52, 51, 48, 63, 78, 103, 127, 102, 133, 120, 123, 142, 109, 116, 112, 99, 73, 64, 60, 36, 33, 20, 19, 9, 9, 4, 2, 2, 0, 3], "real_mean": 3.762, "sim_mean": 3.18, "sim_p90": 3.959, "pct_mean": 83.0, "pct_diff": 83.0, "pct_ann": 82.1, "real": {"wang_mean_pct": 3.762, "weak_mean_pct": 2.376, "diff_pct": 1.386, "ann_pct": 50.41}, "verdict": {"mean": "△ 较弱（百分位83.0%，偏高但不显著）", "diff": "△ 较弱（百分位83.0%，有方向但不显著）", "ann": "△ 较弱（百分位82.1%）", "overall": "✗ 五行月份无统计显著性（0个维度显著），与随机择时无区别，'五行'标签是伪包装，应重新定性为纯季节性研究。"}, "meta_r": {"n_total": 113, "n_wang": 65, "n_weak": 48, "n_sim": 2000, "seed": 42}};
+
+document.getElementById('bigVerdict').innerHTML =
+  '判决：<b>五行月份是"强度信号"而非"择时开关"，且未通过随机对照的显著性检验。</b><br>' +
+  '温和加权无法帕累托改善基线（无杠杆减仓一律双输，带杠杆增益仅靠放大风险换来）；' +
+  '随机对照三项指标分位均约83%，<b>未达90%显著线</b>——五行与随机择时无统计差异。';
+
+// 净值曲线
+const lg = document.getElementById('curveLegend');
+D.curves.forEach(c => {
+  const s = document.createElement('span');
+  s.innerHTML = '<span class="dot" style="background:'+c.color+'"></span>'+c.label;
+  lg.appendChild(s);
+});
+new Chart(document.getElementById('navChart'), {
+  type: 'line',
+  data: { labels: D.xlabels, datasets: D.curves.map(c => ({
+    label: c.label, data: c.data, borderColor: c.color, backgroundColor: c.color,
+    borderWidth: 2, pointRadius: 0, tension: 0.1 })) },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { type: 'logarithmic', title: { display: true, text: '净值(对数轴)' } },
+      x: { ticks: { maxTicksLimit: 12, autoSkip: true } } } }
+});
+
+// 对比表
+const tb = document.querySelector('#cmpTable tbody');
+D.rows.forEach(r => {
+  const tr = document.createElement('tr');
+  tr.className = 'grp-' + (r.grp==='基线'?'base':r.grp);
+  const annCls = r.d_ann > 0 ? 'up' : (r.d_ann < 0 ? 'down' : '');
+  const mddCls = r.d_mdd > 0 ? 'up' : (r.d_mdd < 0 ? 'down' : '');
+  const annTxt = r.name.startsWith('基线') ? '—' : (r.d_ann>0?'+':'')+r.d_ann;
+  const mddTxt = r.name.startsWith('基线') ? '—' : (r.d_mdd>0?'+':'')+r.d_mdd;
+  tr.innerHTML = '<td>'+r.name+'</td><td>+'+r.total+'%</td><td>'+r.ann+'%</td>'+
+    '<td>'+r.mdd+'%</td><td>'+r.sharpe+'</td><td>'+r.win+'%</td>'+
+    '<td class="'+annCls+'">'+annTxt+'</td><td class="'+mddCls+'">'+mddTxt+'</td>';
+  tb.appendChild(tr);
+});
+
+// 分位卡片
+function pctColor(p){ return p>=90 ? '#0F6E56' : (p>=70 ? '#BA7517' : '#A32D2D'); }
+[['mP',D.pct_mean],['dP',D.pct_diff],['aP',D.pct_ann]].forEach(([id,p])=>{
+  const el = document.getElementById(id);
+  el.textContent = p + '%';
+  el.style.color = pctColor(p);
+});
+
+// 直方图 + 真实值标注
+new Chart(document.getElementById('histChart'), {
+  type: 'bar',
+  data: { labels: D.hist_centers, datasets: [{
+    label: '随机分布', data: D.hist_vals,
+    backgroundColor: D.hist_centers.map(c => c >= D.real_mean ? '#F09595' : '#C0D0E0'),
+    borderWidth: 0, barPercentage: 1, categoryPercentage: 1 }] },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false },
+      title: { display: true, text: '随机旺月均月收益分布（红竖线=真实五行 '+D.real_mean+'%，落在 '+D.pct_mean+'% 分位）' } },
+    scales: { x: { title: { display: true, text: '旺月平均月收益 %' }, ticks: { maxTicksLimit: 10 } },
+      y: { title: { display: true, text: '模拟次数' } } } }
+});
+
+document.getElementById('v2verdict').innerHTML =
+  '<b>综合判断：</b>' + D.verdict.overall.replace('✗','✗ ') +
+  '<br><br>· 均月收益：' + D.verdict.mean +
+  '<br>· 旺弱差：' + D.verdict.diff +
+  '<br>· 旺月年化：' + D.verdict.ann;
+
+// 结论
+const cl = document.getElementById('conclList');
+[
+  '<b>五行是强度信号，不是空仓/择时开关。</b>旺月(木火水)均月收益+3.76%确实高于弱月+2.38%，但差距不足以支撑任何减仓动作。',
+  '<b>无杠杆减仓一律双输。</b>弱月减仓0.6~0.8的四个方案，年化从41%降到36~38.5%，回撤反而从-20.9%恶化到-22~-24%——因为弱月同样是正收益，减仓只是白白让出复利。',
+  '<b>带杠杆的"增益"是假象。</b>旺月加杠杆年化能冲到44.6%，但回撤同步恶化到-33.4%，夏普不升反降(1.457→1.404)，纯粹是放大风险换收益，没有alpha。',
+  '<b>随机对照未过关。</b>三项指标分位均约83%，未达90%显著线——真实五行与"随机抽6个月"在统计上无区别，"五行"因果不成立，只能定性为弱季节性效应。',
+  '<b>最终建议：S012 维持 S009 v1.5 原版满仓不择时。</b>月份择时（无论叫五行还是季节性）在此选股引擎上不产生可靠增益。S009的alpha来自"持续在场+选股能力"，任何试图择时的改动都是在削弱它。'
+].forEach(t => { const li=document.createElement('li'); li.innerHTML=t; cl.appendChild(li); });
+</script></body></html>

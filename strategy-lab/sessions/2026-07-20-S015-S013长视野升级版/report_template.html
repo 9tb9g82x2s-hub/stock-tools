@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>S015 — S013长视野升级版</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--orange:#e67700;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:#212529;font-size:14px;}
+  .header{background:linear-gradient(135deg,#0b3d6e 0%,#1971c2 100%);color:#fff;padding:28px 40px;}
+  .header h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+  .header .sub{opacity:.85;font-size:13px;}
+  .container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+  .st{font-size:17px;font-weight:700;color:#0b3d6e;margin:28px 0 14px;padding-bottom:6px;border-bottom:2px solid #1971c2;}
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .kpi .lb{font-size:12px;color:#6c757d;margin-bottom:4px;}
+  .kpi .vl{font-size:24px;font-weight:700;}
+  .kpi .sb{font-size:11px;color:#6c757d;margin-top:3px;}
+  .kpi.hl{border-color:#1971c2;background:#e7f5ff;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .cw{position:relative;height:320px;}
+  .cw-sm{position:relative;height:260px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#e9ecef;padding:9px 8px;text-align:center;font-weight:600;border-bottom:2px solid var(--border);}
+  td{padding:8px;text-align:center;border-bottom:1px solid #f1f3f5;}
+  .red{color:var(--red);}.green{color:var(--green);}.blue{color:var(--blue);}
+  .badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;}
+  .b-new{background:#d0ebff;color:#1971c2;}.b-old{background:#f3f0ff;color:#6741d9;}
+  .b-cv{background:#fff9db;color:#e67700;}
+  .insight{background:#e7f5ff;border:1px solid #74c0fc;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.8;}
+  .insight b{color:#1971c2;}
+  @media(max-width:768px){.g3,.g2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>S015 — S013 长视野升级版</h1>
+  <p class="sub">S013·喜神池 × 40天预测视野 × 双月调仓 | 2017–2026 回测 | 含手续费+止损</p>
+</div>
+<div class="container">
+
+<div class="st">核心指标对比</div>
+<div class="g3">
+  <div class="kpi">
+    <div class="lb"><span class="badge b-old">S013原版</span> 10天·月度</div>
+    <div class="vl blue">36.6%</div><div class="sb">年化收益</div>
+    <hr style="margin:10px 0;border-color:#f1f3f5;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:#6c757d;">
+      <div>回撤 <b>-14.3%</b></div><div>夏普 <b>1.44</b></div>
+      <div>胜率 <b>67.5%</b></div><div>期数 <b>114</b></div></div>
+  </div>
+  <div class="kpi hl">
+    <div class="lb"><span class="badge b-new">S015升级</span> 40天·双月</div>
+    <div class="vl red">41.9%</div><div class="sb">年化 <b class="green">↑+5.3pp</b></div>
+    <hr style="margin:10px 0;border-color:#bee3f8;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:#495057;">
+      <div>回撤 <b>-15.0%</b></div><div>夏普 <b class="red">1.57↑</b></div>
+      <div>胜率 <b class="red">80.7%↑</b></div><div>期数 <b>57</b></div></div>
+  </div>
+  <div class="kpi">
+    <div class="lb"><span class="badge b-cv">S009验证</span> 40天·全市场</div>
+    <div class="vl" style="color:var(--orange);">39.5%</div><div class="sb">交叉验证</div>
+    <hr style="margin:10px 0;border-color:#f1f3f5;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:#6c757d;">
+      <div>回撤 <b>-13.6%</b></div><div>夏普 <b>1.54</b></div>
+      <div>胜率 <b>75.4%</b></div><div>期数 <b>57</b></div></div>
+  </div>
+</div>
+
+<div class="insight">
+  <b>为什么40天更好？</b> S013的LightGBM模型训练目标是"预测未来10天跑赢市场中位数"。而月度换仓约22个交易日，信号有效期只有10天——后半段在吃"过期alpha"。把预测视野拉长到40天后，模型的alpha保质期与持仓期精确匹配，每次调仓时信号依然新鲜。副作用是好的：换手率降至一半（每2月一次），手续费更省，胜率从67%跳到81%。
+</div>
+
+<div class="st">净值曲线对比</div>
+<div class="card">
+  <div style="display:flex;gap:16px;margin-bottom:10px;font-size:12px;color:#6c757d;">
+    <span><span style="display:inline-block;width:14px;height:3px;background:var(--red);vertical-align:middle;margin-right:4px;"></span>S015(40天)</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed var(--blue);vertical-align:middle;margin-right:4px;"></span>S013原版(10天)</span>
+  </div>
+  <div class="cw"><canvas id="navChart" role="img" aria-label="S015与S013净值曲线对比">净值曲线</canvas></div>
+</div>
+
+<div class="st">逐年收益热力图</div>
+<div class="card"><div style="overflow-x:auto;"><table id="yrTable"></table></div>
+  <p style="font-size:11px;color:#6c757d;margin-top:8px;">注：S015在2018/2022等震荡熊市年份收益较低，但2019/2025等趋势年表现更强；两者互有胜负，S015胜在整体夏普和胜率更高。</p>
+</div>
+
+<div class="st">四维对比</div>
+<div class="g2">
+  <div class="card"><div style="font-weight:600;margin-bottom:10px;font-size:13px;">年化收益 & 夏普</div>
+    <div class="cw-sm"><canvas id="barChart" role="img" aria-label="年化夏普对比">年化夏普</canvas></div></div>
+  <div class="card"><div style="font-weight:600;margin-bottom:10px;font-size:13px;">胜率 & 最大回撤</div>
+    <div class="cw-sm"><canvas id="barChart2" role="img" aria-label="胜率回撤对比">胜率回撤</canvas></div></div>
+</div>
+
+<div class="st">策略规格</div>
+<div class="card"><table style="font-size:13px;">
+  <tr><td style="text-align:left;font-weight:600;width:150px;">策略ID</td><td style="text-align:left;">S015 · S013长视野升级版</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">母策略</td><td style="text-align:left;">S013b · 喜神池LightGBM（金水喜神股）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">核心改动</td><td style="text-align:left;">训练标签「未来10日」→「未来40日」跑赢市场中位数</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">调仓频率</td><td style="text-align:left;">每2个月（月初次日开盘买入）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">持仓</td><td style="text-align:left;">Top20 等权，单股-12%止损</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">手续费</td><td style="text-align:left;">买0.025% + 卖0.075%(含印花税)</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">回测区间</td><td style="text-align:left;">2017-01 ~ 2026-07（约9.5年 / 57期）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">排除</td><td style="text-align:left;">ST股 / 净亏损股 / 北交所(.BJ)</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">交叉验证</td><td style="text-align:left;">S009全市场同配置年化39.5%，规律一致成立</td></tr>
+</table></div>
+
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:30px;padding-bottom:20px;">数据区间 2017–2026 | 基于历史回测 不构成投资建议</p>
+</div>
+
+<script>
+const D = __PAYLOAD__;
+const years = D.years;
+
+new Chart(document.getElementById('navChart').getContext('2d'),{
+  type:'line',
+  data:{labels:D.nav15.map((_,i)=>i===0?'起始':'第'+i+'期'),datasets:[
+    {label:'S015(40天)',data:D.nav15,borderColor:'#e03131',borderWidth:2,pointRadius:0,fill:false,tension:0.1},
+    {label:'S013原版(10天)',data:D.nav13,borderColor:'#1971c2',borderWidth:1.5,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+' 净值:'+c.parsed.y.toFixed(2)}}},
+    scales:{x:{ticks:{maxTicksLimit:10,font:{size:10}},grid:{display:false}},
+      y:{title:{display:true,text:'净值(倍)',font:{size:10}},ticks:{font:{size:10}},grid:{color:'#f1f3f5'}}}}
+});
+
+// 逐年表格
+(function(){
+  const t=document.getElementById('yrTable');
+  let h='<tr><th style="text-align:left;">策略</th>'+years.map(y=>'<th>'+y+'</th>').join('')+'</tr>';
+  function row(name,data,color){
+    let r='<tr><td style="text-align:left;font-weight:600;color:'+color+'">'+name+'</td>';
+    years.forEach(y=>{const v=data[y];
+      if(v==null){r+='<td>—</td>';return;}
+      const bg=v>=0?'rgba(224,49,49,'+Math.min(v/80,1)*0.6+')':'rgba(47,158,68,0.5)';
+      const c=v>=40?'#fff':(v<0?'#1a4a2a':'#3d1010');
+      r+='<td style="background:'+bg+';color:'+c+';font-weight:600">'+(v>=0?'+':'')+v+'%</td>';});
+    return r+'</tr>';
+  }
+  h+=row('S015(40天)',D.yr15,'#e03131');
+  h+=row('S013原版(10天)',D.yr13,'#1971c2');
+  h+=row('S009验证(40天)',D.yr09,'#e67700');
+  t.innerHTML=h;
+})();
+
+new Chart(document.getElementById('barChart').getContext('2d'),{
+  type:'bar',
+  data:{labels:['S013原版','S015升级','S009验证'],datasets:[
+    {label:'年化%',data:[36.6,41.9,39.5],backgroundColor:['#adb5bd','#e03131','#e67700'],borderRadius:4,yAxisID:'y'},
+    {label:'夏普',data:[1.44,1.57,1.54],backgroundColor:['#dee2e6','#ffa8a8','#ffd8a8'],borderRadius:4,yAxisID:'y1'},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{font:{size:11}}}},
+    scales:{y:{position:'left',title:{display:true,text:'年化%',font:{size:10}},grid:{color:'#f1f3f5'}},
+      y1:{position:'right',title:{display:true,text:'夏普',font:{size:10}},grid:{display:false},min:0,max:2}}}
+});
+
+new Chart(document.getElementById('barChart2').getContext('2d'),{
+  type:'bar',
+  data:{labels:['S013原版','S015升级','S009验证'],datasets:[
+    {label:'胜率%',data:[67.5,80.7,75.4],backgroundColor:['#adb5bd','#e03131','#e67700'],borderRadius:4,yAxisID:'y'},
+    {label:'回撤%',data:[-14.3,-15.0,-13.6],backgroundColor:['#ced4da','#74c0fc','#a5d8ff'],borderRadius:4,yAxisID:'y1'},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{font:{size:11}}}},
+    scales:{y:{position:'left',title:{display:true,text:'胜率%',font:{size:10}},min:0,max:100,grid:{color:'#f1f3f5'}},
+      y1:{position:'right',title:{display:true,text:'回撤%',font:{size:10}},grid:{display:false},max:0,min:-25}}}
+});
+</script>
+</body>
+</html>

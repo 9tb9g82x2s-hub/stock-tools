@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>策略模拟盘 · S019</title>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;--text:#212529;--muted:#6c757d;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+  .header{background:linear-gradient(135deg,#5c1a1a 0%,#c92a2a 100%);color:#fff;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;}
+  .header h1{font-size:20px;font-weight:700;}
+  .header .meta{font-size:12px;opacity:.85;text-align:right;line-height:1.7;}
+  .container{max-width:1200px;margin:0 auto;padding:20px 16px;}
+  .summary{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .kpi .lb{font-size:11px;color:var(--muted);margin-bottom:4px;}
+  .kpi .vl{font-size:22px;font-weight:700;}
+  .kpi .sub{font-size:11px;color:var(--muted);margin-top:2px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px;}
+  .card-title{font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#f1f3f5;padding:8px 10px;text-align:right;font-weight:600;border-bottom:2px solid var(--border);white-space:nowrap;}
+  th:first-child{text-align:left;}
+  td{padding:8px 10px;border-bottom:1px solid #f1f3f5;text-align:right;}
+  td:first-child{text-align:left;}
+  tr:hover td{background:#f8f9fa;}
+  .tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;}
+  .tag-warn{background:#fff3bf;color:#856404;}
+  .up{color:var(--red);font-weight:600;}
+  .dn{color:var(--green);font-weight:600;}
+  .neutral{color:var(--muted);}
+  .price-input{width:80px;padding:3px 6px;border:1px solid #ced4da;border-radius:4px;text-align:right;font-size:13px;}
+  .btn{padding:6px 14px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;}
+  .btn-primary{background:#c92a2a;color:#fff;}
+  .btn-primary:hover{background:#a61e1e;}
+  .btn-sm{padding:4px 10px;font-size:12px;}
+  .info-box{background:#fff9db;border:1px solid #ffd43b;border-radius:8px;padding:12px 16px;font-size:12px;line-height:1.8;margin-bottom:16px;}
+  .info-box b{color:#856404;}
+  .progress-bar{height:6px;background:#dee2e6;border-radius:3px;overflow:hidden;margin-top:4px;}
+  .progress-fill{height:100%;border-radius:3px;transition:width .3s;}
+  .footer-note{text-align:center;color:var(--muted);font-size:11px;margin-top:20px;padding-bottom:20px;}
+  @media(max-width:768px){.summary{grid-template-columns:repeat(2,1fr);}.header{flex-direction:column;gap:8px;}.header .meta{text-align:left;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <h1>📊 策略模拟盘跟踪器</h1>
+    <div style="font-size:12px;opacity:.8;margin-top:3px;">S019 · 高频10日换仓 · 喜神池</div>
+  </div>
+  <div class="meta" id="headerMeta"></div>
+</div>
+
+<div class="container">
+
+<div class="info-box">
+  <b>本期持仓信息：</b>
+  建仓日 <b>2026-07-21</b>（以收盘价计）&nbsp;&nbsp;
+  预计卖出日 <b>2026-08-04</b>（约10个交易日后）&nbsp;&nbsp;
+  总投入 <span id="infoInvest"></span>&nbsp;&nbsp;
+  剩余现金 <span id="infoCash"></span>&nbsp;&nbsp;
+  <b>注意：</b>到期前如单股跌幅触及-12%止损线，需手动卖出对应股票
+</div>
+
+<div class="summary">
+  <div class="kpi"><div class="lb">总市值</div><div class="vl" id="kpiMv">—</div><div class="sub">含现金</div></div>
+  <div class="kpi"><div class="lb">持仓市值</div><div class="vl" id="kpiPosV">—</div><div class="sub">不含现金</div></div>
+  <div class="kpi"><div class="lb">浮动盈亏</div><div class="vl" id="kpiPnl">—</div><div class="sub" id="kpiPct">—</div></div>
+  <div class="kpi"><div class="lb">持仓天数</div><div class="vl" id="kpiDays">—</div><div class="sub" id="kpiDaysLeft">剩余天数计算中</div></div>
+  <div class="kpi"><div class="lb">止损预警</div><div class="vl" id="kpiAlerts" style="color:var(--red)">0</div><div class="sub">已触及-12%</div></div>
+</div>
+
+<div class="card">
+  <div class="card-title">
+    <span>持仓明细</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span style="font-size:11px;color:var(--muted);">可手动输入今日价格后点「更新」</span>
+      <button class="btn btn-primary btn-sm" onclick="updateAll()">✓ 更新全部</button>
+    </div>
+  </div>
+  <div style="overflow-x:auto;">
+  <table>
+    <thead><tr>
+      <th style="text-align:left;min-width:130px;">股票</th>
+      <th>行业</th>
+      <th>买入价</th>
+      <th>手数</th>
+      <th>成本</th>
+      <th>当前价<br><small style="font-weight:400;">(可编辑)</small></th>
+      <th>最新市值</th>
+      <th>浮动盈亏</th>
+      <th>涨跌%</th>
+      <th>止损线(-12%)</th>
+    </tr></thead>
+    <tbody id="posTable"></tbody>
+  </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">净值历史</div>
+  <table id="histTable">
+    <thead><tr><th style="text-align:left;">日期</th><th>净值</th><th>当期涨跌</th><th>备注</th></tr></thead>
+    <tbody id="histBody"></tbody>
+  </table>
+</div>
+
+</div>
+<div class="footer-note">模拟盘 · 仅供策略跟踪参考 · 不构成投资建议</div>
+
+<script>
+// ─── 数据 ───
+const DATA = {"strategy": "S019 高频10日换仓", "buy_date": "2026-07-21", "note": "以2026-07-21收盘价建仓，模拟盘跟踪", "capital": 1000000, "sell_date_expected": "2026-08-04", "positions": [{"code": "002008.SZ", "name": "大族激光", "industry": "专用机械", "lots": 4, "shares": 400, "buy_price": 100.89, "cost": 40356.0, "cur_price": 100.89}, {"code": "301308.SZ", "name": "江波龙", "industry": "半导体", "lots": 1, "shares": 100, "buy_price": 421.86, "cost": 42186.0, "cur_price": 421.86}, {"code": "603115.SH", "name": "海星股份", "industry": "铝", "lots": 7, "shares": 700, "buy_price": 69.9, "cost": 48930.0, "cur_price": 69.9}, {"code": "600487.SH", "name": "亨通光电", "industry": "通信设备", "lots": 8, "shares": 800, "buy_price": 59.96, "cost": 47968.0, "cur_price": 59.96}, {"code": "603936.SH", "name": "博敏电子", "industry": "元器件", "lots": 35, "shares": 3500, "buy_price": 14.04, "cost": 49140.0, "cur_price": 14.04}, {"code": "688112.SH", "name": "鼎阳科技", "industry": "电器仪表", "lots": 9, "shares": 900, "buy_price": 53.04, "cost": 47736.0, "cur_price": 53.04}, {"code": "688525.SH", "name": "佰维存储", "industry": "半导体", "lots": 1, "shares": 100, "buy_price": 270.97, "cost": 27097.0, "cur_price": 270.97}, {"code": "688308.SH", "name": "欧科亿", "industry": "机械基件", "lots": 4, "shares": 400, "buy_price": 101.68, "cost": 40672.0, "cur_price": 101.68}, {"code": "688551.SH", "name": "科威尔", "industry": "专用机械", "lots": 12, "shares": 1200, "buy_price": 39.58, "cost": 47496.0, "cur_price": 39.58}, {"code": "600563.SH", "name": "法拉电子", "industry": "元器件", "lots": 3, "shares": 300, "buy_price": 130.48, "cost": 39144.0, "cur_price": 130.48}, {"code": "688536.SH", "name": "思瑞浦", "industry": "半导体", "lots": 1, "shares": 100, "buy_price": 258.97, "cost": 25897.0, "cur_price": 258.97}, {"code": "688312.SH", "name": "燕麦科技", "industry": "专用机械", "lots": 10, "shares": 1000, "buy_price": 47.86, "cost": 47860.0, "cur_price": 47.86}, {"code": "002929.SZ", "name": "润建股份", "industry": "通信设备", "lots": 9, "shares": 900, "buy_price": 52.08, "cost": 46872.0, "cur_price": 52.08}, {"code": "688531.SH", "name": "日联科技", "industry": "专用机械", "lots": 3, "shares": 300, "buy_price": 131.0, "cost": 39300.0, "cur_price": 131.0}, {"code": "688456.SH", "name": "有研粉材", "industry": "铜", "lots": 6, "shares": 600, "buy_price": 78.0, "cost": 46800.0, "cur_price": 78.0}, {"code": "300749.SZ", "name": "顶固集创", "industry": "家居用品", "lots": 29, "shares": 2900, "buy_price": 17.15, "cost": 49735.0, "cur_price": 17.15}, {"code": "605198.SH", "name": "安德利", "industry": "软饮料", "lots": 10, "shares": 1000, "buy_price": 49.52, "cost": 49520.0, "cur_price": 49.52}, {"code": "300975.SZ", "name": "商络电子", "industry": "元器件", "lots": 18, "shares": 1800, "buy_price": 27.05, "cost": 48690.0, "cur_price": 27.05}, {"code": "601126.SH", "name": "四方股份", "industry": "电气设备", "lots": 11, "shares": 1100, "buy_price": 44.84, "cost": 49324.0, "cur_price": 44.84}, {"code": "688800.SH", "name": "瑞可达", "industry": "元器件", "lots": 8, "shares": 800, "buy_price": 60.0, "cost": 48000.0, "cur_price": 60.0}], "total_cost": 882723.0, "cash": 117277.0, "history": [{"date": "2026-07-21", "nav": 1.0, "note": "建仓"}]};
+const positions = DATA.positions;
+const CAPITAL = DATA.capital;
+const TOTAL_COST = DATA.total_cost;
+const CASH = DATA.cash;
+const BUY_DATE = new Date(DATA.buy_date);
+const SELL_DATE = new Date(DATA.sell_date_expected);
+const HISTORY = DATA.history;
+
+// 价格状态（初始=买入价）
+const curPrices = {};
+positions.forEach(p => curPrices[p.code] = p.buy_price);
+
+function fmt(v, decimals=2){ return v.toLocaleString('zh-CN',{minimumFractionDigits:decimals,maximumFractionDigits:decimals}); }
+function fmtW(v){ return (v/1e4).toFixed(2)+'万'; }
+
+function renderTable(){
+  const tbody = document.getElementById('posTable');
+  let rows = '', totalMv = 0, totalCost = 0, alerts = 0;
+  positions.forEach(p => {
+    const cp = curPrices[p.code];
+    const mv = cp * p.shares;
+    const pnl = mv - p.cost;
+    const pct = (cp/p.buy_price - 1)*100;
+    const stopLine = p.buy_price * 0.88;
+    const isStop = cp <= stopLine;
+    const isWarn = cp <= p.buy_price * 0.92 && !isStop;
+    if(isStop) alerts++;
+    totalMv += mv; totalCost += p.cost;
+    const pctClass = pct > 0 ? 'up' : pct < 0 ? 'dn' : 'neutral';
+    const rowBg = isStop ? 'background:#fff5f5;' : isWarn ? 'background:#fffbeb;' : '';
+    rows += `<tr style="${rowBg}">
+      <td><b>${p.name}</b><br><small style="color:var(--muted)">${p.code}</small></td>
+      <td style="color:var(--muted);font-size:12px;">${p.industry||'—'}</td>
+      <td>${fmt(p.buy_price)}</td>
+      <td>${p.lots}手<br><small style="color:var(--muted)">${p.shares}股</small></td>
+      <td>${fmtW(p.cost)}</td>
+      <td><input class="price-input" id="px_${p.code}" value="${cp}" onchange="curPrices['${p.code}']=parseFloat(this.value)||${p.buy_price}"></td>
+      <td>${fmtW(mv)}</td>
+      <td class="${pctClass}">${pnl>=0?'+':''}${fmtW(pnl)}</td>
+      <td class="${pctClass}">${pct>=0?'+':''}${fmt(pct,2)}%${isStop?' 🔴止损':isWarn?' 🟡预警':''}</td>
+      <td style="color:var(--muted);font-size:12px;">${fmt(stopLine)}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = rows;
+
+  // 汇总
+  const totalAll = totalMv + CASH;
+  const totalPnl = totalMv - TOTAL_COST;
+  const totalPct = totalPnl / TOTAL_COST * 100;
+  document.getElementById('kpiMv').textContent = fmtW(totalAll);
+  document.getElementById('kpiMv').className = 'vl ' + (totalAll > CAPITAL ? 'up' : totalAll < CAPITAL ? 'dn' : 'neutral');
+  document.getElementById('kpiPosV').textContent = fmtW(totalMv);
+  document.getElementById('kpiPnl').textContent = (totalPnl>=0?'+':'') + fmtW(totalPnl);
+  document.getElementById('kpiPnl').className = 'vl ' + (totalPnl>0?'up':totalPnl<0?'dn':'neutral');
+  document.getElementById('kpiPct').textContent = (totalPct>=0?'+':'') + fmt(totalPct,2) + '%';
+  document.getElementById('kpiAlerts').textContent = alerts;
+
+  // 天数
+  const today = new Date();
+  const held = Math.round((today - BUY_DATE)/(86400000));
+  const left = Math.round((SELL_DATE - today)/(86400000));
+  document.getElementById('kpiDays').textContent = held + '天';
+  document.getElementById('kpiDaysLeft').textContent = left > 0 ? `剩${left}天卖出` : left === 0 ? '今天卖出！' : '已超期';
+}
+
+function updateAll(){
+  positions.forEach(p => {
+    const el = document.getElementById('px_'+p.code);
+    if(el){ const v = parseFloat(el.value); if(v>0) curPrices[p.code]=v; }
+  });
+  renderTable();
+}
+
+function renderHistory(){
+  const tbody = document.getElementById('histBody');
+  let rows = '';
+  HISTORY.forEach((h,i) => {
+    const prev = i > 0 ? HISTORY[i-1].nav : h.nav;
+    const chg = (h.nav/prev - 1)*100;
+    const cls = chg > 0 ? 'up' : chg < 0 ? 'dn' : 'neutral';
+    rows += `<tr><td>${h.date}</td><td>${fmt(h.nav,4)}</td>
+      <td class="${cls}">${i>0?(chg>=0?'+':'')+fmt(chg,2)+'%':'—'}</td>
+      <td style="color:var(--muted)">${h.note||''}</td></tr>`;
+  });
+  tbody.innerHTML = rows;
+}
+
+// 初始化
+document.getElementById('infoInvest').textContent = fmtW(TOTAL_COST);
+document.getElementById('infoCash').textContent = fmtW(CASH);
+const today = new Date();
+document.getElementById('headerMeta').innerHTML =
+  `数据更新: ${today.toLocaleString('zh-CN')}<br>建仓日: ${DATA.buy_date} · 预计卖出: ${DATA.sell_date_expected}`;
+renderTable();
+renderHistory();
+</script>
+</body>
+</html>

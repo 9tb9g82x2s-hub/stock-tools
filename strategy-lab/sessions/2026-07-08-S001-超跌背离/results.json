@@ -1,0 +1,42 @@
+{
+  "strategy_name": "S001-超跌背离-熊市",
+  "created_date": "2026-07-08",
+  "strategy_type": "均值回归",
+  "version": "v3",
+  "metrics": {
+    "note": "回测数据待补充"
+  },
+  "aux_metrics": {},
+  "stocks": [],
+  "latest_scan": {
+    "date": "2026-07-06",
+    "pool_size": 300,
+    "drop_gt_40": 7,
+    "convergence_lt_75": 38,
+    "obv_divergence": 69,
+    "technical_signal": 1,
+    "market_regime": "牛市",
+    "sh_index": 4037,
+    "sh_52w_high": 4243,
+    "sh_drawdown": -4.9,
+    "filtered_by_regime": true,
+    "final_signal": 0,
+    "blocked_reason": "牛市-观望（历史上大众交通连续3次牛市信号全亏）"
+  },
+  "positions": [
+    {
+      "code": "300251",
+      "name": "光线传媒",
+      "entry_date": "2026-07-08",
+      "entry_price": 12.14,
+      "shares": 8000,
+      "note": "v2信号买入（v3上线前）。v3熊市过滤器下不会触发此信号。"
+    }
+  ],
+  "ai_analysis": {
+    "model": "manual",
+    "summary": "v3升级后首次扫描：上证跌4.9%被判定为牛市，技术面有1个信号但被熊市过滤器拦截。现有光线传媒持仓是在v2时期建立的，v3规则下不会触发该交易。",
+    "confidence": "中"
+  },
+  "notes": "v3重大升级：新增熊市择时前置条件（上证52周跌幅>15%才开仓），旨在过滤牛市中策略的假信号。目前持仓光线传媒为v2信号买入，需单独评估持有/退出策略。"
+}

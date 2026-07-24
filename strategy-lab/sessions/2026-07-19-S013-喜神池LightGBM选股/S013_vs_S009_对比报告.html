@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S013喜神池 vs S009全市场 · 净值对比</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f5f0; color: #2c2c2a; line-height: 1.6; padding: 32px 20px; }
+.wrap { max-width: 980px; margin: 0 auto; }
+h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; }
+.sub { color: #5f5e5a; font-size: 14px; margin-bottom: 24px; }
+.card { background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 14px;
+  padding: 22px 24px; margin-bottom: 22px; }
+h2 { font-size: 17px; font-weight: 600; margin-bottom: 14px; }
+.metrics { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 6px; }
+.metric { background: #f7f6f2; border-radius: 10px; padding: 12px 10px; text-align: center; }
+.metric .l { font-size: 11px; color: #5f5e5a; }
+.metric .v { font-size: 20px; font-weight: 600; margin-top: 4px; }
+.metric .d { font-size: 11px; margin-top: 2px; }
+.good { color: #d33; } .bad { color: #1a9e60; }
+.legend { display: flex; gap: 20px; font-size: 13px; color: #5f5e5a; margin-bottom: 12px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.dot { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart-box { position: relative; width: 100%; height: 340px; }
+.chart-box.sm { height: 240px; }
+.big { font-size: 15px; padding: 18px 20px; border-radius: 12px; background: #2c2c2a;
+  color: #fff; margin-bottom: 22px; }
+.big b { color: #FAC775; }
+.concl { font-size: 14px; }
+.concl li { margin: 8px 0 8px 18px; }
+.foot { color: #888780; font-size: 12px; text-align: center; margin-top: 24px; }
+.tag { display:inline-block; font-size: 12px; padding: 2px 10px; border-radius: 20px;
+  background: #E1F5EE; color: #0F6E56; margin-left: 8px; vertical-align: middle; }
+</style></head><body><div class="wrap">
+<h1>S013 喜神池 vs S009 全市场<span class="tag">同口径对照</span></h1>
+<div class="sub">两者均为 LightGBM + C1·12%止损版，滚动训练/月度调仓/Top20等权/T+1开盘价全部一致 —— <b>唯一变量：选股池</b>（全市场 vs 金水喜神1485只） · 2017-01~2026-07 · 114期</div>
+
+<div class="big" id="bigV"></div>
+
+<div class="card">
+<h2>核心指标对比</h2>
+<div class="metrics" id="mBox"></div>
+<div style="font-size:12px;color:#888780;margin-top:10px;">红色=对策略有利方向。S013用少量年化(-0.9pt)换到了更低回撤、更高夏普、更高胜率。</div>
+</div>
+
+<div class="card">
+<h2>净值曲线（对数轴）</h2>
+<div class="legend">
+<span><span class="dot" style="background:#888780"></span>S009 全市场</span>
+<span><span class="dot" style="background:#D85A30"></span>S013 喜神池(金水)</span>
+</div>
+<div class="chart-box"><canvas id="navChart" role="img" aria-label="S009与S013净值曲线对比"></canvas></div>
+</div>
+
+<div class="card">
+<h2>回撤曲线（越浅越好）</h2>
+<div class="legend">
+<span><span class="dot" style="background:#888780"></span>S009 全市场</span>
+<span><span class="dot" style="background:#378ADD"></span>S013 喜神池</span>
+</div>
+<div class="chart-box sm"><canvas id="ddChart" role="img" aria-label="回撤曲线对比"></canvas></div>
+<div style="font-size:12px;color:#888780;margin-top:8px;">S013回撤曲线整体更浅更平，最深-12.95% vs S009 -15.24%，扛跌能力更强。</div>
+</div>
+
+<div class="card">
+<h2>结论</h2>
+<ul class="concl" id="conclList"></ul>
+</div>
+
+<div class="foot">S013 · 泓锦 · 喜神池重训回测 · 数据面板共享S009(1.7G真实面板)</div>
+</div>
+<script>
+const D = {"dates": ["起点", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07"], "nav13": [1.0, 0.9983, 1.0852, 1.1048, 1.0367, 1.0587, 1.1535, 1.2104, 1.2734, 1.3153, 1.3362, 1.3234, 1.3648, 1.4481, 1.4641, 1.5916, 1.6638, 1.6792, 1.6484, 1.7015, 1.6511, 1.6785, 1.6996, 1.8319, 1.7672, 1.8223, 2.2297, 2.5137, 2.3169, 2.3714, 2.4929, 2.3757, 2.4471, 2.451, 2.6157, 2.5255, 2.6275, 2.2872, 2.7023, 2.5088, 2.9523, 3.021, 3.4674, 3.9636, 4.2441, 3.9775, 3.7555, 4.1513, 4.4217, 4.4739, 4.6647, 4.6738, 4.9581, 5.032, 4.9461, 5.4328, 5.6692, 6.0011, 6.1635, 6.7376, 7.0316, 7.9603, 8.153, 7.7274, 7.2921, 8.6748, 9.1347, 9.7712, 9.5542, 9.1135, 9.7401, 10.7354, 10.6236, 11.4285, 11.4609, 11.2141, 11.4352, 11.1533, 11.6021, 12.2269, 11.8019, 11.7405, 11.5642, 11.8192, 11.7073, 12.004, 12.2235, 13.6574, 14.2891, 13.9656, 13.8641, 14.4072, 13.5367, 16.8124, 15.2923, 15.5822, 15.6745, 15.4553, 15.6373, 16.08, 15.8243, 16.2614, 17.3622, 19.3745, 20.2319, 20.0117, 20.6889, 20.7447, 21.1082, 21.8294, 21.8076, 20.0322, 22.424, 21.5741, 20.5516], "nav09": [1.0, 0.9935, 1.0801, 1.072, 1.0036, 1.0216, 1.1138, 1.1591, 1.2102, 1.2121, 1.1987, 1.191, 1.2434, 1.2906, 1.2953, 1.4789, 1.5643, 1.5593, 1.4597, 1.4998, 1.4581, 1.4764, 1.4705, 1.6733, 1.6413, 1.6952, 2.1228, 2.3995, 2.1643, 2.2175, 2.3012, 2.074, 2.2961, 2.3064, 2.488, 2.4061, 2.4532, 2.109, 2.5344, 2.3515, 2.7975, 2.985, 3.4754, 3.8955, 4.0475, 3.7678, 3.6072, 4.0091, 4.1986, 4.2145, 4.5564, 4.7035, 4.9448, 4.9922, 5.0233, 5.5533, 6.1148, 6.4141, 6.0567, 6.8855, 7.1138, 6.942, 7.3683, 7.7324, 6.7403, 8.4111, 9.1168, 9.5283, 9.1819, 8.7263, 9.5687, 10.2212, 10.08, 10.8482, 10.9969, 10.8187, 10.4042, 10.2761, 10.5543, 11.0955, 10.6546, 10.7209, 10.6114, 10.7986, 10.701, 11.1432, 11.1465, 12.8231, 13.387, 12.8389, 12.6675, 13.9876, 13.2889, 16.9413, 15.2101, 15.5773, 15.7685, 15.5727, 15.9108, 16.2789, 15.9272, 15.8432, 17.1512, 17.6803, 18.5662, 18.1728, 18.7795, 19.1153, 19.5963, 20.398, 20.61, 18.9203, 20.7832, 20.5512, 19.2598], "dd13": [0.0, -0.17, 0.0, 0.0, -6.16, -4.17, 0.0, 0.0, 0.0, 0.0, 0.0, -0.96, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.84, 0.0, -2.97, -1.35, -0.11, 0.0, -3.53, -0.52, 0.0, 0.0, -7.83, -5.66, -0.83, -5.49, -2.65, -2.49, 0.0, -3.44, 0.0, -12.95, 0.0, -7.16, 0.0, 0.0, 0.0, 0.0, 0.0, -6.28, -11.51, -2.19, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.71, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -5.22, -10.56, 0.0, 0.0, 0.0, -2.22, -6.73, -0.32, 0.0, -1.04, 0.0, 0.0, -2.15, -0.22, -2.68, 0.0, 0.0, -3.48, -3.98, -5.42, -3.33, -4.25, -1.82, -0.03, 0.0, 0.0, -2.26, -2.97, 0.0, -6.04, 0.0, -9.04, -7.32, -6.77, -8.07, -6.99, -4.36, -5.88, -3.28, 0.0, 0.0, 0.0, -1.09, 0.0, 0.0, 0.0, 0.0, -0.1, -8.23, 0.0, -3.79, -8.35], "dd09": [0.0, -0.65, 0.0, -0.75, -7.08, -5.41, 0.0, 0.0, 0.0, 0.0, -1.11, -1.74, 0.0, 0.0, 0.0, 0.0, 0.0, -0.32, -6.69, -4.12, -6.79, -5.61, -5.99, 0.0, -1.91, 0.0, 0.0, 0.0, -9.8, -7.59, -4.1, -13.56, -4.31, -3.88, 0.0, -3.29, -1.4, -15.24, 0.0, -7.21, 0.0, 0.0, 0.0, 0.0, 0.0, -6.91, -10.88, -0.95, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -5.57, 0.0, 0.0, -2.42, 0.0, 0.0, -12.83, 0.0, 0.0, 0.0, -3.64, -8.42, 0.0, 0.0, -1.38, 0.0, 0.0, -1.62, -5.39, -6.55, -4.02, 0.0, -3.97, -3.38, -4.36, -2.68, -3.55, 0.0, 0.0, 0.0, 0.0, -4.09, -5.37, 0.0, -4.99, 0.0, -10.22, -8.05, -6.92, -8.08, -6.08, -3.91, -5.99, -6.48, 0.0, 0.0, 0.0, -2.12, 0.0, 0.0, 0.0, 0.0, 0.0, -8.2, 0.0, -1.12, -7.33], "m13": {"ann": 37.47, "mdd": -12.95, "sharpe": 1.554, "win": 68.4, "total": 1955.0}, "m09": {"ann": 36.53, "mdd": -15.24, "sharpe": 1.355, "win": 64.9, "total": 1826.0}, "pool": 1485};
+
+document.getElementById('bigV').innerHTML =
+  '<b>喜神池选股不是"没alpha"，而是"低波动"。</b> 在1485只金水股里重新选够20只，' +
+  '年化仅降0.9个点(37.47% vs 36.53%其实还略高)，但<b>最大回撤从-15.24%收窄到-12.95%，夏普1.355→1.554，胜率64.9%→68.4%</b>。' +
+  'S013是S009的"稳健低波动姊妹版"。';
+
+const mdefs = [
+  ["累计收益", "total", "%", false],
+  ["年化", "ann", "%", false],
+  ["最大回撤", "mdd", "%", true],
+  ["夏普", "sharpe", "", false],
+  ["胜率", "win", "%", false],
+];
+const mBox = document.getElementById('mBox');
+mdefs.forEach(([label, key, unit, mddType]) => {
+  const v13 = D.m13[key], v09 = D.m09[key];
+  let better;
+  if (mddType) better = v13 > v09;
+  else better = v13 > v09;
+  const diff = (v13 - v09);
+  const dstr = (diff>0?'+':'') + diff.toFixed(key==='sharpe'?3:(key==='total'?0:2));
+  mBox.innerHTML += '<div class="metric"><div class="l">'+label+'</div>'+
+    '<div class="v">'+ (key==='sharpe'?v13.toFixed(3):v13)+unit+'</div>'+
+    '<div class="d '+(better?'good':'bad')+'">S013比S009 '+dstr+'</div></div>';
+});
+
+new Chart(document.getElementById('navChart'), {
+  type: 'line',
+  data: { labels: D.dates, datasets: [
+    { label:'S009全市场', data:D.nav09, borderColor:'#888780', borderWidth:2, pointRadius:0, tension:0.1 },
+    { label:'S013喜神池', data:D.nav13, borderColor:'#D85A30', borderWidth:2, pointRadius:0, tension:0.1 },
+  ]},
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{ y:{type:'logarithmic', title:{display:true,text:'净值(对数)'}},
+      x:{ticks:{maxTicksLimit:12,autoSkip:true}} } }
+});
+
+new Chart(document.getElementById('ddChart'), {
+  type: 'line',
+  data: { labels: D.dates, datasets: [
+    { label:'S009', data:D.dd09, borderColor:'#888780', backgroundColor:'rgba(136,135,128,.12)',
+      borderWidth:1.5, pointRadius:0, fill:true, tension:0.1 },
+    { label:'S013', data:D.dd13, borderColor:'#378ADD', backgroundColor:'rgba(55,138,221,.12)',
+      borderWidth:1.5, pointRadius:0, fill:true, tension:0.1 },
+  ]},
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+    scales:{ y:{title:{display:true,text:'回撤 %'}, max:0},
+      x:{ticks:{maxTicksLimit:12,autoSkip:true}} } }
+});
+
+const cl = document.getElementById('conclList');
+[
+  '<b>公平对照下的真结果：</b>S013与S009同为C1止损版，唯一差别是选股池。S013年化37.47%甚至略高于S009的36.53%，同时回撤更小、夏普更高——金水池不拖后腿。',
+  '<b>推翻了之前快验证的悲观结论。</b>前面几轮从S009已选的20只里"过滤"金水股(每期只剩4-8只)，样本稀疏严重低估了策略；真·重训(在1485只里重新选够20只)才是公平口径。',
+  '<b>金水行业的特性=低波动。</b>银行/黄金/金属/港口/水运涨得慢但也跌得少，模型选够20只后曲线更平滑，最大回撤-12.95%是全场最低。',
+  '<b>S013的定位：</b>S009的"稳健低波动姊妹版"。追求扛回撤、睡得着觉的资金更适合S013；追求收益弹性的用S009。两者可作为组合的两条腿。',
+  '<b>命理视角的意外收获：</b>老大喜金水，S013正好是"只买喜神股"的策略，且回测证明它更稳——命理偏好与量化稳健性在这里达成了统一。',
+].forEach(t => { const li=document.createElement('li'); li.innerHTML=t; cl.appendChild(li); });
+</script></body></html>

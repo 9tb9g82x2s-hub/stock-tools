@@ -1,0 +1,1555 @@
+{
+  "strategy": "S009-LightGBM多因子选股",
+  "test_scenario": "2026年6-7月 通信大涨→股灾压力测试",
+  "periods": [
+    {
+      "rebalance_date": "20260105",
+      "buy_date": "20260106",
+      "sell_date": "20260203",
+      "period_label": "202601→202602",
+      "top20_holdings": [
+        {
+          "ts_code": "600741.SH",
+          "name": "华域汽车",
+          "industry": "汽车配件",
+          "score": 0.7695
+        },
+        {
+          "ts_code": "002402.SZ",
+          "name": "和而泰",
+          "industry": "元器件",
+          "score": 0.7403
+        },
+        {
+          "ts_code": "600884.SH",
+          "name": "杉杉股份",
+          "industry": "电气设备",
+          "score": 0.7233
+        },
+        {
+          "ts_code": "300443.SZ",
+          "name": "金雷股份",
+          "industry": "电气设备",
+          "score": 0.7098
+        },
+        {
+          "ts_code": "002236.SZ",
+          "name": "大华股份",
+          "industry": "IT设备",
+          "score": 0.6918
+        },
+        {
+          "ts_code": "600031.SH",
+          "name": "三一重工",
+          "industry": "工程机械",
+          "score": 0.6861
+        },
+        {
+          "ts_code": "688352.SH",
+          "name": "颀中科技",
+          "industry": "半导体",
+          "score": 0.6857
+        },
+        {
+          "ts_code": "600167.SH",
+          "name": "联美控股",
+          "industry": "供气供热",
+          "score": 0.6855
+        },
+        {
+          "ts_code": "605020.SH",
+          "name": "永和股份",
+          "industry": "化工原料",
+          "score": 0.685
+        },
+        {
+          "ts_code": "688577.SH",
+          "name": "浙海德曼",
+          "industry": "机床制造",
+          "score": 0.683
+        },
+        {
+          "ts_code": "603285.SH",
+          "name": "XD键邦股",
+          "industry": "化工原料",
+          "score": 0.6792
+        },
+        {
+          "ts_code": "603909.SH",
+          "name": "建发合诚",
+          "industry": "建筑工程",
+          "score": 0.6751
+        },
+        {
+          "ts_code": "688419.SH",
+          "name": "耐科装备",
+          "industry": "半导体",
+          "score": 0.6696
+        },
+        {
+          "ts_code": "688138.SH",
+          "name": "清溢光电",
+          "industry": "半导体",
+          "score": 0.6675
+        },
+        {
+          "ts_code": "300507.SZ",
+          "name": "苏奥传感",
+          "industry": "汽车配件",
+          "score": 0.667
+        },
+        {
+          "ts_code": "688466.SH",
+          "name": "金科环境",
+          "industry": "环境保护",
+          "score": 0.6667
+        },
+        {
+          "ts_code": "002106.SZ",
+          "name": "莱宝高科",
+          "industry": "元器件",
+          "score": 0.6651
+        },
+        {
+          "ts_code": "002838.SZ",
+          "name": "道恩股份",
+          "industry": "塑料",
+          "score": 0.6627
+        },
+        {
+          "ts_code": "300440.SZ",
+          "name": "运达科技",
+          "industry": "软件服务",
+          "score": 0.6625
+        },
+        {
+          "ts_code": "600846.SH",
+          "name": "同济科技",
+          "industry": "建筑工程",
+          "score": 0.6613
+        }
+      ],
+      "industry_distribution": {
+        "汽车配件": 2,
+        "元器件": 2,
+        "电气设备": 2,
+        "IT设备": 1,
+        "工程机械": 1,
+        "半导体": 3,
+        "供气供热": 1,
+        "化工原料": 2,
+        "机床制造": 1,
+        "建筑工程": 2,
+        "环境保护": 1,
+        "塑料": 1,
+        "软件服务": 1
+      },
+      "stock_returns": [
+        {
+          "ts_code": "688419.SH",
+          "name": "耐科装备",
+          "industry": "半导体",
+          "buy_price": 28.33,
+          "sell_price": 42.86,
+          "return_pct": 51.31
+        },
+        {
+          "ts_code": "603285.SH",
+          "name": "XD键邦股",
+          "industry": "化工原料",
+          "buy_price": 24.47,
+          "sell_price": 34.99,
+          "return_pct": 42.99
+        },
+        {
+          "ts_code": "002838.SZ",
+          "name": "道恩股份",
+          "industry": "塑料",
+          "buy_price": 23.77,
+          "sell_price": 28.5,
+          "return_pct": 19.9
+        },
+        {
+          "ts_code": "300440.SZ",
+          "name": "运达科技",
+          "industry": "软件服务",
+          "buy_price": 12.2,
+          "sell_price": 14.02,
+          "return_pct": 14.96
+        },
+        {
+          "ts_code": "688352.SH",
+          "name": "颀中科技",
+          "industry": "半导体",
+          "buy_price": 12.87,
+          "sell_price": 14.56,
+          "return_pct": 13.1
+        },
+        {
+          "ts_code": "600031.SH",
+          "name": "三一重工",
+          "industry": "工程机械",
+          "buy_price": 21.25,
+          "sell_price": 23.08,
+          "return_pct": 8.61
+        },
+        {
+          "ts_code": "688466.SH",
+          "name": "金科环境",
+          "industry": "环境保护",
+          "buy_price": 16.6,
+          "sell_price": 17.58,
+          "return_pct": 5.9
+        },
+        {
+          "ts_code": "002106.SZ",
+          "name": "莱宝高科",
+          "industry": "元器件",
+          "buy_price": 10.94,
+          "sell_price": 11.52,
+          "return_pct": 5.35
+        },
+        {
+          "ts_code": "688138.SH",
+          "name": "清溢光电",
+          "industry": "半导体",
+          "buy_price": 29.0,
+          "sell_price": 29.89,
+          "return_pct": 3.07
+        },
+        {
+          "ts_code": "605020.SH",
+          "name": "永和股份",
+          "industry": "化工原料",
+          "buy_price": 26.75,
+          "sell_price": 27.44,
+          "return_pct": 2.55
+        },
+        {
+          "ts_code": "603909.SH",
+          "name": "建发合诚",
+          "industry": "建筑工程",
+          "buy_price": 11.24,
+          "sell_price": 11.27,
+          "return_pct": 0.26
+        },
+        {
+          "ts_code": "300507.SZ",
+          "name": "苏奥传感",
+          "industry": "汽车配件",
+          "buy_price": 9.42,
+          "sell_price": 9.42,
+          "return_pct": 0.0
+        },
+        {
+          "ts_code": "600167.SH",
+          "name": "联美控股",
+          "industry": "供气供热",
+          "buy_price": 7.1,
+          "sell_price": 6.94,
+          "return_pct": -2.25
+        },
+        {
+          "ts_code": "002236.SZ",
+          "name": "大华股份",
+          "industry": "IT设备",
+          "buy_price": 18.86,
+          "sell_price": 18.28,
+          "return_pct": -3.06
+        },
+        {
+          "ts_code": "600884.SH",
+          "name": "杉杉股份",
+          "industry": "电气设备",
+          "buy_price": 13.47,
+          "sell_price": 12.99,
+          "return_pct": -3.56
+        },
+        {
+          "ts_code": "300443.SZ",
+          "name": "金雷股份",
+          "industry": "电气设备",
+          "buy_price": 28.59,
+          "sell_price": 27.19,
+          "return_pct": -4.88
+        },
+        {
+          "ts_code": "600846.SH",
+          "name": "同济科技",
+          "industry": "建筑工程",
+          "buy_price": 13.43,
+          "sell_price": 12.7,
+          "return_pct": -5.44
+        },
+        {
+          "ts_code": "002402.SZ",
+          "name": "和而泰",
+          "industry": "元器件",
+          "buy_price": 39.65,
+          "sell_price": 37.01,
+          "return_pct": -6.67
+        },
+        {
+          "ts_code": "600741.SH",
+          "name": "华域汽车",
+          "industry": "汽车配件",
+          "buy_price": 20.16,
+          "sell_price": 18.76,
+          "return_pct": -6.94
+        },
+        {
+          "ts_code": "688577.SH",
+          "name": "浙海德曼",
+          "industry": "机床制造",
+          "buy_price": 68.17,
+          "sell_price": 53.04,
+          "return_pct": -22.2
+        }
+      ],
+      "gross_return_pct": 5.65,
+      "cost_pct": 0.025,
+      "net_return_pct": 5.63,
+      "win_count": 11,
+      "total_count": 20
+    },
+    {
+      "rebalance_date": "20260202",
+      "buy_date": "20260203",
+      "sell_date": "20260303",
+      "period_label": "202602→202603",
+      "top20_holdings": [
+        {
+          "ts_code": "603516.SH",
+          "name": "淳中科技",
+          "industry": "IT设备",
+          "score": 0.7256
+        },
+        {
+          "ts_code": "300715.SZ",
+          "name": "凯伦股份",
+          "industry": "其他建材",
+          "score": 0.7211
+        },
+        {
+          "ts_code": "600202.SH",
+          "name": "哈空调",
+          "industry": "专用机械",
+          "score": 0.7152
+        },
+        {
+          "ts_code": "301392.SZ",
+          "name": "汇成真空",
+          "industry": "专用机械",
+          "score": 0.7141
+        },
+        {
+          "ts_code": "605218.SH",
+          "name": "伟时电子",
+          "industry": "元器件",
+          "score": 0.6978
+        },
+        {
+          "ts_code": "600992.SH",
+          "name": "贵绳股份",
+          "industry": "钢加工",
+          "score": 0.6966
+        },
+        {
+          "ts_code": "605255.SH",
+          "name": "天普股份",
+          "industry": "汽车配件",
+          "score": 0.695
+        },
+        {
+          "ts_code": "600711.SH",
+          "name": "盛屯矿业",
+          "industry": "小金属",
+          "score": 0.6851
+        },
+        {
+          "ts_code": "002566.SZ",
+          "name": "益盛药业",
+          "industry": "中成药",
+          "score": 0.6759
+        },
+        {
+          "ts_code": "300535.SZ",
+          "name": "达威股份",
+          "industry": "化工原料",
+          "score": 0.6754
+        },
+        {
+          "ts_code": "301151.SZ",
+          "name": "冠龙节能",
+          "industry": "机械基件",
+          "score": 0.6727
+        },
+        {
+          "ts_code": "688073.SH",
+          "name": "毕得医药",
+          "industry": "化学制药",
+          "score": 0.6726
+        },
+        {
+          "ts_code": "301006.SZ",
+          "name": "迈拓股份",
+          "industry": "电器仪表",
+          "score": 0.6721
+        },
+        {
+          "ts_code": "603073.SH",
+          "name": "彩蝶实业",
+          "industry": "纺织",
+          "score": 0.6701
+        },
+        {
+          "ts_code": "301298.SZ",
+          "name": "东利机械",
+          "industry": "汽车配件",
+          "score": 0.6686
+        },
+        {
+          "ts_code": "603041.SH",
+          "name": "美思德",
+          "industry": "化工原料",
+          "score": 0.6682
+        },
+        {
+          "ts_code": "603800.SH",
+          "name": "洪田股份",
+          "industry": "专用机械",
+          "score": 0.6675
+        },
+        {
+          "ts_code": "600561.SH",
+          "name": "江西长运",
+          "industry": "公共交通",
+          "score": 0.6665
+        },
+        {
+          "ts_code": "600830.SH",
+          "name": "香溢融通",
+          "industry": "多元金融",
+          "score": 0.6644
+        },
+        {
+          "ts_code": "002700.SZ",
+          "name": "万憬能源",
+          "industry": "供气供热",
+          "score": 0.6614
+        }
+      ],
+      "industry_distribution": {
+        "IT设备": 1,
+        "其他建材": 1,
+        "专用机械": 3,
+        "元器件": 1,
+        "钢加工": 1,
+        "汽车配件": 2,
+        "小金属": 1,
+        "中成药": 1,
+        "化工原料": 2,
+        "机械基件": 1,
+        "化学制药": 1,
+        "电器仪表": 1,
+        "纺织": 1,
+        "公共交通": 1,
+        "多元金融": 1,
+        "供气供热": 1
+      },
+      "stock_returns": [
+        {
+          "ts_code": "300715.SZ",
+          "name": "凯伦股份",
+          "industry": "其他建材",
+          "buy_price": 11.92,
+          "sell_price": 14.72,
+          "return_pct": 23.49
+        },
+        {
+          "ts_code": "002700.SZ",
+          "name": "万憬能源",
+          "industry": "供气供热",
+          "buy_price": 7.16,
+          "sell_price": 8.18,
+          "return_pct": 14.25
+        },
+        {
+          "ts_code": "300535.SZ",
+          "name": "达威股份",
+          "industry": "化工原料",
+          "buy_price": 20.53,
+          "sell_price": 21.12,
+          "return_pct": 2.87
+        },
+        {
+          "ts_code": "301151.SZ",
+          "name": "冠龙节能",
+          "industry": "机械基件",
+          "buy_price": 19.29,
+          "sell_price": 19.7,
+          "return_pct": 2.15
+        },
+        {
+          "ts_code": "600711.SH",
+          "name": "盛屯矿业",
+          "industry": "小金属",
+          "buy_price": 15.14,
+          "sell_price": 15.28,
+          "return_pct": 0.92
+        },
+        {
+          "ts_code": "600202.SH",
+          "name": "哈空调",
+          "industry": "专用机械",
+          "buy_price": 6.13,
+          "sell_price": 6.16,
+          "return_pct": 0.49
+        },
+        {
+          "ts_code": "603041.SH",
+          "name": "美思德",
+          "industry": "化工原料",
+          "buy_price": 12.88,
+          "sell_price": 12.94,
+          "return_pct": 0.47
+        },
+        {
+          "ts_code": "603800.SH",
+          "name": "洪田股份",
+          "industry": "专用机械",
+          "buy_price": 39.9,
+          "sell_price": 39.97,
+          "return_pct": 0.18
+        },
+        {
+          "ts_code": "600561.SH",
+          "name": "江西长运",
+          "industry": "公共交通",
+          "buy_price": 6.92,
+          "sell_price": 6.92,
+          "return_pct": 0.0
+        },
+        {
+          "ts_code": "002566.SZ",
+          "name": "益盛药业",
+          "industry": "中成药",
+          "buy_price": 8.05,
+          "sell_price": 8.04,
+          "return_pct": -0.12
+        },
+        {
+          "ts_code": "603073.SH",
+          "name": "彩蝶实业",
+          "industry": "纺织",
+          "buy_price": 20.57,
+          "sell_price": 20.5,
+          "return_pct": -0.34
+        },
+        {
+          "ts_code": "600992.SH",
+          "name": "贵绳股份",
+          "industry": "钢加工",
+          "buy_price": 13.77,
+          "sell_price": 13.71,
+          "return_pct": -0.44
+        },
+        {
+          "ts_code": "301006.SZ",
+          "name": "迈拓股份",
+          "industry": "电器仪表",
+          "buy_price": 18.26,
+          "sell_price": 17.75,
+          "return_pct": -2.79
+        },
+        {
+          "ts_code": "301298.SZ",
+          "name": "东利机械",
+          "industry": "汽车配件",
+          "buy_price": 16.54,
+          "sell_price": 16.06,
+          "return_pct": -2.91
+        },
+        {
+          "ts_code": "600830.SH",
+          "name": "香溢融通",
+          "industry": "多元金融",
+          "buy_price": 9.74,
+          "sell_price": 9.38,
+          "return_pct": -3.69
+        },
+        {
+          "ts_code": "603516.SH",
+          "name": "淳中科技",
+          "industry": "IT设备",
+          "buy_price": 164.0,
+          "sell_price": 155.55,
+          "return_pct": -5.15
+        },
+        {
+          "ts_code": "605218.SH",
+          "name": "伟时电子",
+          "industry": "元器件",
+          "buy_price": 19.16,
+          "sell_price": 18.15,
+          "return_pct": -5.27
+        },
+        {
+          "ts_code": "688073.SH",
+          "name": "毕得医药",
+          "industry": "化学制药",
+          "buy_price": 57.58,
+          "sell_price": 51.08,
+          "return_pct": -11.3
+        },
+        {
+          "ts_code": "605255.SH",
+          "name": "天普股份",
+          "industry": "汽车配件",
+          "buy_price": 133.88,
+          "sell_price": 116.42,
+          "return_pct": -13.05
+        },
+        {
+          "ts_code": "301392.SZ",
+          "name": "汇成真空",
+          "industry": "专用机械",
+          "buy_price": 121.94,
+          "sell_price": 103.91,
+          "return_pct": -14.79
+        }
+      ],
+      "gross_return_pct": -0.75,
+      "cost_pct": 0.1,
+      "net_return_pct": -0.85,
+      "win_count": 8,
+      "total_count": 20
+    },
+    {
+      "rebalance_date": "20260302",
+      "buy_date": "20260303",
+      "sell_date": "20260402",
+      "period_label": "202603→202604",
+      "top20_holdings": [
+        {
+          "ts_code": "600977.SH",
+          "name": "中国电影",
+          "industry": "影视音像",
+          "score": 0.7951
+        },
+        {
+          "ts_code": "603817.SH",
+          "name": "海峡环保",
+          "industry": "环境保护",
+          "score": 0.6786
+        },
+        {
+          "ts_code": "603176.SH",
+          "name": "汇通集团",
+          "industry": "建筑工程",
+          "score": 0.6753
+        },
+        {
+          "ts_code": "600846.SH",
+          "name": "同济科技",
+          "industry": "建筑工程",
+          "score": 0.6717
+        },
+        {
+          "ts_code": "603039.SH",
+          "name": "泛微网络",
+          "industry": "软件服务",
+          "score": 0.6672
+        },
+        {
+          "ts_code": "000567.SZ",
+          "name": "海德股份",
+          "industry": "多元金融",
+          "score": 0.6663
+        },
+        {
+          "ts_code": "000735.SZ",
+          "name": "罗 牛 山",
+          "industry": "农业综合",
+          "score": 0.6609
+        },
+        {
+          "ts_code": "601566.SH",
+          "name": "九牧王",
+          "industry": "服饰",
+          "score": 0.6596
+        },
+        {
+          "ts_code": "301155.SZ",
+          "name": "海力风电",
+          "industry": "电气设备",
+          "score": 0.6591
+        },
+        {
+          "ts_code": "300388.SZ",
+          "name": "节能国祯",
+          "industry": "环境保护",
+          "score": 0.6589
+        },
+        {
+          "ts_code": "601288.SH",
+          "name": "农业银行",
+          "industry": "银行",
+          "score": 0.6548
+        },
+        {
+          "ts_code": "002943.SZ",
+          "name": "宇晶股份",
+          "industry": "机床制造",
+          "score": 0.653
+        },
+        {
+          "ts_code": "603100.SH",
+          "name": "川仪股份",
+          "industry": "电器仪表",
+          "score": 0.6497
+        },
+        {
+          "ts_code": "600015.SH",
+          "name": "华夏银行",
+          "industry": "银行",
+          "score": 0.6495
+        },
+        {
+          "ts_code": "688095.SH",
+          "name": "福昕软件",
+          "industry": "软件服务",
+          "score": 0.6485
+        },
+        {
+          "ts_code": "603759.SH",
+          "name": "海天股份",
+          "industry": "水务",
+          "score": 0.6465
+        },
+        {
+          "ts_code": "688656.SH",
+          "name": "浩欧博",
+          "industry": "医疗保健",
+          "score": 0.6454
+        },
+        {
+          "ts_code": "002320.SZ",
+          "name": "海峡股份",
+          "industry": "水运",
+          "score": 0.6432
+        },
+        {
+          "ts_code": "002390.SZ",
+          "name": "信邦制药",
+          "industry": "医药商业",
+          "score": 0.6424
+        },
+        {
+          "ts_code": "301006.SZ",
+          "name": "迈拓股份",
+          "industry": "电器仪表",
+          "score": 0.6403
+        }
+      ],
+      "industry_distribution": {
+        "影视音像": 1,
+        "环境保护": 2,
+        "建筑工程": 2,
+        "软件服务": 2,
+        "多元金融": 1,
+        "农业综合": 1,
+        "服饰": 1,
+        "电气设备": 1,
+        "银行": 2,
+        "机床制造": 1,
+        "电器仪表": 2,
+        "水务": 1,
+        "医疗保健": 1,
+        "水运": 1,
+        "医药商业": 1
+      },
+      "stock_returns": [
+        {
+          "ts_code": "600015.SH",
+          "name": "华夏银行",
+          "industry": "银行",
+          "buy_price": 6.77,
+          "sell_price": 7.49,
+          "return_pct": 10.64
+        },
+        {
+          "ts_code": "601288.SH",
+          "name": "农业银行",
+          "industry": "银行",
+          "buy_price": 6.34,
+          "sell_price": 6.79,
+          "return_pct": 7.12
+        },
+        {
+          "ts_code": "002390.SZ",
+          "name": "信邦制药",
+          "industry": "医药商业",
+          "buy_price": 3.27,
+          "sell_price": 3.33,
+          "return_pct": 1.8
+        },
+        {
+          "ts_code": "603817.SH",
+          "name": "海峡环保",
+          "industry": "环境保护",
+          "buy_price": 7.06,
+          "sell_price": 7.11,
+          "return_pct": 0.71
+        },
+        {
+          "ts_code": "603039.SH",
+          "name": "泛微网络",
+          "industry": "软件服务",
+          "buy_price": 37.87,
+          "sell_price": 36.81,
+          "return_pct": -2.81
+        },
+        {
+          "ts_code": "603176.SH",
+          "name": "汇通集团",
+          "industry": "建筑工程",
+          "buy_price": 5.63,
+          "sell_price": 5.41,
+          "return_pct": -3.9
+        },
+        {
+          "ts_code": "601566.SH",
+          "name": "九牧王",
+          "industry": "服饰",
+          "buy_price": 10.8,
+          "sell_price": 10.25,
+          "return_pct": -5.06
+        },
+        {
+          "ts_code": "600977.SH",
+          "name": "中国电影",
+          "industry": "影视音像",
+          "buy_price": 14.28,
+          "sell_price": 13.5,
+          "return_pct": -5.46
+        },
+        {
+          "ts_code": "600846.SH",
+          "name": "同济科技",
+          "industry": "建筑工程",
+          "buy_price": 12.95,
+          "sell_price": 12.11,
+          "return_pct": -6.49
+        },
+        {
+          "ts_code": "301006.SZ",
+          "name": "迈拓股份",
+          "industry": "电器仪表",
+          "buy_price": 18.41,
+          "sell_price": 16.89,
+          "return_pct": -8.26
+        },
+        {
+          "ts_code": "300388.SZ",
+          "name": "节能国祯",
+          "industry": "环境保护",
+          "buy_price": 8.66,
+          "sell_price": 7.92,
+          "return_pct": -8.62
+        },
+        {
+          "ts_code": "000567.SZ",
+          "name": "海德股份",
+          "industry": "多元金融",
+          "buy_price": 5.65,
+          "sell_price": 5.16,
+          "return_pct": -8.67
+        },
+        {
+          "ts_code": "688656.SH",
+          "name": "浩欧博",
+          "industry": "医疗保健",
+          "buy_price": 142.68,
+          "sell_price": 128.88,
+          "return_pct": -9.68
+        },
+        {
+          "ts_code": "603759.SH",
+          "name": "海天股份",
+          "industry": "水务",
+          "buy_price": 10.52,
+          "sell_price": 9.43,
+          "return_pct": -10.36
+        },
+        {
+          "ts_code": "000735.SZ",
+          "name": "罗 牛 山",
+          "industry": "农业综合",
+          "buy_price": 7.61,
+          "sell_price": 6.71,
+          "return_pct": -11.9
+        },
+        {
+          "ts_code": "301155.SZ",
+          "name": "海力风电",
+          "industry": "电气设备",
+          "buy_price": 74.91,
+          "sell_price": 65.07,
+          "return_pct": -13.13
+        },
+        {
+          "ts_code": "688095.SH",
+          "name": "福昕软件",
+          "industry": "软件服务",
+          "buy_price": 82.69,
+          "sell_price": 69.99,
+          "return_pct": -15.35
+        },
+        {
+          "ts_code": "002320.SZ",
+          "name": "海峡股份",
+          "industry": "水运",
+          "buy_price": 10.13,
+          "sell_price": 8.54,
+          "return_pct": -15.72
+        },
+        {
+          "ts_code": "603100.SH",
+          "name": "川仪股份",
+          "industry": "电器仪表",
+          "buy_price": 24.2,
+          "sell_price": 19.01,
+          "return_pct": -21.43
+        },
+        {
+          "ts_code": "002943.SZ",
+          "name": "宇晶股份",
+          "industry": "机床制造",
+          "buy_price": 49.84,
+          "sell_price": 34.66,
+          "return_pct": -30.45
+        }
+      ],
+      "gross_return_pct": -7.85,
+      "cost_pct": 0.095,
+      "net_return_pct": -7.95,
+      "win_count": 4,
+      "total_count": 20
+    },
+    {
+      "rebalance_date": "20260401",
+      "buy_date": "20260402",
+      "sell_date": "20260507",
+      "period_label": "202604→202605",
+      "top20_holdings": [
+        {
+          "ts_code": "603681.SH",
+          "name": "永冠新材",
+          "industry": "化工原料",
+          "score": 0.8119
+        },
+        {
+          "ts_code": "300945.SZ",
+          "name": "曼卡龙",
+          "industry": "服饰",
+          "score": 0.7985
+        },
+        {
+          "ts_code": "300877.SZ",
+          "name": "金春股份",
+          "industry": "纺织",
+          "score": 0.7955
+        },
+        {
+          "ts_code": "600391.SH",
+          "name": "航发科技",
+          "industry": "航空",
+          "score": 0.7654
+        },
+        {
+          "ts_code": "603979.SH",
+          "name": "金诚信",
+          "industry": "铜",
+          "score": 0.7633
+        },
+        {
+          "ts_code": "000426.SZ",
+          "name": "兴业银锡",
+          "industry": "铅锌",
+          "score": 0.7613
+        },
+        {
+          "ts_code": "600141.SH",
+          "name": "兴发集团",
+          "industry": "农药化肥",
+          "score": 0.7573
+        },
+        {
+          "ts_code": "603155.SH",
+          "name": "新亚强",
+          "industry": "化工原料",
+          "score": 0.7519
+        },
+        {
+          "ts_code": "600595.SH",
+          "name": "中孚实业",
+          "industry": "铝",
+          "score": 0.749
+        },
+        {
+          "ts_code": "600531.SH",
+          "name": "豫光金铅",
+          "industry": "铅锌",
+          "score": 0.7479
+        },
+        {
+          "ts_code": "002918.SZ",
+          "name": "蒙娜丽莎",
+          "industry": "陶瓷",
+          "score": 0.7465
+        },
+        {
+          "ts_code": "000060.SZ",
+          "name": "中金岭南",
+          "industry": "铅锌",
+          "score": 0.7381
+        },
+        {
+          "ts_code": "603993.SH",
+          "name": "洛阳钼业",
+          "industry": "小金属",
+          "score": 0.737
+        },
+        {
+          "ts_code": "605288.SH",
+          "name": "凯迪股份",
+          "industry": "电气设备",
+          "score": 0.7346
+        },
+        {
+          "ts_code": "601020.SH",
+          "name": "华钰矿业",
+          "industry": "铅锌",
+          "score": 0.7293
+        },
+        {
+          "ts_code": "000758.SZ",
+          "name": "中色股份",
+          "industry": "铅锌",
+          "score": 0.7287
+        },
+        {
+          "ts_code": "600230.SH",
+          "name": "沧州大化",
+          "industry": "化工原料",
+          "score": 0.7269
+        },
+        {
+          "ts_code": "301286.SZ",
+          "name": "侨源股份",
+          "industry": "化工原料",
+          "score": 0.7264
+        },
+        {
+          "ts_code": "600966.SH",
+          "name": "博汇纸业",
+          "industry": "造纸",
+          "score": 0.7261
+        },
+        {
+          "ts_code": "600961.SH",
+          "name": "株冶集团",
+          "industry": "铅锌",
+          "score": 0.7191
+        }
+      ],
+      "industry_distribution": {
+        "化工原料": 4,
+        "服饰": 1,
+        "纺织": 1,
+        "航空": 1,
+        "铜": 1,
+        "铅锌": 6,
+        "农药化肥": 1,
+        "铝": 1,
+        "陶瓷": 1,
+        "小金属": 1,
+        "电气设备": 1,
+        "造纸": 1
+      },
+      "stock_returns": [
+        {
+          "ts_code": "600961.SH",
+          "name": "株冶集团",
+          "industry": "铅锌",
+          "buy_price": 17.65,
+          "sell_price": 29.46,
+          "return_pct": 66.91
+        },
+        {
+          "ts_code": "000060.SZ",
+          "name": "中金岭南",
+          "industry": "铅锌",
+          "buy_price": 6.21,
+          "sell_price": 8.08,
+          "return_pct": 30.11
+        },
+        {
+          "ts_code": "301286.SZ",
+          "name": "侨源股份",
+          "industry": "化工原料",
+          "buy_price": 45.24,
+          "sell_price": 57.4,
+          "return_pct": 26.88
+        },
+        {
+          "ts_code": "603155.SH",
+          "name": "新亚强",
+          "industry": "化工原料",
+          "buy_price": 15.62,
+          "sell_price": 18.82,
+          "return_pct": 20.49
+        },
+        {
+          "ts_code": "600531.SH",
+          "name": "豫光金铅",
+          "industry": "铅锌",
+          "buy_price": 13.29,
+          "sell_price": 15.71,
+          "return_pct": 18.21
+        },
+        {
+          "ts_code": "000426.SZ",
+          "name": "兴业银锡",
+          "industry": "铅锌",
+          "buy_price": 40.81,
+          "sell_price": 48.14,
+          "return_pct": 17.96
+        },
+        {
+          "ts_code": "300877.SZ",
+          "name": "金春股份",
+          "industry": "纺织",
+          "buy_price": 26.09,
+          "sell_price": 30.13,
+          "return_pct": 15.48
+        },
+        {
+          "ts_code": "000758.SZ",
+          "name": "中色股份",
+          "industry": "铅锌",
+          "buy_price": 6.63,
+          "sell_price": 7.49,
+          "return_pct": 12.97
+        },
+        {
+          "ts_code": "603979.SH",
+          "name": "金诚信",
+          "industry": "铜",
+          "buy_price": 60.0,
+          "sell_price": 67.51,
+          "return_pct": 12.52
+        },
+        {
+          "ts_code": "603993.SH",
+          "name": "洛阳钼业",
+          "industry": "小金属",
+          "buy_price": 17.86,
+          "sell_price": 19.58,
+          "return_pct": 9.6
+        },
+        {
+          "ts_code": "603681.SH",
+          "name": "永冠新材",
+          "industry": "化工原料",
+          "buy_price": 17.46,
+          "sell_price": 18.6,
+          "return_pct": 6.53
+        },
+        {
+          "ts_code": "600595.SH",
+          "name": "中孚实业",
+          "industry": "铝",
+          "buy_price": 7.34,
+          "sell_price": 7.79,
+          "return_pct": 6.12
+        },
+        {
+          "ts_code": "601020.SH",
+          "name": "华钰矿业",
+          "industry": "铅锌",
+          "buy_price": 28.38,
+          "sell_price": 29.93,
+          "return_pct": 5.46
+        },
+        {
+          "ts_code": "300945.SZ",
+          "name": "曼卡龙",
+          "industry": "服饰",
+          "buy_price": 15.61,
+          "sell_price": 15.79,
+          "return_pct": 1.14
+        },
+        {
+          "ts_code": "600391.SH",
+          "name": "航发科技",
+          "industry": "航空",
+          "buy_price": 39.4,
+          "sell_price": 38.7,
+          "return_pct": -1.78
+        },
+        {
+          "ts_code": "600966.SH",
+          "name": "博汇纸业",
+          "industry": "造纸",
+          "buy_price": 6.45,
+          "sell_price": 6.32,
+          "return_pct": -2.02
+        },
+        {
+          "ts_code": "600141.SH",
+          "name": "兴发集团",
+          "industry": "农药化肥",
+          "buy_price": 33.64,
+          "sell_price": 32.01,
+          "return_pct": -4.85
+        },
+        {
+          "ts_code": "600230.SH",
+          "name": "沧州大化",
+          "industry": "化工原料",
+          "buy_price": 18.95,
+          "sell_price": 18.03,
+          "return_pct": -4.85
+        },
+        {
+          "ts_code": "605288.SH",
+          "name": "凯迪股份",
+          "industry": "电气设备",
+          "buy_price": 64.5,
+          "sell_price": 60.97,
+          "return_pct": -5.47
+        },
+        {
+          "ts_code": "002918.SZ",
+          "name": "蒙娜丽莎",
+          "industry": "陶瓷",
+          "buy_price": 11.25,
+          "sell_price": 10.52,
+          "return_pct": -6.49
+        }
+      ],
+      "gross_return_pct": 11.25,
+      "cost_pct": 0.1,
+      "net_return_pct": 11.15,
+      "win_count": 14,
+      "total_count": 20
+    },
+    {
+      "rebalance_date": "20260506",
+      "buy_date": "20260507",
+      "sell_date": "20260602",
+      "period_label": "202605→202606",
+      "top20_holdings": [
+        {
+          "ts_code": "001331.SZ",
+          "name": "胜通能源",
+          "industry": "供气供热",
+          "score": 0.7079
+        },
+        {
+          "ts_code": "300749.SZ",
+          "name": "顶固集创",
+          "industry": "家居用品",
+          "score": 0.6998
+        },
+        {
+          "ts_code": "001260.SZ",
+          "name": "坤泰股份",
+          "industry": "汽车配件",
+          "score": 0.6993
+        },
+        {
+          "ts_code": "603096.SH",
+          "name": "新经典",
+          "industry": "出版业",
+          "score": 0.6966
+        },
+        {
+          "ts_code": "603860.SH",
+          "name": "中公高科",
+          "industry": "建筑工程",
+          "score": 0.6929
+        },
+        {
+          "ts_code": "301011.SZ",
+          "name": "华立科技",
+          "industry": "文教休闲",
+          "score": 0.6925
+        },
+        {
+          "ts_code": "600850.SH",
+          "name": "电科数字",
+          "industry": "软件服务",
+          "score": 0.6896
+        },
+        {
+          "ts_code": "300502.SZ",
+          "name": "新易盛",
+          "industry": "通信设备",
+          "score": 0.6876
+        },
+        {
+          "ts_code": "300800.SZ",
+          "name": "力合科技",
+          "industry": "环境保护",
+          "score": 0.687
+        },
+        {
+          "ts_code": "603176.SH",
+          "name": "汇通集团",
+          "industry": "建筑工程",
+          "score": 0.6846
+        },
+        {
+          "ts_code": "300857.SZ",
+          "name": "协创数据",
+          "industry": "IT设备",
+          "score": 0.6799
+        },
+        {
+          "ts_code": "301000.SZ",
+          "name": "肇民科技",
+          "industry": "汽车配件",
+          "score": 0.6767
+        },
+        {
+          "ts_code": "301622.SZ",
+          "name": "英思特",
+          "industry": "矿物制品",
+          "score": 0.6767
+        },
+        {
+          "ts_code": "301308.SZ",
+          "name": "江波龙",
+          "industry": "半导体",
+          "score": 0.6727
+        },
+        {
+          "ts_code": "301413.SZ",
+          "name": "安培龙",
+          "industry": "电器仪表",
+          "score": 0.6689
+        },
+        {
+          "ts_code": "301167.SZ",
+          "name": "建研设计",
+          "industry": "建筑工程",
+          "score": 0.6634
+        },
+        {
+          "ts_code": "603587.SH",
+          "name": "地素时尚",
+          "industry": "服饰",
+          "score": 0.6626
+        },
+        {
+          "ts_code": "688335.SH",
+          "name": "复洁科技",
+          "industry": "环境保护",
+          "score": 0.6602
+        },
+        {
+          "ts_code": "300439.SZ",
+          "name": "美康生物",
+          "industry": "医疗保健",
+          "score": 0.659
+        },
+        {
+          "ts_code": "300604.SZ",
+          "name": "长川科技",
+          "industry": "半导体",
+          "score": 0.6589
+        }
+      ],
+      "industry_distribution": {
+        "供气供热": 1,
+        "家居用品": 1,
+        "汽车配件": 2,
+        "出版业": 1,
+        "建筑工程": 3,
+        "文教休闲": 1,
+        "软件服务": 1,
+        "通信设备": 1,
+        "环境保护": 2,
+        "IT设备": 1,
+        "矿物制品": 1,
+        "半导体": 2,
+        "电器仪表": 1,
+        "服饰": 1,
+        "医疗保健": 1
+      },
+      "stock_returns": [
+        {
+          "ts_code": "300502.SZ",
+          "name": "新易盛",
+          "industry": "通信设备",
+          "buy_price": 373.69,
+          "sell_price": 532.88,
+          "return_pct": 42.6
+        },
+        {
+          "ts_code": "600850.SH",
+          "name": "电科数字",
+          "industry": "软件服务",
+          "buy_price": 19.59,
+          "sell_price": 25.41,
+          "return_pct": 29.71
+        },
+        {
+          "ts_code": "300604.SZ",
+          "name": "长川科技",
+          "industry": "半导体",
+          "buy_price": 177.7,
+          "sell_price": 207.52,
+          "return_pct": 16.78
+        },
+        {
+          "ts_code": "301413.SZ",
+          "name": "安培龙",
+          "industry": "电器仪表",
+          "buy_price": 79.01,
+          "sell_price": 85.85,
+          "return_pct": 8.65
+        },
+        {
+          "ts_code": "301000.SZ",
+          "name": "肇民科技",
+          "industry": "汽车配件",
+          "buy_price": 27.5,
+          "sell_price": 29.8,
+          "return_pct": 8.38
+        },
+        {
+          "ts_code": "301308.SZ",
+          "name": "江波龙",
+          "industry": "半导体",
+          "buy_price": 489.03,
+          "sell_price": 519.5,
+          "return_pct": 6.23
+        },
+        {
+          "ts_code": "301622.SZ",
+          "name": "英思特",
+          "industry": "矿物制品",
+          "buy_price": 54.78,
+          "sell_price": 55.5,
+          "return_pct": 1.31
+        },
+        {
+          "ts_code": "603587.SH",
+          "name": "地素时尚",
+          "industry": "服饰",
+          "buy_price": 13.19,
+          "sell_price": 12.55,
+          "return_pct": -4.85
+        },
+        {
+          "ts_code": "300749.SZ",
+          "name": "顶固集创",
+          "industry": "家居用品",
+          "buy_price": 24.18,
+          "sell_price": 21.92,
+          "return_pct": -9.35
+        },
+        {
+          "ts_code": "603176.SH",
+          "name": "汇通集团",
+          "industry": "建筑工程",
+          "buy_price": 5.68,
+          "sell_price": 5.13,
+          "return_pct": -9.67
+        },
+        {
+          "ts_code": "688335.SH",
+          "name": "复洁科技",
+          "industry": "环境保护",
+          "buy_price": 30.94,
+          "sell_price": 27.85,
+          "return_pct": -9.98
+        },
+        {
+          "ts_code": "300439.SZ",
+          "name": "美康生物",
+          "industry": "医疗保健",
+          "buy_price": 10.15,
+          "sell_price": 9.12,
+          "return_pct": -10.21
+        },
+        {
+          "ts_code": "603096.SH",
+          "name": "新经典",
+          "industry": "出版业",
+          "buy_price": 17.67,
+          "sell_price": 15.81,
+          "return_pct": -10.51
+        },
+        {
+          "ts_code": "001260.SZ",
+          "name": "坤泰股份",
+          "industry": "汽车配件",
+          "buy_price": 21.78,
+          "sell_price": 19.04,
+          "return_pct": -12.59
+        },
+        {
+          "ts_code": "603860.SH",
+          "name": "中公高科",
+          "industry": "建筑工程",
+          "buy_price": 32.62,
+          "sell_price": 28.41,
+          "return_pct": -12.91
+        },
+        {
+          "ts_code": "301011.SZ",
+          "name": "华立科技",
+          "industry": "文教休闲",
+          "buy_price": 19.59,
+          "sell_price": 16.71,
+          "return_pct": -14.71
+        },
+        {
+          "ts_code": "301167.SZ",
+          "name": "建研设计",
+          "industry": "建筑工程",
+          "buy_price": 17.83,
+          "sell_price": 14.96,
+          "return_pct": -16.12
+        },
+        {
+          "ts_code": "300800.SZ",
+          "name": "力合科技",
+          "industry": "环境保护",
+          "buy_price": 12.75,
+          "sell_price": 10.67,
+          "return_pct": -16.33
+        },
+        {
+          "ts_code": "300857.SZ",
+          "name": "协创数据",
+          "industry": "IT设备",
+          "buy_price": 284.65,
+          "sell_price": 235.53,
+          "return_pct": -17.26
+        }
+      ],
+      "gross_return_pct": -1.62,
+      "cost_pct": 0.1,
+      "net_return_pct": -1.72,
+      "win_count": 7,
+      "total_count": 19
+    }
+  ],
+  "crash_day_analysis": null
+}

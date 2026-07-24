@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>策略实验室 - 仪表板</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --text: #2c3e50;
+  --text-secondary: #6c757d;
+  --border: #e9ecef;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --up: #dc2626;
+  --down: #16a34a;
+  --up-bg: #fef2f2;
+  --down-bg: #f0fdf4;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --radius: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.header {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #fff;
+  padding: 20px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 { font-size: 22px; font-weight: 600; }
+.header .subtitle { font-size: 13px; color: #94a3b8; }
+.header .last-update { font-size: 12px; color: #64748b; }
+
+/* Stats Bar */
+.stats-bar {
+  display: flex;
+  gap: 12px;
+  padding: 12px 32px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.stat-card {
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  cursor: default;
+}
+.stat-card .value { font-size: 22px; font-weight: 700; }
+.stat-card .label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.stat-card.clickable { cursor: pointer; transition: all 0.2s; }
+.stat-card.clickable:hover { background: #eff6ff; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 32px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.tab {
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+/* Content */
+.content { padding: 20px 32px; max-width: 1400px; margin: 0 auto; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* Table */
+.table-container {
+  overflow-x: auto;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+th {
+  background: #f8fafc;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+th:hover { color: var(--text); }
+th.sorted::after {
+  content: '';
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 4px solid transparent;
+}
+th.sorted.asc::after { border-bottom-color: var(--accent); top: 40%; }
+th.sorted.desc::after { border-top-color: var(--accent); top: 60%; }
+
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f8fafc; }
+
+/* Badges */
+.metric-up { color: var(--up); font-weight: 600; }
+.metric-down { color: var(--down); font-weight: 600; }
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-trend { background: #dbeafe; color: #1e40af; }
+.badge-mean { background: #fce7f3; color: #9d174d; }
+.badge-momentum { background: #d1fae5; color: #065f46; }
+.badge-factor { background: #fef3c7; color: #92400e; }
+.badge-event { background: #ede9fe; color: #5b21b6; }
+.badge-other { background: #e5e7eb; color: #374151; }
+
+/* Status badges */
+.badge-tested { background: #d1fae5; color: #065f46; }
+.badge-testing { background: #fef3c7; color: #92400e; }
+.badge-draft { background: #e5e7eb; color: #374151; }
+.badge-idea { background: #ede9fe; color: #5b21b6; }
+.badge-abandoned { background: #fee2e2; color: #991b1b; }
+
+/* Overview cards */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.overview-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+.overview-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+.overview-card.tested { border-left-color: #16a34a; }
+.overview-card.testing { border-left-color: #ca8a04; }
+.overview-card.draft { border-left-color: #6b7280; }
+.overview-card.idea { border-left-color: #7c3aed; }
+
+.overview-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.overview-card .card-name { font-size: 15px; font-weight: 600; }
+.overview-card .card-date { font-size: 11px; color: var(--text-secondary); }
+.overview-card .card-summary { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+.overview-card .card-meta { display: flex; gap: 12px; font-size: 12px; }
+.overview-card .card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.tag {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+/* Empty */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+.empty-icon { font-size: 48px; margin-bottom: 12px; }
+.empty h3 { font-size: 16px; margin-bottom: 6px; color: var(--text); }
+.empty p { font-size: 13px; max-width: 400px; margin: 0 auto; }
+
+/* Section title */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 16px 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Radar controls */
+.radar-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.radar-check {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+  background: var(--card-bg);
+}
+.radar-check:hover { border-color: var(--accent); }
+.radar-check.selected { background: #eff6ff; border-color: var(--accent); color: var(--accent); }
+.radar-check input { display: none; }
+.radar-chart-container { max-width: 500px; margin: 0 auto; }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.timeline-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--card-bg);
+}
+.timeline-item.idea::before { background: #7c3aed; }
+.timeline-date { font-size: 11px; color: var(--text-secondary); }
+.timeline-name { font-size: 14px; font-weight: 600; margin: 2px 0; }
+.timeline-meta { font-size: 11px; color: var(--text-secondary); }
+
+/* Ideas */
+.idea-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-left: 3px solid #7c3aed;
+}
+.idea-card .idea-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.idea-card .idea-title { font-size: 14px; font-weight: 600; }
+.idea-card .idea-date { font-size: 11px; color: var(--text-secondary); }
+.idea-card .idea-desc { font-size: 12px; color: var(--text-secondary); }
+.idea-card .idea-footer { display: flex; gap: 8px; margin-top: 8px; font-size: 11px; }
+
+/* Heat map for stock intersection */
+.heat-1 { background: #fef2f2; }
+.heat-2 { background: #fee2e2; }
+.heat-3 { background: #fecaca; }
+.heat-4 { background: #fca5a5; }
+.heat-5 { background: #f87171; color: #fff; }
+
+/* Clickable */
+.clickable { cursor: pointer; }
+.clickable:hover { text-decoration: underline; }
+
+/* Error banner */
+.error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #991b1b;
+}
+.error-banner code {
+  background: #fee2e2;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+/* Idea input widget */
+.idea-input-bar {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.idea-input-bar input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+}
+.idea-input-bar input:focus { border-color: var(--accent); }
+.idea-input-bar button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.idea-input-bar button:hover { background: var(--accent-hover); }
+
+/* Quick guide */
+.quick-guide {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #0369a1;
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+.quick-guide strong { color: #0c4a6e; }
+
+/* Journal */
+.journal-month {
+  margin-bottom: 24px;
+}
+.journal-month-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.journal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+  max-width: 500px;
+}
+.journal-day-header {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  font-weight: 600;
+}
+.journal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: default;
+  background: var(--bg);
+  color: var(--text-secondary);
+}
+.journal-day.has-entry {
+  background: #dcfce7;
+  color: #166534;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.journal-day.has-entry:hover {
+  background: #bbf7d0;
+  transform: scale(1.05);
+}
+.journal-day.today {
+  border: 2px solid var(--accent);
+  font-weight: 700;
+}
+.journal-day.empty {
+  background: transparent;
+}
+.journal-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.journal-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.journal-stat strong { color: var(--text); }
+.journal-checklist {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px 18px;
+  margin-top: 16px;
+}
+.journal-checklist h4 {
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 12px;
+}
+.check-item.pass { color: #16a34a; }
+.check-item.fail { color: #dc2626; }
+.check-item.unknown { color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🧪 策略实验室</h1>
+    <div class="subtitle">投资策略集中管理 · 自动归档 · 对比决策</div>
+  </div>
+  <div class="last-update" id="lastUpdate">加载中...</div>
+</div>
+
+<div class="stats-bar" id="statsBar">
+  <div class="stat-card clickable" onclick="switchTab('overview')">
+    <div class="value" id="statTotal">0</div>
+    <div class="label">📊 策略总数</div>
+  </div>
+  <div class="stat-card clickable" onclick="switchTab('ideas')">
+    <div class="value" id="statIdeas">0</div>
+    <div class="label">💡 想法</div>
+  </div>
+  <div class="stat-card">
+    <div class="value" id="statBest"><span style="color:var(--up)">--</span></div>
+    <div class="label">🏆 最佳收益</div>
+  </div>
+  <div class="stat-card">
+    <div class="value" id="statSharpe">--</div>
+    <div class="label">📈 最高夏普</div>
+  </div>
+  <div class="stat-card">
+    <div class="value" id="statAvg">--</div>
+    <div class="label">🎯 平均胜率</div>
+  </div>
+  <div class="stat-card clickable" onclick="switchTab('journal')">
+    <div class="value" id="statJournalDays">0</div>
+    <div class="label">📓 日记天数</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('overview')">🏠 总览</button>
+  <button class="tab" onclick="switchTab('comparison')">📋 对比表格</button>
+  <button class="tab" onclick="switchTab('radar')">🎯 雷达图</button>
+  <button class="tab" onclick="switchTab('ideas')">💡 想法收件箱</button>
+  <button class="tab" onclick="switchTab('journal')">📓 操作日记</button>
+  <button class="tab" onclick="switchTab('timeline')">📅 时间线</button>
+  <button class="tab" onclick="switchTab('stocks')">🔗 股票交集</button>
+</div>
+
+<div class="content">
+
+  <div id="loading" style="text-align:center;padding:60px;">
+    <p style="font-size:16px;">⏳ 正在加载策略数据...</p>
+    <p style="font-size:13px;color:var(--text-secondary);">从 sessions/ 和 index.json 读取</p>
+  </div>
+
+  <div id="errorBanner" class="error-banner" style="display:none;">
+    ⚠️ <strong>无法自动加载数据</strong><br>
+    <span id="errorMsg"></span><br><br>
+    <strong>解决方法：</strong>双击运行 <code>view.sh</code> 或终端执行 <code>cd ~/stock-tools/strategy-lab && bash view.sh</code>
+  </div>
+
+  <!-- Overview -->
+  <div id="panel-overview" class="panel">
+    <div id="overviewContainer"></div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div id="panel-comparison" class="panel">
+    <div class="table-container" id="tableContainer"></div>
+  </div>
+
+  <!-- Radar -->
+  <div id="panel-radar" class="panel">
+    <div class="radar-controls" id="radarControls"></div>
+    <div class="radar-chart-container">
+      <canvas id="radarChart" height="400"></canvas>
+    </div>
+  </div>
+
+  <!-- Ideas -->
+  <div id="panel-ideas" class="panel">
+    <div class="quick-guide">
+      💡 <strong>在这里记录零散策略想法。</strong>泓锦（AI助手）会在对话中自动检测策略相关想法并归档到这里。你也可以直接在这里添加。
+    </div>
+    <div class="idea-input-bar">
+      <input type="text" id="ideaInput" placeholder="快速记录一个策略想法...（回车添加）" onkeydown="if(event.key==='Enter')addIdea()">
+      <button onclick="addIdea()">+ 添加</button>
+    </div>
+    <div id="ideasContainer"></div>
+  </div>
+
+  <!-- Journal -->
+  <div id="panel-journal" class="panel">
+    <div class="quick-guide">
+      📓 <strong>操作日记：</strong>每日操盘记录、思路、铁律检查。运行 <code>bash journal.sh</code> 创建当天日记，填完后告诉泓锦"帮我分析今天的日记"。
+    </div>
+    <div class="journal-stats" id="journalStats"></div>
+    <div id="journalContainer"></div>
+  </div>
+
+  <!-- Timeline -->
+  <div id="panel-timeline" class="panel">
+    <div class="timeline" id="timelineContainer"></div>
+  </div>
+
+  <!-- Stock Intersection -->
+  <div id="panel-stocks" class="panel">
+    <div class="table-container" id="stockIntersectionContainer"></div>
+  </div>
+
+</div>
+
+<script>
+// ========================================
+// Data
+// ========================================
+let allStrategies = [];
+let allIdeas = [];
+let journalEntries = []; // { date, month, day, hasEntry }
+let indexData = null;
+let currentSort = { field: null, asc: true };
+const sessionsDir = 'sessions/';
+const journalDir = 'journal/';
+
+// ========================================
+// Load
+// ========================================
+async function loadAllData() {
+  try {
+    // 并行加载 index.json 和 sessions
+    const [indexResp, sessionsHtml] = await Promise.all([
+      fetch('index.json').catch(() => null),
+      fetch(sessionsDir).catch(() => null)
+    ]);
+
+    // 并行加载 journal 目录
+    loadJournalData();
+
+    if (indexResp && indexResp.ok) {
+      indexData = await indexResp.json();
+      allIdeas = indexData.ideas || [];
+      document.getElementById('lastUpdate').textContent = 
+        '更新: ' + (indexData.last_updated || '--');
+    }
+
+    if (sessionsHtml && sessionsHtml.ok) {
+      const html = await sessionsHtml.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const links = doc.querySelectorAll('a');
+      const dirNames = [];
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.endsWith('/') && href !== '../') {
+          dirNames.push(href.replace(/\/$/, ''));
+        }
+      });
+
+      const promises = dirNames.map(async (dirName) => {
+        try {
+          const resp = await fetch(`${sessionsDir}${dirName}/results.json`);
+          if (resp.ok) {
+            const data = await resp.json();
+            data._dirname = dirName;
+            // 从 index 补充 status 信息
+            if (indexData) {
+              const idx = indexData.strategies.find(s => s.id === dirName);
+              if (idx) data._status = idx.status;
+            }
+            return data;
+          }
+        } catch (e) {}
+        return null;
+      });
+
+      const results = await Promise.all(promises);
+      allStrategies = results.filter(r => r !== null);
+      allStrategies.sort((a, b) =>
+        (b.created_date || '').localeCompare(a.created_date || '')
+      );
+    }
+
+    document.getElementById('loading').style.display = 'none';
+
+    if (allStrategies.length === 0 && allIdeas.length === 0 && journalEntries.length === 0) {
+      document.getElementById('errorBanner').style.display = 'none';
+      showEmptyOverview();
+      return;
+    }
+
+    updateStats();
+    renderOverview();
+    renderTable();
+    renderRadarControls();
+    renderIdeas();
+    renderJournal();
+    renderTimeline();
+    renderStockIntersection();
+
+  } catch (e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('errorBanner').style.display = 'block';
+    document.getElementById('errorMsg').textContent = e.message;
+  }
+}
+
+function showEmptyOverview() {
+  document.getElementById('overviewContainer').innerHTML = `
+    <div class="empty">
+      <div class="empty-icon">🧪</div>
+      <h3>策略实验室就绪</h3>
+      <p>还没有策略记录。运行 <code>./new-session.sh "策略名称"</code> 创建第一个策略，或者在想法收件箱里记录灵感。</p>
+      <p style="margin-top:12px;font-size:12px;">提示：在任何 WorkBuddy 对话中讨论策略，泓锦会自动归档到这里。</p>
+    </div>`;
+}
+
+// ========================================
+// Stats
+// ========================================
+function updateStats() {
+  document.getElementById('statTotal').textContent = allStrategies.length;
+  document.getElementById('statIdeas').textContent = allIdeas.length;
+  document.getElementById('statJournalDays').textContent = journalEntries.length;
+
+  let bestReturn = -Infinity;
+  allStrategies.forEach(s => {
+    if (s.metrics?.total_return != null && s.metrics.total_return > bestReturn)
+      bestReturn = s.metrics.total_return;
+  });
+  if (bestReturn > -Infinity) {
+    const sign = bestReturn >= 0 ? '+' : '';
+    document.getElementById('statBest').innerHTML =
+      `<span style="color:var(--up)">${sign}${(bestReturn*100).toFixed(1)}%</span>`;
+  }
+
+  let totalWin = 0, wc = 0;
+  allStrategies.forEach(s => {
+    if (s.metrics?.win_rate != null) { totalWin += s.metrics.win_rate; wc++; }
+  });
+  document.getElementById('statAvg').textContent =
+    wc > 0 ? `${(totalWin/wc*100).toFixed(1)}%` : '--';
+
+  let bestSharpe = -Infinity;
+  allStrategies.forEach(s => {
+    if (s.metrics?.sharpe_ratio != null && s.metrics.sharpe_ratio > bestSharpe)
+      bestSharpe = s.metrics.sharpe_ratio;
+  });
+  document.getElementById('statSharpe').textContent =
+    bestSharpe > -Infinity ? bestSharpe.toFixed(2) : '--';
+}
+
+// ========================================
+// Overview
+// ========================================
+function renderOverview() {
+  const container = document.getElementById('overviewContainer');
+  let html = '';
+
+  // 进行中的策略
+  const inProgress = allStrategies.filter(s =>
+    !s._status || s._status === 'testing' || s._status === 'draft'
+  );
+  if (inProgress.length > 0) {
+    html += '<div class="section-title">🔄 进行中</div>';
+    html += '<div class="overview-grid">';
+    inProgress.forEach(s => {
+      const st = s._status || 'testing';
+      html += overviewCard(s, st);
+    });
+    html += '</div>';
+  }
+
+  // 已完成的策略
+  const tested = allStrategies.filter(s => s._status === 'tested');
+  if (tested.length > 0) {
+    html += '<div class="section-title">✅ 已回测</div>';
+    html += '<div class="overview-grid">';
+    tested.forEach(s => html += overviewCard(s, 'tested'));
+    html += '</div>';
+  }
+
+  // 想法
+  if (allIdeas.length > 0) {
+    html += '<div class="section-title">💡 待探索的想法</div>';
+    html += '<div class="overview-grid">';
+    allIdeas.slice(0, 6).forEach(idea => {
+      html += `
+      <div class="overview-card idea" onclick="switchTab('ideas')">
+        <div class="card-header">
+          <div class="card-name">${esc(idea.title || '未命名想法')}</div>
+          <span class="badge badge-idea">💭想法</span>
+        </div>
+        <div class="card-date">${idea.date || ''}</div>
+        <div class="card-summary">${esc(idea.description || '')}</div>
+      </div>`;
+    });
+    html += '</div>';
+    if (allIdeas.length > 6) {
+      html += `<p style="font-size:12px;color:var(--text-secondary);cursor:pointer" onclick="switchTab('ideas')">查看全部 ${allIdeas.length} 个想法 →</p>`;
+    }
+  }
+
+  if (!html) {
+    html = `<div class="section-title">📊 策略列表</div>
+    <div class="overview-grid">`;
+    allStrategies.forEach(s => html += overviewCard(s, 'tested'));
+    html += '</div>';
+  }
+
+  container.innerHTML = html;
+}
+
+function overviewCard(s, status) {
+  const statusLabel = {
+    'tested': '✅已回测', 'testing': '🔄测试中',
+    'draft': '📝草稿', 'idea': '💭想法', 'abandoned': '❌放弃'
+  };
+  const statusCls = {
+    'tested': 'badge-tested', 'testing': 'badge-testing',
+    'draft': 'badge-draft', 'idea': 'badge-idea', 'abandoned': 'badge-abandoned'
+  };
+
+  return `
+  <div class="overview-card ${status}" onclick="openStrategyDir('${s._dirname}')">
+    <div class="card-header">
+      <div class="card-name">${esc(s.strategy_name || '未命名')}</div>
+      <span class="badge ${statusCls[status] || 'badge-draft'}">${statusLabel[status] || status}</span>
+    </div>
+    <div class="card-date">${s.created_date || '-'} · ${typeBadge(s.strategy_type || '其他')}</div>
+    <div class="card-meta">
+      ${s.metrics?.total_return != null ? 
+        `<span class="${s.metrics.total_return >= 0 ? 'metric-up' : 'metric-down'}">收益 ${(s.metrics.total_return >= 0 ? '+' : '')}${(s.metrics.total_return * 100).toFixed(1)}%</span>` : ''}
+      ${s.metrics?.win_rate != null ? `<span>胜率 ${(s.metrics.win_rate * 100).toFixed(0)}%</span>` : ''}
+      ${s.metrics?.sharpe_ratio != null ? `<span>夏普 ${s.metrics.sharpe_ratio.toFixed(2)}</span>` : ''}
+    </div>
+    ${s.notes ? `<div class="card-summary" style="margin-top:4px;">${esc(s.notes.substring(0, 80))}${s.notes.length > 80 ? '...' : ''}</div>` : ''}
+  </div>`;
+}
+
+// ========================================
+// Comparison Table
+// ========================================
+function renderTable(sortField, sortAsc) {
+  let strategies = [...allStrategies];
+  if (sortField) {
+    strategies.sort((a, b) => {
+      let va = getMetricValue(a, sortField);
+      let vb = getMetricValue(b, sortField);
+      if (va == null) va = sortAsc ? Infinity : -Infinity;
+      if (vb == null) vb = sortAsc ? Infinity : -Infinity;
+      return sortAsc ? va - vb : vb - va;
+    });
+  }
+
+  const headers = [
+    { key: 'strategy_name', label: '策略名称' },
+    { key: 'created_date', label: '日期' },
+    { key: 'strategy_type', label: '类型' },
+    { key: 'total_return', label: '总收益率', fmt: 'pct' },
+    { key: 'annual_return', label: '年化收益', fmt: 'pct' },
+    { key: 'win_rate', label: '胜率', fmt: 'pct' },
+    { key: 'max_drawdown', label: '最大回撤', fmt: 'pct_neg' },
+    { key: 'sharpe_ratio', label: '夏普比率', fmt: 'num2' },
+    { key: 'total_trades', label: '交易次数', fmt: 'int' },
+  ];
+
+  let html = '<table><thead><tr>';
+  headers.forEach(h => {
+    let cls = currentSort.field === h.key ?
+      (currentSort.asc ? 'sorted asc' : 'sorted desc') : '';
+    html += `<th class="${cls}" onclick="sortBy('${h.key}')">${h.label}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  // Find best values
+  const bestVals = {};
+  ['total_return','annual_return','win_rate','sharpe_ratio'].forEach(f => {
+    let b = null;
+    strategies.forEach(s => { const v = getMetricValue(s,f); if (v!=null && (b==null||v>b)) b=v; });
+    bestVals[f] = b;
+  });
+  {
+    let b = null;
+    strategies.forEach(s => { const v = getMetricValue(s,'max_drawdown'); if (v!=null && (b==null||v>b)) b=v; });
+    bestVals['max_drawdown'] = b;
+  }
+
+  strategies.forEach(s => {
+    html += '<tr>';
+    headers.forEach(h => {
+      let val = '', cls = '';
+      if (h.key === 'strategy_name') {
+        val = `<span class="clickable" onclick="openStrategyDir('${s._dirname}')">${esc(s.strategy_name || '未命名')}</span>`;
+      } else if (h.key === 'created_date') {
+        val = s.created_date || '-';
+      } else if (h.key === 'strategy_type') {
+        val = typeBadge(s.strategy_type || '其他');
+      } else {
+        const v = getMetricValue(s, h.key);
+        if (v == null) { val = '-'; }
+        else if (h.fmt === 'pct') {
+          val = `${v>=0?'+':''}${(v*100).toFixed(1)}%`;
+          cls = v>=0 ? 'metric-up' : 'metric-down';
+        } else if (h.fmt === 'pct_neg') {
+          val = `${(v*100).toFixed(1)}%`;
+          cls = 'metric-down';
+        } else if (h.fmt === 'num2') {
+          val = v.toFixed(2);
+        } else if (h.fmt === 'int') {
+          val = v.toString();
+        }
+        if (bestVals[h.key] != null && v === bestVals[h.key]) cls += ' best-value';
+      }
+      html += `<td class="${cls}">${val}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('tableContainer').innerHTML = html;
+}
+
+function getMetricValue(s, key) {
+  const map = { total_return: 'total_return', annual_return: 'annual_return',
+    win_rate: 'win_rate', max_drawdown: 'max_drawdown',
+    sharpe_ratio: 'sharpe_ratio', total_trades: 'total_trades' };
+  return s.metrics?.[map[key]];
+}
+
+function sortBy(field) {
+  if (currentSort.field === field) currentSort.asc = !currentSort.asc;
+  else { currentSort.field = field; currentSort.asc = true; }
+  renderTable(currentSort.field, currentSort.asc);
+}
+
+function typeBadge(type) {
+  const map = { '趋势跟踪': 'badge-trend', '均值回归': 'badge-mean',
+    '动量策略': 'badge-momentum', '多因子': 'badge-factor', '事件驱动': 'badge-event' };
+  return `<span class="badge ${map[type]||'badge-other'}">${esc(type)}</span>`;
+}
+
+function openStrategyDir(dirname) {
+  window.open(`${sessionsDir}${dirname}/report.html`, '_blank');
+}
+
+// ========================================
+// Radar
+// ========================================
+let radarChartInstance = null;
+
+function renderRadarControls() {
+  const container = document.getElementById('radarControls');
+  let html = '';
+  allStrategies.forEach((s, i) => {
+    html += `<label class="radar-check" onclick="toggleRadar(${i}, this)">
+      <input type="checkbox" ${i < Math.min(5, allStrategies.length) ? 'checked' : ''}>
+      ${esc(s.strategy_name || '未命名')}
+    </label>`;
+  });
+  container.innerHTML = html;
+  updateRadarChart();
+}
+
+function toggleRadar(index, el) {
+  el.classList.toggle('selected');
+  updateRadarChart();
+}
+
+function updateRadarChart() {
+  const checks = document.querySelectorAll('.radar-check');
+  const selected = [];
+  checks.forEach((c, i) => { if (c.classList.contains('selected')) selected.push(allStrategies[i]); });
+  if (selected.length === 0) { if (radarChartInstance) radarChartInstance.destroy(); return; }
+
+  const labels = ['总收益率', '胜率', '夏普比率', '回撤控制', '交易频率'];
+  const colors = ['#dc2626','#2563eb','#16a34a','#ca8a04','#9333ea','#0891b2','#db2777','#4f46e5'];
+
+  const datasets = selected.map((s, i) => {
+    const dd = s.metrics?.max_drawdown;
+    const maxT = Math.max(...selected.map(x => x.metrics?.total_trades || 0));
+    return {
+      label: s.strategy_name || '未命名',
+      data: [
+        s.metrics?.total_return != null ? Math.max(0, Math.min(1, (s.metrics.total_return + 0.5) / 1.0)) : 0,
+        s.metrics?.win_rate || 0,
+        s.metrics?.sharpe_ratio != null ? Math.max(0, Math.min(1, s.metrics.sharpe_ratio / 4)) : 0,
+        dd != null ? Math.max(0, 1 + dd) : 0,
+        maxT > 0 && s.metrics?.total_trades ? s.metrics.total_trades / maxT : 0,
+      ],
+      borderColor: colors[i % colors.length],
+      backgroundColor: colors[i % colors.length] + '15',
+      borderWidth: 2,
+      pointBackgroundColor: colors[i % colors.length],
+    };
+  });
+
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  if (radarChartInstance) radarChartInstance.destroy();
+  radarChartInstance = new Chart(ctx, {
+    type: 'radar',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      scales: { r: { beginAtZero: true, max: 1,
+        ticks: { display: false, stepSize: 0.2 },
+        pointLabels: { font: { size: 12 } } } },
+      plugins: { legend: { position: 'bottom', labels: { padding: 14, usePointStyle: true } } }
+    }
+  });
+}
+
+// ========================================
+// Ideas
+// ========================================
+function renderIdeas() {
+  const container = document.getElementById('ideasContainer');
+  if (allIdeas.length === 0) {
+    container.innerHTML = `<div class="empty">
+      <div class="empty-icon">💡</div>
+      <h3>想法收件箱是空的</h3>
+      <p>在这里记录零散策略灵感。或者在任何 WorkBuddy 对话里聊策略，泓锦会自动归档。</p>
+    </div>`;
+    return;
+  }
+  let html = '';
+  allIdeas.forEach((idea, idx) => {
+    html += `
+    <div class="idea-card">
+      <div class="idea-header">
+        <div class="idea-title">💡 ${esc(idea.title || '未命名想法')}</div>
+        <div class="idea-date">${idea.date || ''}</div>
+      </div>
+      <div class="idea-desc">${esc(idea.description || '')}</div>
+      ${idea.status ? `<div class="idea-footer">
+        <span class="badge ${idea.status === 'idea' ? 'badge-idea' : idea.status === '立项' ? 'badge-testing' : 'badge-draft'}">${idea.status}</span>
+      </div>` : ''}
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function addIdea() {
+  const input = document.getElementById('ideaInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  const today = new Date().toISOString().split('T')[0];
+  allIdeas.unshift({ date: today, title: text, description: '', status: '💭想法' });
+  renderIdeas();
+  updateStats();
+  alert('想法已记录（注意：刷新页面后会丢失，泓锦下次对话会帮你归档到 ideas.md）');
+}
+
+// ========================================
+// Journal
+// ========================================
+async function loadJournalData() {
+  journalEntries = [];
+  try {
+    // 获取 journal 目录下的月份子目录
+    const resp = await fetch(journalDir);
+    if (!resp.ok) return;
+    const html = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const links = doc.querySelectorAll('a');
+    const months = [];
+    links.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.endsWith('/') && href !== '../' && href.match(/^\d{4}-\d{2}\/$/)) {
+        months.push(href.replace(/\/$/, ''));
+      }
+    });
+
+    // 对每个月，加载其中的日记文件
+    for (const month of months) {
+      try {
+        const monthResp = await fetch(`${journalDir}${month}/`);
+        if (!monthResp.ok) continue;
+        const monthHtml = await monthResp.text();
+        const monthDoc = parser.parseFromString(monthHtml, 'text/html');
+        const monthLinks = monthDoc.querySelectorAll('a');
+        monthLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && href.endsWith('.md') && href.match(/^\d{2}\.md$/)) {
+            const day = href.replace('.md', '');
+            journalEntries.push({
+              date: `${month}-${day}`,
+              month: month,
+              day: day,
+              hasEntry: true
+            });
+          }
+        });
+      } catch (e) {}
+    }
+
+    journalEntries.sort((a, b) => b.date.localeCompare(a.date));
+  } catch (e) {}
+}
+
+function renderJournal() {
+  const container = document.getElementById('journalContainer');
+  const statsEl = document.getElementById('journalStats');
+
+  // 统计
+  const today = new Date().toISOString().split('T')[0];
+  const todayEntry = journalEntries.find(j => j.date === today);
+  const thisMonth = today.substring(0, 7);
+  const thisMonthEntries = journalEntries.filter(j => j.date.startsWith(thisMonth));
+  const totalDays = journalEntries.length;
+
+  statsEl.innerHTML = `
+    <div class="journal-stat">📅 总记录：<strong>${totalDays}</strong>天</div>
+    <div class="journal-stat">📆 本月：<strong>${thisMonthEntries.length}</strong>天</div>
+    <div class="journal-stat">${todayEntry ? '✅ 今日已写' : '⚠️ 今日未写'}</div>
+  `;
+
+  if (journalEntries.length === 0) {
+    container.innerHTML = `<div class="empty">
+      <div class="empty-icon">📓</div>
+      <h3>还没有操作日记</h3>
+      <p>运行 <code>bash journal.sh</code> 创建今天的日记。泓锦也可以帮你创建和填写。</p>
+    </div>`;
+    return;
+  }
+
+  // 按月份分组显示日历
+  const monthGroups = {};
+  journalEntries.forEach(j => {
+    if (!monthGroups[j.month]) monthGroups[j.month] = {};
+    monthGroups[j.month][j.day] = true;
+  });
+
+  // 最近3个月
+  const sortedMonths = Object.keys(monthGroups).sort().reverse().slice(0, 3);
+
+  let html = '';
+  sortedMonths.forEach(month => {
+    const [y, m] = month.split('-');
+    const daysInMonth = new Date(parseInt(y), parseInt(m), 0).getDate();
+    const firstDayOfWeek = new Date(parseInt(y), parseInt(m) - 1, 1).getDay();
+
+    html += `<div class="journal-month">`;
+    html += `<div class="journal-month-title">📅 ${y}年${parseInt(m)}月</div>`;
+
+    // Day headers
+    const dayNames = ['日','一','二','三','四','五','六'];
+    html += '<div class="journal-grid">';
+    dayNames.forEach(d => {
+      html += `<div class="journal-day-header">${d}</div>`;
+    });
+
+    // Empty cells before 1st
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      html += '<div class="journal-day empty"></div>';
+    }
+
+    // Days
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${month}-${String(d).padStart(2, '0')}`;
+      const hasEntry = monthGroups[month][String(d).padStart(2, '0')];
+      const isToday = dateStr === today;
+
+      let cls = 'journal-day';
+      if (hasEntry) cls += ' has-entry';
+      if (isToday) cls += ' today';
+      if (!hasEntry && dateStr > today) cls += ' empty';
+
+      const onclick = hasEntry ? `onclick="openJournal('${dateStr}')"` : '';
+      html += `<div class="${cls}" ${onclick}>${d}</div>`;
+    }
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function openJournal(dateStr) {
+  const [y, m, d] = dateStr.split('-');
+  window.open(`${journalDir}${y}-${m}/${d}.md`, '_blank');
+}
+
+// ========================================
+// Timeline (strategies + ideas)
+// ========================================
+function renderTimeline() {
+  const container = document.getElementById('timelineContainer');
+  let items = [];
+
+  allStrategies.forEach(s => {
+    items.push({
+      date: s.created_date || '', type: 'strategy', name: s.strategy_name,
+      dirname: s._dirname, meta: s,
+    });
+  });
+
+  allIdeas.forEach(idea => {
+    items.push({
+      date: idea.date || '', type: 'idea', name: idea.title,
+      meta: idea,
+    });
+  });
+
+  journalEntries.forEach(j => {
+    items.push({
+      date: j.date, type: 'journal', name: `操作日记`,
+      meta: j,
+    });
+  });
+
+  items.sort((a, b) => b.date.localeCompare(a.date));
+
+  let html = '';
+  items.forEach(item => {
+    if (item.type === 'idea') {
+      html += `
+      <div class="timeline-item idea" onclick="switchTab('ideas')">
+        <div class="timeline-date">${item.date}</div>
+        <div class="timeline-name">💡 ${esc(item.name || '未命名想法')}</div>
+        <div class="timeline-meta">${esc(item.meta.description || '')}</div>
+      </div>`;
+    } else if (item.type === 'journal') {
+      html += `
+      <div class="timeline-item" onclick="openJournal('${item.date}')">
+        <div class="timeline-date">${item.date}</div>
+        <div class="timeline-name">📓 操作日记</div>
+        <div class="timeline-meta">当日操盘记录与复盘</div>
+      </div>`;
+    } else {
+      html += `
+      <div class="timeline-item" onclick="openStrategyDir('${item.dirname}')">
+        <div class="timeline-date">${item.date}</div>
+        <div class="timeline-name">${esc(item.name || '未命名')} ${typeBadge(item.meta.strategy_type || '其他')}</div>
+        <div class="timeline-meta">
+          ${item.meta.metrics?.total_return != null ? `收益: ${(item.meta.metrics.total_return >= 0 ? '+' : '')}${(item.meta.metrics.total_return * 100).toFixed(1)}%` : ''}
+          ${item.meta.metrics?.win_rate != null ? ` | 胜率: ${(item.meta.metrics.win_rate * 100).toFixed(0)}%` : ''}
+          ${item.meta.metrics?.sharpe_ratio != null ? ` | 夏普: ${item.meta.metrics.sharpe_ratio.toFixed(2)}` : ''}
+        </div>
+      </div>`;
+    }
+  });
+  container.innerHTML = html || '<div class="empty"><p>暂无记录</p></div>';
+}
+
+// ========================================
+// Stock Intersection
+// ========================================
+function renderStockIntersection() {
+  const container = document.getElementById('stockIntersectionContainer');
+  const stockMap = {};
+  allStrategies.forEach(s => {
+    if (!s.stocks || !Array.isArray(s.stocks)) return;
+    s.stocks.forEach(st => {
+      if (!stockMap[st.code]) stockMap[st.code] = { name: st.name, strategies: [], count: 0 };
+      stockMap[st.code].strategies.push(s.strategy_name || '未命名');
+      stockMap[st.code].count++;
+    });
+  });
+  const stocks = Object.entries(stockMap)
+    .map(([code, info]) => ({ code, ...info }))
+    .sort((a, b) => b.count - a.count);
+  const multi = stocks.filter(s => s.count >= 2);
+
+  if (multi.length === 0) {
+    container.innerHTML = '<div class="empty"><p>还没有被多个策略同时选中的股票</p><p style="font-size:12px;color:var(--text-secondary);margin-top:6px;">等积累几个策略后这里会自动显示交集</p></div>';
+    return;
+  }
+  let html = '<table><thead><tr><th>股票代码</th><th>名称</th><th>选中次数</th><th>选中策略</th></tr></thead><tbody>';
+  multi.forEach(s => {
+    const cls = s.count >= 5 ? 'heat-5' : s.count >= 4 ? 'heat-4' : s.count >= 3 ? 'heat-3' : 'heat-2';
+    html += `<tr class="${cls}"><td><strong>${s.code}</strong></td><td>${esc(s.name)}</td><td><strong>${s.count}</strong></td><td style="font-size:11px;">${s.strategies.join(', ')}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ========================================
+// Tabs
+// ========================================
+const tabOrder = ['overview','comparison','radar','ideas','journal','timeline','stocks'];
+function switchTab(tabName) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab')[tabOrder.indexOf(tabName)].classList.add('active');
+  document.getElementById('panel-' + tabName).classList.add('active');
+  if (tabName === 'radar') setTimeout(() => updateRadarChart(), 100);
+}
+
+function esc(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ========================================
+// Init
+// ========================================
+loadAllData();
+</script>
+
+</body>
+</html>

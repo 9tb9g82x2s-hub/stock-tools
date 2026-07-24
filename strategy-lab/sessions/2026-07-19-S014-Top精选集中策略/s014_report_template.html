@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>S014 Top精选集中策略 分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--orange:#e67700;--purple:#7048e8;--gray:#495057;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:#212529;font-size:14px;}
+  .header{background:linear-gradient(135deg,#1c3d6e 0%,#1971c2 100%);color:#fff;padding:28px 40px;}
+  .header h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+  .header p{opacity:.8;font-size:13px;}
+  .container{max-width:1200px;margin:0 auto;padding:24px 20px;}
+  .section-title{font-size:17px;font-weight:700;color:#1c3d6e;margin:28px 0 14px;padding-bottom:6px;border-bottom:2px solid #1971c2;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .kpi-card{text-align:center;border-radius:10px;padding:16px 12px;background:var(--card);border:1px solid var(--border);}
+  .kpi-label{font-size:12px;color:var(--gray);margin-bottom:4px;}
+  .kpi-val{font-size:22px;font-weight:700;}
+  .kpi-sub{font-size:11px;color:var(--gray);margin-top:3px;}
+  .red{color:var(--red);} .green{color:var(--green);} .blue{color:var(--blue);}
+  .orange{color:var(--orange);} .purple{color:var(--purple);}
+  .chart-wrap{position:relative;height:320px;}
+  .chart-wrap-tall{position:relative;height:420px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#e9ecef;color:#495057;padding:9px 10px;text-align:center;font-weight:600;border-bottom:2px solid var(--border);}
+  td{padding:8px 10px;text-align:center;border-bottom:1px solid #f1f3f5;}
+  tr:nth-child(even) td{background:#f8f9fa;}
+  .tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;}
+  .tag-up{background:#fff0f0;color:var(--red);}
+  .tag-dn{background:#f0fff4;color:var(--green);}
+  .tag-blue{background:#e7f5ff;color:var(--blue);}
+  .warn-box{background:#fff9db;border:1px solid #ffd43b;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.7;}
+  .warn-box b{color:#e67700;}
+  .conclusion-box{background:#e7f5ff;border:1px solid #74c0fc;border-radius:8px;padding:16px 18px;margin-top:16px;font-size:13px;line-height:1.8;}
+  .conclusion-box b{color:#1971c2;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:600;}
+  .badge-s9{background:#ffe8cc;color:#e67700;}
+  .badge-s13{background:#d0ebff;color:#1971c2;}
+  @media(max-width:768px){.grid2,.grid4{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📊 S014 — Top精选集中策略 分析报告</h1>
+  <p>基于 S009 / S013b 历史持仓，对比 Top1 / Top2 / Top3 集中持股的收益与风险特征 | 2017–2026</p>
+</div>
+
+<div class="container">
+
+<!-- ═══ SECTION 1: 核心结论 ═══ -->
+<div class="section-title">🔍 核心结论</div>
+<div class="conclusion-box">
+  <b>S009（无止损版）:</b> Top1年化 <b class="red">+68.3%</b>，Top2 <b class="red">+60.0%</b>，Top3 <b class="red">+56.3%</b>，显著强于原策略 Top20（+41%）。代价是最大回撤从 -21% 放大到 -25～-29%。<br>
+  <b>S013b（喜神池+止损）:</b> Top1年化 <b class="red">+52.0%</b>，Top2/Top3约 +37%，与原策略持平。加上止损保护 Top2/Top3 的额外收益有限，但 Top1 仍有 +15pp 超额。<br>
+  <b>建议操作:</b> <b>可以另设一组仓位跟投 S009-Top2（或Top3）</b>——年化 60% / 56%，夏普保持 1.43/1.45，回撤仅放大 4pp。S013b 方向上 <b>Top1 单独跟投</b>有潜力，但回撤 -37% 较高，需配合止损纪律。
+</div>
+
+<!-- ═══ SECTION 2: S009 核心指标 ═══ -->
+<div class="section-title"><span class="badge badge-s9">S009</span> LightGBM多因子 — Top精选指标</div>
+<div class="grid4" id="kpi009"></div>
+<div class="grid2" style="margin-top:16px;">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📈 NAV净值曲线（S009）</div>
+    <div class="chart-wrap-tall"><canvas id="nav009"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📅 逐年收益热力图（S009）</div>
+    <div style="overflow-x:auto;margin-top:6px;"><table id="yr009_table"></table></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3: S013b 核心指标 ═══ -->
+<div class="section-title"><span class="badge badge-s13">S013b</span> 喜神池LightGBM — Top精选指标</div>
+<div class="grid4" id="kpi013"></div>
+<div class="grid2" style="margin-top:16px;">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📈 NAV净值曲线（S013b）</div>
+    <div class="chart-wrap-tall"><canvas id="nav013"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📅 逐年收益热力图（S013b）</div>
+    <div style="overflow-x:auto;margin-top:6px;"><table id="yr013_table"></table></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: 综合对比 ═══ -->
+<div class="section-title">⚖️ 四维综合对比</div>
+<div class="grid2">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">年化收益对比</div>
+    <div class="chart-wrap"><canvas id="bar_annual"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">风险收益散点（每期）</div>
+    <div class="chart-wrap"><canvas id="scatter_rr"></canvas></div>
+  </div>
+</div>
+<div class="grid2" style="margin-top:16px;">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">胜率对比</div>
+    <div class="chart-wrap"><canvas id="bar_wr"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">最大回撤对比</div>
+    <div class="chart-wrap"><canvas id="bar_dd"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5: 风险提示 ═══ -->
+<div class="warn-box">
+  ⚠️ <b>跟投风险提示</b>：(1) Top1/2/3 在历史回测中表现出色，但集中度越高波动越大，单期最大亏损可超 -30%；(2) 本分析未计滑点/冲击成本，实盘换手率高时摩擦成本将侵蚀收益；(3) S013b 止损参数在组合层面有效，但 Top1 单股止损需独立设置；(4) <b>强烈建议另设独立小仓位（如总仓 10-15%）跟投 Top2/3</b>，而非加大主仓。
+</div>
+
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:30px;padding-bottom:20px;">数据区间 2017-2026 | 基于历史回测 不构成投资建议</p>
+</div>
+
+<script>
+const DATA = __PAYLOAD__;
+
+const COLS = ["original_return","top1_return","top2_return","top3_return"];
+const CLABELS = {"original_return":"原策略Top20","top1_return":"Top1","top2_return":"Top2均权","top3_return":"Top3均权"};
+const COLORS = {"original_return":"#868e96","top1_return":"#e03131","top2_return":"#e67700","top3_return":"#1971c2"};
+
+function pct(v,d=1){return (v*100).toFixed(d)+'%';}
+function fmt(v,d=1){return (v>=0?'+':'')+pct(v,d);}
+
+// ─── KPI cards ───
+function buildKPI(divId, stratKey) {
+  const s = DATA.stats[stratKey];
+  const el = document.getElementById(divId);
+  COLS.forEach(col => {
+    const m = s[col];
+    const card = document.createElement('div');
+    card.className = 'kpi-card';
+    const isOrig = col==='original_return';
+    card.innerHTML = `
+      <div class="kpi-label">${CLABELS[col]}</div>
+      <div class="kpi-val ${m.annual_return>0?'red':'green'}">${fmt(m.annual_return)}</div>
+      <div class="kpi-sub">年化收益</div>
+      <hr style="margin:8px 0;border-color:#f1f3f5;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:#495057">
+        <div>胜率 <b>${pct(m.win_rate)}</b></div>
+        <div>夏普 <b>${m.sharpe.toFixed(2)}</b></div>
+        <div>回撤 <b style="color:#e03131">${pct(m.max_drawdown)}</b></div>
+        <div>期均 <b>${fmt(m.avg_return,2)}</b></div>
+      </div>
+    `;
+    el.appendChild(card);
+  });
+}
+buildKPI('kpi009','s009');
+buildKPI('kpi013','s013b');
+
+// ─── NAV 曲线 ───
+function buildNav(canvasId, nav, labels) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: labels,
+      datasets: COLS.map(c=>({
+        label: CLABELS[c],
+        data: nav[c],
+        borderColor: COLORS[c],
+        borderWidth: c==='original_return'?2:1.5,
+        borderDash: c==='original_return'?[4,3]:[],
+        pointRadius:0,
+        tension:0.1,
+        fill:false,
+      }))
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{ticks:{maxTicksLimit:10,maxRotation:0,font:{size:10}},grid:{display:false}},
+        y:{title:{display:true,text:'净值',font:{size:10}},ticks:{font:{size:10}},grid:{color:'#f1f3f5'}}
+      },
+      plugins:{legend:{position:'top',labels:{font:{size:11},boxWidth:20}}}
+    }
+  });
+}
+buildNav('nav009', DATA.nav009, DATA.labels009);
+buildNav('nav013', DATA.nav013, DATA.labels013);
+
+// ─── 逐年热力图表格 ───
+function buildYrTable(tableId, yr) {
+  const years = DATA.years;
+  const t = document.getElementById(tableId);
+  // header
+  let hdr = '<tr><th>类型</th>'+years.map(y=>`<th>${y}</th>`).join('')+'</tr>';
+  let body = '';
+  COLS.forEach(col=>{
+    const ydata = yr[col];
+    body += `<tr><td style="font-weight:600;text-align:left">${CLABELS[col]}</td>`;
+    years.forEach(y=>{
+      const v = ydata[y];
+      if(v===null||v===undefined){body+='<td>—</td>';return;}
+      const bg = v>=0?`rgba(224,49,49,${Math.min(v/0.8,1)*0.55})`:`rgba(47,158,68,${Math.min(-v/0.5,1)*0.55})`;
+      body+=`<td style="background:${bg};color:${v>=0?'#7d1a1a':'#1a4a2a'};font-weight:600">${fmt(v)}</td>`;
+    });
+    body+='</tr>';
+  });
+  t.innerHTML=hdr+body;
+}
+buildYrTable('yr009_table', DATA.yr009);
+buildYrTable('yr013_table', DATA.yr013);
+
+// ─── 年化收益柱状图 ───
+function buildBarAnnual(){
+  const s9 = DATA.stats.s009;
+  const s13 = DATA.stats.s013b;
+  const ctx = document.getElementById('bar_annual').getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['原策略\nTop20','Top1','Top2\n均权','Top3\n均权'],
+      datasets:[
+        {label:'S009',data:COLS.map(c=>(s9[c].annual_return*100).toFixed(1)),backgroundColor:'rgba(230,119,0,0.7)',borderRadius:4},
+        {label:'S013b',data:COLS.map(c=>(s13[c].annual_return*100).toFixed(1)),backgroundColor:'rgba(25,113,194,0.7)',borderRadius:4},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{y:{title:{display:true,text:'年化收益%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},x:{grid:{display:false}}},
+      plugins:{legend:{position:'top',labels:{font:{size:11}}}}
+    }
+  });
+}
+buildBarAnnual();
+
+// ─── 胜率对比 ───
+function buildBarWR(){
+  const s9=DATA.stats.s009; const s13=DATA.stats.s013b;
+  const ctx=document.getElementById('bar_wr').getContext('2d');
+  new Chart(ctx,{type:'bar',
+    data:{labels:['原策略Top20','Top1','Top2均权','Top3均权'],
+      datasets:[
+        {label:'S009',data:COLS.map(c=>(s9[c].win_rate*100).toFixed(1)),backgroundColor:'rgba(230,119,0,0.7)',borderRadius:4},
+        {label:'S013b',data:COLS.map(c=>(s13[c].win_rate*100).toFixed(1)),backgroundColor:'rgba(25,113,194,0.7)',borderRadius:4},
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{y:{title:{display:true,text:'胜率%'},min:40,ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},x:{grid:{display:false}}},
+      plugins:{legend:{position:'top',labels:{font:{size:11}}}}
+    }});
+}
+buildBarWR();
+
+// ─── 回撤对比 ───
+function buildBarDD(){
+  const s9=DATA.stats.s009; const s13=DATA.stats.s013b;
+  const ctx=document.getElementById('bar_dd').getContext('2d');
+  new Chart(ctx,{type:'bar',
+    data:{labels:['原策略Top20','Top1','Top2均权','Top3均权'],
+      datasets:[
+        {label:'S009',data:COLS.map(c=>(s9[c].max_drawdown*100).toFixed(1)),backgroundColor:'rgba(224,49,49,0.65)',borderRadius:4},
+        {label:'S013b',data:COLS.map(c=>(s13[c].max_drawdown*100).toFixed(1)),backgroundColor:'rgba(112,72,232,0.65)',borderRadius:4},
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{y:{title:{display:true,text:'最大回撤%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},x:{grid:{display:false}}},
+      plugins:{legend:{position:'top',labels:{font:{size:11}}}}
+    }});
+}
+buildBarDD();
+
+// ─── 散点图 ───
+function buildScatter(){
+  const ctx=document.getElementById('scatter_rr').getContext('2d');
+  const pts009={top1:[],top2:[],top3:[]};
+  const pts013={top1:[],top2:[],top3:[]};
+  // 这里放top1 per-period收益
+  // 从嵌入数据里造 - 我们用stats近似用 avg vs std
+  // 用4个点来表示4种组合
+  const defs = [
+    {k:'s009',col:'original_return',color:'rgba(134,142,150,0.8)',label:'S009-Top20'},
+    {k:'s009',col:'top1_return',color:'rgba(224,49,49,0.8)',label:'S009-Top1'},
+    {k:'s009',col:'top2_return',color:'rgba(230,119,0,0.8)',label:'S009-Top2'},
+    {k:'s009',col:'top3_return',color:'rgba(25,113,194,0.8)',label:'S009-Top3'},
+    {k:'s013b',col:'original_return',color:'rgba(134,142,150,0.4)',label:'S013b-Top20'},
+    {k:'s013b',col:'top1_return',color:'rgba(112,72,232,0.8)',label:'S013b-Top1'},
+    {k:'s013b',col:'top2_return',color:'rgba(25,113,194,0.4)',label:'S013b-Top2'},
+    {k:'s013b',col:'top3_return',color:'rgba(25,113,194,0.6)',label:'S013b-Top3'},
+  ];
+  new Chart(ctx,{type:'scatter',
+    data:{datasets:defs.map(d=>{
+      const s=DATA.stats[d.k][d.col];
+      return{label:d.label,data:[{x:parseFloat((s.std*100).toFixed(2)),y:parseFloat((s.annual_return*100).toFixed(2))}],
+        backgroundColor:d.color,pointRadius:8,pointHoverRadius:11};
+    })},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{title:{display:true,text:'单期标准差%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},
+        y:{title:{display:true,text:'年化收益%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}}
+      },
+      plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}},
+        tooltip:{callbacks:{label:d=>`${d.dataset.label}: 年化${d.parsed.y}% | 波动${d.parsed.x}%`}}}
+    }});
+}
+buildScatter();
+</script>
+</body>
+</html>

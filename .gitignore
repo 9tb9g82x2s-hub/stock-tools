@@ -1,0 +1,84 @@
+# ========================================
+# 股票量化策略 Git 同步排除规则
+# 只同步代码/配置/文档，排除数据/模型/日志
+# ========================================
+
+# Python 运行时产物
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# 数据文件（可从源重新下载）
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# 回测中间产物（可重新生成）
+*.pkl
+*.pkl.*
+*.h5
+*.hdf5
+*.parquet
+
+# 结果数据（可重新跑出来）
+*.csv
+!**/requirements.csv  # 保留依赖清单
+reports/
+outputs/
+
+# 日志文件
+*.log
+logs/
+*.log.*
+
+# 大模型和 checkpoint
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.model
+*.joblib
+
+# Jupyter Notebook checkpoint
+.ipynb_checkpoints/
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# WorkBuddy 本地配置
+.workbuddy/
+
+# 临时文件
+tmp/
+temp/
+cache/
+*.tmp
+*.bak
+*.backup
+
+# 策略 session 里的大数据面板
+strategy-lab/sessions/*/features_panel.pkl*
+strategy-lab/sessions/*/rebalance_prices.csv
+strategy-lab/sessions/*/*.pkl
+strategy-lab/sessions/*/*.csv
+strategy-lab/sessions/*/checkpoint/
+
+# 但保留小的策略说明和配置
+!strategy-lab/**/*.md
+!strategy-lab/**/*.py
+!strategy-lab/**/*.sh
+!strategy-lab/**/*.json
+!strategy-lab/**/ideas.md
+!strategy-lab/**/README.md

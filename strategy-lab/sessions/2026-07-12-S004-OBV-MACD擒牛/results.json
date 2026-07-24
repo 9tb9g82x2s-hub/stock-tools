@@ -1,0 +1,47 @@
+{
+  "strategy_name": "S004-OBV-MACD擒牛",
+  "created_date": "2026-07-12",
+  "strategy_type": "趋势跟踪",
+  "version": "v12",
+  "metrics": {
+    "total_return": 1.064,
+    "annual_return": 0.174,
+    "win_rate": 0.72,
+    "max_drawdown": -0.143,
+    "sharpe_ratio": null,
+    "total_trades": 47
+  },
+  "aux_metrics": {
+    "avg_hold_days": 65,
+    "median_return": 0.504,
+    "position_size": 0.08,
+    "max_positions": 10,
+    "avg_daily_positions": 5
+  },
+  "entry_conditions": {
+    "obv_trend": "近20天OBV>MAOBV(20)>=80%",
+    "obv_slope": "近5天归一化斜率>0.20",
+    "macd_bull": "近30天DIF>0且DEA>0>=67%",
+    "ma_cross": "MA5上穿MA10",
+    "macd_bar": "MACD柱>0",
+    "market_filter": "沪深300>MA200（仅牛市开仓）"
+  },
+  "exit_rules": {
+    "take_profit": "触及+50%即卖",
+    "max_hold": "160交易日",
+    "trigger_rate": 0.46
+  },
+  "annual_returns": {
+    "2022": 0.0,
+    "2023": 0.061,
+    "2024": 0.266,
+    "2025": 0.477,
+    "2026_to_jul": 0.023
+  },
+  "ai_analysis": {
+    "model": "manual",
+    "summary": "OBV+MACD中长线趋势策略，经12轮调优。4.5年回测年化17.4%、胜率72%、最大回撤14.3%。三层风控（牛熊过滤+仓位分散+止盈），不设固定止损。S005短线版验证：同样逻辑缩短周期后年化仅7.9%。",
+    "confidence": "高"
+  },
+  "notes": "12轮调优，从v1初版中位+0.86%优化到v12止盈版中位+19.7%。固定止损测试全部降低收益，不采用。此策略适合中长线，短线不适配。"
+}

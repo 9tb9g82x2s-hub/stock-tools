@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>S017 — 喜神池20天月度策略</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--orange:#e67700;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:#212529;font-size:14px;}
+  .header{background:linear-gradient(135deg,#7a1f1f 0%,#e03131 100%);color:#fff;padding:28px 40px;}
+  .header h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+  .header .sub{opacity:.9;font-size:13px;}
+  .container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+  .st{font-size:17px;font-weight:700;color:#7a1f1f;margin:28px 0 14px;padding-bottom:6px;border-bottom:2px solid #e03131;}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .kpi .lb{font-size:11px;color:#6c757d;margin-bottom:3px;}
+  .kpi .vl{font-size:22px;font-weight:700;}
+  .kpi .sb{font-size:10px;color:#6c757d;margin-top:3px;}
+  .kpi.hl{border:2px solid #e03131;background:#fff5f5;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .cw{position:relative;height:320px;}
+  .cw-sm{position:relative;height:260px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#e9ecef;padding:8px;text-align:center;font-weight:600;border-bottom:2px solid var(--border);}
+  td{padding:7px;text-align:center;border-bottom:1px solid #f1f3f5;}
+  .insight{background:#fff5f5;border:1px solid #ffc9c9;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.8;}
+  .insight b{color:#e03131;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;}
+  @media(max-width:768px){.g4,.g2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>S017 — 喜神池 20天月度策略</h1>
+  <p class="sub">S013的正确对齐版：标签窗口20天 × 月度调仓 × Top20等权 · 2017–2026回测 · 含手续费+止损</p>
+</div>
+<div class="container">
+
+<div class="st">核心指标（★ S017全面领先）</div>
+<div class="g4">
+  <div class="kpi"><div class="lb">S009原版 全市场10天月度</div><div class="vl" style="color:#868e96;">41.0%</div><div class="sb">年化 · 回撤-20.9% · 夏普1.45</div></div>
+  <div class="kpi"><div class="lb">S013原版 喜神10天月度</div><div class="vl blue">36.6%</div><div class="sb">年化 · 回撤-14.3% · 夏普1.44</div></div>
+  <div class="kpi hl"><div class="lb"><span class="badge" style="background:#ffe3e3;color:#e03131;">★ S017</span> 喜神20天月度</div><div class="vl red">51.6%</div><div class="sb">年化 · 回撤-13.9% · 夏普1.89</div></div>
+  <div class="kpi"><div class="lb">S015 喜神40天双月</div><div class="vl" style="color:#e67700;">41.9%</div><div class="sb">年化 · 回撤-15.0% · 胜率80.7%</div></div>
+</div>
+
+<div class="insight">
+  <b>核心发现：标签窗口应与持仓期对齐。</b> S013原版持仓约一个月（22个交易日），标签却只预测未来10天，存在"学10天、拿22天"的错配——后半程信号已过期。把标签改为<b>20天</b>（对齐月度持仓）后，年化从36.6%飙升到<b>51.6%</b>（+15pp），夏普从1.44升到1.89，回撤反而更小（-13.9%）。总收益9.5年达<b>5084%</b>，是S013原版(1830%)的2.8倍。这不是"拉长持仓"，而是<b>修正了原始设计的窗口错配bug</b>。40天双月(S015)则又走过头，不如20天。
+</div>
+
+<div class="st">净值曲线对比</div>
+<div class="card">
+  <div style="display:flex;gap:16px;margin-bottom:10px;font-size:12px;color:#6c757d;">
+    <span><span style="display:inline-block;width:14px;height:3px;background:var(--red);vertical-align:middle;margin-right:4px;"></span>S017(20天)</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed var(--blue);vertical-align:middle;margin-right:4px;"></span>S013(10天)</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed var(--orange);vertical-align:middle;margin-right:4px;"></span>S015(40天)</span>
+  </div>
+  <div class="cw"><canvas id="navChart" role="img" aria-label="S017 S013 S015净值曲线对比">净值曲线</canvas></div>
+</div>
+
+<div class="st">逐年收益对比</div>
+<div class="card"><div class="cw-sm"><canvas id="yrChart" role="img" aria-label="逐年收益对比">逐年收益</canvas></div>
+  <p style="font-size:11px;color:#6c757d;margin-top:8px;">S017在2020(+90%)/2021(+95%)/2024(+73%)等牛市年碾压；S015(40天)在2019/2023/2025/2026等震荡熊转期更抗跌；S013原版在2018/2022逆势年靠短视野占优。</p>
+</div>
+
+<div class="st">策略规格</div>
+<div class="card"><table>
+  <tr><td style="text-align:left;font-weight:600;width:150px;">策略ID</td><td style="text-align:left;">S017 · 喜神池20天月度策略</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">母策略</td><td style="text-align:left;">S013b · 喜神池LightGBM（金水喜神股3074只）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">核心改动</td><td style="text-align:left;">训练标签「未来10日」→「未来20日」跑赢市场中位数（对齐月度持仓）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">调仓频率</td><td style="text-align:left;">每月（保持不变）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">持仓</td><td style="text-align:left;">Top20等权，单股-12%止损</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">手续费</td><td style="text-align:left;">买0.025% + 卖0.075%(含印花税)</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">回测</td><td style="text-align:left;">2017-01~2026-07（约9.5年 / 114期）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">排除</td><td style="text-align:left;">ST股 / 净亏损股 / 北交所(.BJ)</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">全市场交叉验证</td><td style="text-align:left;">S009同配置(全市场20天月度)年化51.75%/夏普1.84，规律一致成立</td></tr>
+</table></div>
+
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:30px;padding-bottom:20px;">数据区间 2017–2026 | 基于历史回测 不构成投资建议 | 夏普按月度√12年化</p>
+</div>
+
+<script>
+const D=__PAYLOAD__;
+new Chart(document.getElementById('navChart').getContext('2d'),{type:'line',
+  data:{labels:D.nav17.map((_,i)=>i===0?'起':'第'+i+'期'),datasets:[
+    {label:'S017',data:D.nav17,borderColor:'#e03131',borderWidth:2,pointRadius:0,fill:false,tension:0.1},
+    {label:'S013',data:D.nav13,borderColor:'#1971c2',borderWidth:1.3,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+    {label:'S015',data:D.nav15,borderColor:'#e67700',borderWidth:1.3,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+' 净值:'+c.parsed.y.toFixed(1)}}},
+    scales:{x:{ticks:{maxTicksLimit:10,font:{size:10}},grid:{display:false}},
+      y:{title:{display:true,text:'净值(倍)',font:{size:10}},ticks:{font:{size:10}},grid:{color:'#f1f3f5'}}}}});
+
+const years=D.years;
+new Chart(document.getElementById('yrChart').getContext('2d'),{type:'bar',
+  data:{labels:years,datasets:[
+    {label:'S013(10天)',data:years.map(y=>D.y13[y]??null),backgroundColor:'rgba(25,113,194,0.7)',borderRadius:3},
+    {label:'S017(20天)',data:years.map(y=>D.y17[y]??null),backgroundColor:'rgba(224,49,49,0.8)',borderRadius:3},
+    {label:'S015(40天)',data:years.map(y=>D.y15[y]??null),backgroundColor:'rgba(230,119,0,0.7)',borderRadius:3},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:14}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.parsed.y>=0?'+':'')+c.parsed.y+'%'}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:10}}},
+      y:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#f1f3f5'}}}}});
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>S008 牛市超跌抢筹</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--bg:#fff;--s:#f8f9fa;--b:#e9ecef;--t:#212529;--t2:#6c757d;--t3:#adb5bd;--r:#e03131;--g:#2f9e44;--blu:#1c7ed6;--rb:#fff5f5;--gb:#f0fff4;--rad:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC",sans-serif;background:var(--bg);color:var(--t);padding:24px 32px;line-height:1.5}
+h1{font-size:22px;font-weight:600;margin-bottom:2px}
+.sub{font-size:13px;color:var(--t3);margin-bottom:20px}
+.g{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.c{background:var(--s);border-radius:var(--rad);padding:16px 20px;border:.5px solid var(--b)}
+.cl{font-size:12px;color:var(--t2);margin-bottom:2px}
+.cv{font-size:26px;font-weight:600}
+.cs{font-size:11px;color:var(--t3);margin-top:2px}
+.r{color:var(--r)}.gr{color:var(--g)}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500}
+.bb{background:#fff3e0;color:#e8590c}.bbe{background:#e3f2fd;color:#1565c0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--b);color:var(--t2);font-weight:500;font-size:12px}
+td{padding:7px 12px;border-bottom:.5px solid var(--b)}
+tr:hover{background:var(--s)}
+.cw{position:relative;width:100%;height:260px}
+.tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px}
+.tu{background:var(--rb);color:var(--r)}.td{background:var(--gb);color:var(--g)}
+.ft{margin-top:32px;padding-top:16px;border-top:.5px solid var(--b);font-size:12px;color:var(--t3)}
+.hold-table{max-height:500px;overflow-y:auto}
+</style>
+</head>
+<body>
+<h1>S008 牛市超跌抢筹</h1>
+<p class="sub">4条件 · 60天持有 · 每日自动刷新 · 2026-07-16 10:17</p>
+
+<div class="g g4" style="margin-bottom:20px">
+<div class="c"><div class="cl">市场状态</div><div class="cv" style="font-size:18px"><span class="badge bb">🐂 牛市</span></div><div class="cs">沪深300 4787 | MA200 4693</div></div>
+<div class="c"><div class="cl">当前持仓</div><div class="cv">0<span style="font-size:14px;color:var(--t2)"> 笔</span></div><div class="cs">  均浮盈+0.0%</div></div>
+<div class="c"><div class="cl">已平仓</div><div class="cv">0<span style="font-size:14px;color:var(--t2)"> 笔</span></div><div class="cs">尚无 </div></div>
+<div class="c"><div class="cl">策略回测</div><div class="cv gr">+42.4%</div><div class="cs">96笔/7年 · 胜率100% · 60日均</div></div>
+</div>
+
+<div class="g g2" style="margin-bottom:20px">
+<div class="c"><div class="cl" style="margin-bottom:8px">净值曲线</div><div class="cw"><canvas id="navChart"></canvas></div></div>
+<div class="c"><div class="cl" style="margin-bottom:8px">板块分布</div><div class="cw"><canvas id="mktChart"></canvas></div></div>
+</div>
+
+<div class="c" style="margin-bottom:20px">
+<div class="cl" style="margin-bottom:8px">持仓明细（按浮盈排序）</div>
+<div class="hold-table"><table id="holdTable"><thead><tr><th>代码</th><th>名称</th><th>入场</th><th>价</th><th>天</th><th>浮盈</th><th>峰值</th><th>板块</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<div class="c"><div class="cl" style="margin-bottom:8px">策略说明</div>
+<div style="font-size:13px;color:var(--t2);line-height:1.8">
+<strong>入场条件：</strong>下跌 &lt;100天 · 日均跌 &lt;-0.4% · 振幅收敛 &lt;1.2x · OBV底背离<br>
+<strong>持有：</strong>60个交易日 · 无止盈止损 · 到期自动卖出<br>
+<strong>历史：</strong>2019-2026 共96笔 · 胜率100% · 均收益+42.4% · 中位+34.8%
+</div></div>
+
+<div class="ft">S008 策略实验室 · 每日9:30自动扫描 · 看板自动刷新</div>
+
+<script>
+var D = {"update_time": "2026-07-16 10:17", "bull": true, "hs300": 4787, "ma200": 4693, "n_holding": 0, "avg_return": 0, "n_up": 0, "n_down": 0, "closed_n": 0, "closed_ret": 0, "closed_wr": 0, "closed_total": 0, "market_dist": {}, "holdings": [], "nav": [], "last_scan": {}};
+
+// 净值曲线
+var navCtx = document.getElementById('navChart').getContext('2d');
+if(D.nav.length>0){
+  new Chart(navCtx,{
+    type:'line',data:{labels:D.nav.map(function(n){return n.date}),datasets:[{label:'已平仓累计收益%',data:D.nav.map(function(n){return n.total_return_pct}),borderColor:'#2f9e44',backgroundColor:'rgba(47,158,68,0.1)',fill:true,pointRadius:3,tension:0.3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v.toFixed(0)+'%'}}}}}
+  });
+}else{
+  navCtx.canvas.parentElement.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--t3)">尚无数据，等待首笔平仓</div>';
+}
+
+// 板块分布
+var mktCtx = document.getElementById('mktChart').getContext('2d');
+var mkts = D.market_dist;
+if(Object.keys(mkts).length>0){
+  new Chart(mktCtx,{
+    type:'doughnut',data:{labels:Object.keys(mkts),datasets:[{data:Object.values(mkts),backgroundColor:['#e03131','#1c7ed6','#2f9e44','#f59f00','#7950f2'],borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:12}}}}}
+  });
+}
+
+// 持仓表格
+var tbody = document.getElementById('holdTable').querySelector('tbody');
+if(D.holdings.length>0){
+  D.holdings.forEach(function(h){
+    var ret=h.return_pct,retC=ret>0?'r':(ret<0?'gr':''),retStr=ret!=null?(ret>0?'+':'')+ret.toFixed(1)+'%':'--';
+    var peak=h.peak_return,peakStr=peak!=null?peak.toFixed(1)+'%':'--';
+    tbody.innerHTML+='<tr><td>'+h.ts_code+'</td><td>'+h.name+'</td><td>'+h.entry_date+'</td><td>'+h.entry_price.toFixed(2)+'</td><td>'+h.holding_days+'</td><td class="'+retC+'">'+retStr+'</td><td>'+peakStr+'</td><td>'+h.market+'</td></tr>';
+  });
+}else{
+  tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--t3);padding:40px">暂无持仓，等待入场信号</td></tr>';
+}
+</script>
+</body>
+</html>

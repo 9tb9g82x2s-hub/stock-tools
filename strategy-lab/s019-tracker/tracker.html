@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S019 实盘追踪</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--bg:#f5f6f8;--card:#fff;--border:#e5e7eb;--text:#1a1a1a;--muted:#6b7280;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);font-size:14px;padding-bottom:30px;}
+  .topbar{background:linear-gradient(135deg,#5c1a1a,#c92a2a);color:#fff;padding:18px 20px;}
+  .topbar h1{font-size:19px;font-weight:600;}
+  .topbar .sub{font-size:12px;opacity:.9;margin-top:3px;}
+  .wrap{max-width:1000px;margin:0 auto;padding:16px;}
+  .hero{background:var(--card);border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .hero .pnl-big{font-size:38px;font-weight:700;line-height:1.1;}
+  .hero .pnl-pct{font-size:18px;font-weight:600;margin-left:8px;}
+  .hero .lb{font-size:12px;color:var(--muted);margin-bottom:6px;}
+  .hero .meta{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+  .hero .meta b{color:var(--text);font-size:14px;font-weight:600;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+  .stat{background:var(--card);border-radius:12px;padding:14px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .stat .v{font-size:20px;font-weight:700;}
+  .stat .l{font-size:11px;color:var(--muted);margin-top:3px;}
+  .card{background:var(--card);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .card h2{font-size:15px;font-weight:600;margin-bottom:14px;}
+  .cw{position:relative;height:260px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:right;padding:8px 6px;color:var(--muted);font-weight:500;font-size:11px;border-bottom:1px solid var(--border);}
+  th:first-child{text-align:left;}
+  td{text-align:right;padding:9px 6px;border-bottom:1px solid #f3f4f6;}
+  td:first-child{text-align:left;}
+  .up{color:var(--red);}.dn{color:var(--green);}.flat{color:var(--muted);}
+  .bar{height:4px;border-radius:2px;margin-top:3px;}
+  .tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:4px;}
+  .tag-stop{background:#fee2e2;color:#b91c1c;}
+  .rk{display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:50%;background:#f3f4f6;color:var(--muted);font-size:10px;margin-right:6px;}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr);}.hero .pnl-big{font-size:30px;}.industry-col{display:none;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>📈 S019 实盘追踪</h1>
+  <div class="sub" id="subBar">加载中…</div>
+</div>
+<div class="wrap">
+  <div class="hero">
+    <div class="lb">当前浮动盈亏</div>
+    <div><span class="pnl-big" id="pnlBig">—</span><span class="pnl-pct" id="pnlPct"></span></div>
+    <div class="meta" id="heroMeta"></div>
+  </div>
+  <div class="grid4" id="statGrid"></div>
+  <div class="card">
+    <h2>净值曲线</h2>
+    <div class="cw"><canvas id="navChart" role="img" aria-label="组合净值曲线">净值曲线</canvas></div>
+  </div>
+  <div class="card">
+    <h2>持仓明细 <span style="font-weight:400;color:var(--muted);font-size:12px;">(按涨跌排序)</span></h2>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr>
+        <th>股票</th><th class="industry-col">行业</th><th>成本价</th><th>现价</th>
+        <th>涨跌</th><th>市值</th><th>浮盈</th>
+      </tr></thead>
+      <tbody id="posBody"></tbody>
+    </table>
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:11px;">数据每晚自动更新 · 模拟盘跟踪 · 不构成投资建议</p>
+</div>
+<script id="dataScript" type="application/json">__DATA__</script>
+<script>
+const D = JSON.parse(document.getElementById('dataScript').textContent);
+const s = D.summary;
+const fmt = (v,d=0)=>Number(v).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmtW = v=>(v/1e4).toFixed(2)+'万';
+const cls = v=>v>0?'up':v<0?'dn':'flat';
+const sign = v=>v>0?'+':'';
+
+document.getElementById('subBar').textContent =
+  `${s.strategy} · 建仓 ${s.buy_date} · 数据至 ${s.latest_date} · 更新于 ${s.updated_at}`;
+
+const pb=document.getElementById('pnlBig');
+pb.textContent = `${sign(s.cur_pnl)}${fmt(s.cur_pnl)}元`;
+pb.className = 'pnl-big '+cls(s.cur_pnl);
+const pp=document.getElementById('pnlPct');
+pp.textContent = `${sign(s.cur_pnl_pct)}${s.cur_pnl_pct}%`;
+pp.className = 'pnl-pct '+cls(s.cur_pnl_pct);
+
+document.getElementById('heroMeta').innerHTML =
+  `<span>总资产 <b>${fmtW(s.cur_market_value + s.cash)}</b></span>`+
+  `<span>持仓市值 <b>${fmtW(s.cur_market_value)}</b></span>`+
+  `<span>现金 <b>${fmtW(s.cash)}</b></span>`+
+  `<span>净值 <b>${s.cur_nav}</b></span>`;
+
+const stats=[
+  {v:s.days_held+'天',l:'持仓天数'},
+  {v:s.n_win+'/'+(s.n_win+s.n_lose+ (20-s.n_win-s.n_lose)),l:'盈利个股',c:'up'},
+  {v:s.n_lose,l:'亏损个股',c:'dn'},
+  {v:s.n_stop,l:'触及止损',c:s.n_stop>0?'dn':'flat'},
+];
+document.getElementById('statGrid').innerHTML = stats.map(x=>
+  `<div class="stat"><div class="v ${x.c||''}">${x.v}</div><div class="l">${x.l}</div></div>`).join('');
+
+new Chart(document.getElementById('navChart'),{
+  type:'line',
+  data:{labels:D.nav_curve.map(p=>p.date.slice(5)),
+    datasets:[{data:D.nav_curve.map(p=>p.pnl_pct),borderColor:'#c92a2a',
+      backgroundColor:'rgba(201,42,42,0.08)',borderWidth:2,pointRadius:3,fill:true,tension:0.15}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'累计收益 '+(c.parsed.y>=0?'+':'')+c.parsed.y+'%'}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#6b7280'}},
+      y:{ticks:{callback:v=>v+'%',font:{size:10},color:'#6b7280'},grid:{color:'#f3f4f6'}}}}
+});
+
+const maxAbs = Math.max(...D.holdings.map(h=>Math.abs(h.pnl_pct)),1);
+document.getElementById('posBody').innerHTML = D.holdings.map((h,i)=>{
+  const c=cls(h.pnl_pct);
+  const barColor = h.pnl_pct>0?'#e03131':h.pnl_pct<0?'#2f9e44':'#d1d5db';
+  const barW = Math.abs(h.pnl_pct)/maxAbs*100;
+  return `<tr>
+    <td><span class="rk">${i+1}</span><b>${h.name}</b><br>
+       <span style="color:#9ca3af;font-size:11px;margin-left:24px;">${h.code}</span>
+       ${h.is_stop?'<span class="tag tag-stop">止损</span>':''}
+       <div class="bar" style="width:${barW}%;background:${barColor};margin-left:24px;"></div></td>
+    <td class="industry-col" style="color:#9ca3af;font-size:12px;">${h.industry||'—'}</td>
+    <td>${h.buy_price}</td>
+    <td><b>${h.cur_price}</b></td>
+    <td class="${c}">${sign(h.pnl_pct)}${h.pnl_pct}%</td>
+    <td style="color:#6b7280;">${fmtW(h.market_value)}</td>
+    <td class="${c}">${sign(h.pnl)}${fmt(h.pnl)}</td>
+  </tr>`;
+}).join('');
+</script>
+</body>
+</html>

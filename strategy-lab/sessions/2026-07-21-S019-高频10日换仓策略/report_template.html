@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>S019 — 高频10日换仓策略</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--blue:#1971c2;--green:#2f9e44;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:#212529;font-size:14px;}
+  .header{background:linear-gradient(135deg,#5c1a1a 0%,#c92a2a 100%);color:#fff;padding:28px 40px;}
+  .header h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+  .header .sub{opacity:.9;font-size:13px;}
+  .container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+  .st{font-size:17px;font-weight:700;color:#5c1a1a;margin:28px 0 14px;padding-bottom:6px;border-bottom:2px solid #e03131;}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .kpi .lb{font-size:11px;color:#6c757d;margin-bottom:3px;}
+  .kpi .vl{font-size:22px;font-weight:700;}
+  .kpi.hl{border:2px solid #e03131;background:#fff5f5;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .cw{position:relative;height:300px;}
+  .cw-sm{position:relative;height:260px;}
+  .warn{background:#fff9db;border:1px solid #ffd43b;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.8;}
+  .warn b{color:#e67700;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#e9ecef;padding:8px;text-align:center;font-weight:600;border-bottom:2px solid var(--border);}
+  td{padding:7px;text-align:center;border-bottom:1px solid #f1f3f5;}
+  @media(max-width:768px){.g4,.g2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>S019 — 高频10日换仓策略</h1>
+  <p class="sub">喜神池 × label10天 × 每10交易日调仓 × 全程满仓 · 2017–2026 · 含手续费+止损 · 未含滑点</p>
+</div>
+<div class="container">
+
+<div class="st">核心指标（⚠️ 未含滑点，实盘需打折）</div>
+<div class="g4">
+  <div class="kpi"><div class="lb">S013原版 10天月度</div><div class="vl blue">36.6%</div><div class="lb" style="margin-top:4px;">年化 · 总收益1830%</div></div>
+  <div class="kpi"><div class="lb">S017 20天月度</div><div class="vl" style="color:#e67700;">51.6%</div><div class="lb" style="margin-top:4px;">年化 · 总收益5084%</div></div>
+  <div class="kpi hl"><div class="lb">★ S019 高频10日（回测）</div><div class="vl red">64.5%</div><div class="lb" style="margin-top:4px;">年化 · 总收益11397%</div></div>
+  <div class="kpi"><div class="lb">S019 含0.2%滑点估算</div><div class="vl" style="color:#495057;">49.8%</div><div class="lb" style="margin-top:4px;">年化 · 实盘参考值</div></div>
+</div>
+<div class="warn"><b>⚠️ 重要提示：</b>S019每年调仓24次，是S017的2倍，对滑点高度敏感。回测不含滑点；A股实盘单边滑点约0.15%~0.3%，对应实盘年化约43%~54%。建议先用小资金实测真实滑点，再决定是否放大。</div>
+
+<div class="st">净值曲线对比</div>
+<div class="card">
+  <div style="display:flex;gap:16px;margin-bottom:10px;font-size:12px;color:#6c757d;">
+    <span><span style="display:inline-block;width:14px;height:3px;background:#e03131;vertical-align:middle;margin-right:4px;"></span>S019高频(10日)</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed #e67700;vertical-align:middle;margin-right:4px;"></span>S017(月度20天)</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed #868e96;vertical-align:middle;margin-right:4px;"></span>S013原版</span>
+  </div>
+  <div class="cw"><canvas id="navC" role="img" aria-label="S019 S017 S013净值曲线">净值</canvas></div>
+</div>
+
+<div class="st">逐年收益 & 滑点敏感性</div>
+<div class="g2">
+  <div class="card"><div style="font-weight:600;margin-bottom:10px;font-size:13px;">逐年收益对比</div>
+    <div class="cw-sm"><canvas id="yrC" role="img" aria-label="逐年收益">逐年</canvas></div>
+  </div>
+  <div class="card"><div style="font-weight:600;margin-bottom:10px;font-size:13px;">滑点敏感性（S019 vs S017）</div>
+    <div class="cw-sm"><canvas id="slipC" role="img" aria-label="滑点敏感性曲线">滑点</canvas></div>
+  </div>
+</div>
+
+<div class="st">策略规格</div>
+<div class="card"><table>
+  <tr><td style="text-align:left;font-weight:600;width:150px;">策略ID</td><td style="text-align:left;">S019 · 高频10日换仓策略</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">衍生自</td><td style="text-align:left;">S013b · 喜神池（标签与持仓期对齐的极致版本）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">核心设计</td><td style="text-align:left;">label10天对齐持仓10天，每10个交易日换仓，全程满仓无空窗</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">调仓频率</td><td style="text-align:left;">每10个交易日（约每2个自然周），全年约24次</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">持仓</td><td style="text-align:left;">Top20等权，单股-12%止损</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">回测</td><td style="text-align:left;">2017-01~2026-07（227期，约9.4年）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">回测未计滑点</td><td style="text-align:left;">已扣手续费(买0.025%+卖0.075%)，未扣滑点；实盘年化需按滑点打折</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">实盘前提条件</td><td style="text-align:left;">①流动性过滤(剔除日成交额低的票) ②分批限价下单 ③小资金实测真实滑点3个月</td></tr>
+</table></div>
+
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:30px;padding-bottom:20px;">2017–2026 · 历史回测 · 不构成投资建议 · 实盘年化因滑点会低于回测值</p>
+</div>
+<script>
+const D=__PAYLOAD__;
+new Chart(document.getElementById('navC').getContext('2d'),{type:'line',
+  data:{labels:D.nav19.map((_,i)=>i===0?'起':'第'+i+'期'),datasets:[
+    {label:'S019高频',data:D.nav19,borderColor:'#e03131',borderWidth:2,pointRadius:0,fill:false,tension:0.1},
+    {label:'S017月度',data:D.nav17.slice(0,D.nav19.length),borderColor:'#e67700',borderWidth:1.5,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+    {label:'S013原版',data:D.nav13.slice(0,D.nav19.length),borderColor:'#868e96',borderWidth:1.2,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+':'+c.parsed.y.toFixed(1)+'倍'}}},
+    scales:{x:{ticks:{maxTicksLimit:10,font:{size:10}},grid:{display:false}},y:{ticks:{font:{size:10}},grid:{color:'#f1f3f5'}}}}});
+
+const yrs=D.years;
+new Chart(document.getElementById('yrC').getContext('2d'),{type:'bar',
+  data:{labels:yrs,datasets:[
+    {label:'S019',data:yrs.map(y=>D.y19[y]??null),backgroundColor:'rgba(224,49,49,0.8)',borderRadius:3},
+    {label:'S017',data:yrs.map(y=>D.y17[y]??null),backgroundColor:'rgba(230,119,0,0.6)',borderRadius:3},
+    {label:'S013',data:yrs.map(y=>D.y13[y]??null),backgroundColor:'rgba(134,142,150,0.55)',borderRadius:3},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:12}},tooltip:{callbacks:{label:c=>c.dataset.label+':'+(c.parsed.y>=0?'+':'')+c.parsed.y+'%'}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}}}}});
+
+new Chart(document.getElementById('slipC').getContext('2d'),{type:'line',
+  data:{labels:D.slip.labels,datasets:[
+    {label:'S019高频',data:D.slip.hf,borderColor:'#e03131',backgroundColor:'#e03131',borderWidth:2.5,pointRadius:4,tension:0.1},
+    {label:'S017月度',data:D.slip.s17,borderColor:'#e67700',backgroundColor:'#e67700',borderWidth:2,pointRadius:4,tension:0.1},
+    {label:'S013原版',data:D.slip.s13,borderColor:'#868e96',backgroundColor:'#868e96',borderWidth:1.5,pointRadius:3,borderDash:[4,3],tension:0.1},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:12}},tooltip:{callbacks:{label:c=>c.dataset.label+' '+c.label+': '+c.parsed.y+'%'}}},
+    scales:{x:{title:{display:true,text:'单边滑点',font:{size:10}},grid:{display:false},ticks:{font:{size:10}}},y:{title:{display:true,text:'年化%',font:{size:10}},ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'},min:20,max:70}}}});
+</script>
+</body>
+</html>

@@ -1,0 +1,1240 @@
+{
+  "v13_pit": {
+    "nav": 23.7209,
+    "total_return_pct": 2272.1,
+    "annual_pct": 39.97,
+    "mdd_pct": -19.55,
+    "sharpe": 1.36,
+    "win_pct": 64.6,
+    "n_periods": 113,
+    "n_cash": 0,
+    "yearly": {
+      "2017": {
+        "return_pct": 32.06,
+        "cash_periods": 0
+      },
+      "2018": {
+        "return_pct": 15.86,
+        "cash_periods": 0
+      },
+      "2019": {
+        "return_pct": 73.63,
+        "cash_periods": 0
+      },
+      "2020": {
+        "return_pct": 46.31,
+        "cash_periods": 0
+      },
+      "2021": {
+        "return_pct": 83.15,
+        "cash_periods": 0
+      },
+      "2022": {
+        "return_pct": 36.21,
+        "cash_periods": 0
+      },
+      "2023": {
+        "return_pct": 9.71,
+        "cash_periods": 0
+      },
+      "2024": {
+        "return_pct": 78.38,
+        "cash_periods": 0
+      },
+      "2025": {
+        "return_pct": 28.79,
+        "cash_periods": 0
+      },
+      "2026": {
+        "return_pct": -2.94,
+        "cash_periods": 0
+      }
+    }
+  },
+  "v14_timing": {
+    "nav": 2.6461,
+    "total_return_pct": 164.6,
+    "annual_pct": 10.89,
+    "mdd_pct": -43.31,
+    "sharpe": 0.69,
+    "win_pct": 36.3,
+    "n_periods": 113,
+    "n_cash": 47,
+    "yearly": {
+      "2017": {
+        "return_pct": 10.28,
+        "cash_periods": 5
+      },
+      "2018": {
+        "return_pct": 24.44,
+        "cash_periods": 6
+      },
+      "2019": {
+        "return_pct": -9.62,
+        "cash_periods": 8
+      },
+      "2020": {
+        "return_pct": 3.44,
+        "cash_periods": 4
+      },
+      "2021": {
+        "return_pct": 48.88,
+        "cash_periods": 6
+      },
+      "2022": {
+        "return_pct": 10.67,
+        "cash_periods": 5
+      },
+      "2023": {
+        "return_pct": 2.98,
+        "cash_periods": 4
+      },
+      "2024": {
+        "return_pct": 8.64,
+        "cash_periods": 4
+      },
+      "2025": {
+        "return_pct": 25.73,
+        "cash_periods": 3
+      },
+      "2026": {
+        "return_pct": -11.01,
+        "cash_periods": 2
+      }
+    }
+  },
+  "v13_navc": [
+    {
+      "date": "20170206",
+      "nav": 1.000781,
+      "cash": false
+    },
+    {
+      "date": "20170302",
+      "nav": 1.067996,
+      "cash": false
+    },
+    {
+      "date": "20170406",
+      "nav": 1.08157,
+      "cash": false
+    },
+    {
+      "date": "20170503",
+      "nav": 1.03006,
+      "cash": false
+    },
+    {
+      "date": "20170602",
+      "nav": 1.009022,
+      "cash": false
+    },
+    {
+      "date": "20170704",
+      "nav": 1.12189,
+      "cash": false
+    },
+    {
+      "date": "20170802",
+      "nav": 1.223374,
+      "cash": false
+    },
+    {
+      "date": "20170904",
+      "nav": 1.253462,
+      "cash": false
+    },
+    {
+      "date": "20171010",
+      "nav": 1.273705,
+      "cash": false
+    },
+    {
+      "date": "20171102",
+      "nav": 1.282882,
+      "cash": false
+    },
+    {
+      "date": "20171204",
+      "nav": 1.271456,
+      "cash": false
+    },
+    {
+      "date": "20180103",
+      "nav": 1.320646,
+      "cash": false
+    },
+    {
+      "date": "20180202",
+      "nav": 1.340376,
+      "cash": false
+    },
+    {
+      "date": "20180302",
+      "nav": 1.332902,
+      "cash": false
+    },
+    {
+      "date": "20180403",
+      "nav": 1.505177,
+      "cash": false
+    },
+    {
+      "date": "20180503",
+      "nav": 1.486432,
+      "cash": false
+    },
+    {
+      "date": "20180604",
+      "nav": 1.430105,
+      "cash": false
+    },
+    {
+      "date": "20180703",
+      "nav": 1.33312,
+      "cash": false
+    },
+    {
+      "date": "20180802",
+      "nav": 1.380248,
+      "cash": false
+    },
+    {
+      "date": "20180904",
+      "nav": 1.359169,
+      "cash": false
+    },
+    {
+      "date": "20181009",
+      "nav": 1.375727,
+      "cash": false
+    },
+    {
+      "date": "20181105",
+      "nav": 1.384783,
+      "cash": false
+    },
+    {
+      "date": "20181205",
+      "nav": 1.572302,
+      "cash": false
+    },
+    {
+      "date": "20190107",
+      "nav": 1.530068,
+      "cash": false
+    },
+    {
+      "date": "20190211",
+      "nav": 1.574885,
+      "cash": false
+    },
+    {
+      "date": "20190304",
+      "nav": 2.080979,
+      "cash": false
+    },
+    {
+      "date": "20190403",
+      "nav": 2.350035,
+      "cash": false
+    },
+    {
+      "date": "20190507",
+      "nav": 2.110376,
+      "cash": false
+    },
+    {
+      "date": "20190604",
+      "nav": 2.22324,
+      "cash": false
+    },
+    {
+      "date": "20190702",
+      "nav": 2.293724,
+      "cash": false
+    },
+    {
+      "date": "20190802",
+      "nav": 2.081919,
+      "cash": false
+    },
+    {
+      "date": "20190903",
+      "nav": 2.333144,
+      "cash": false
+    },
+    {
+      "date": "20191009",
+      "nav": 2.292713,
+      "cash": false
+    },
+    {
+      "date": "20191104",
+      "nav": 2.472504,
+      "cash": false
+    },
+    {
+      "date": "20191203",
+      "nav": 2.405236,
+      "cash": false
+    },
+    {
+      "date": "20200103",
+      "nav": 2.656647,
+      "cash": false
+    },
+    {
+      "date": "20200204",
+      "nav": 2.137291,
+      "cash": false
+    },
+    {
+      "date": "20200303",
+      "nav": 2.689398,
+      "cash": false
+    },
+    {
+      "date": "20200402",
+      "nav": 2.367039,
+      "cash": false
+    },
+    {
+      "date": "20200507",
+      "nav": 2.815691,
+      "cash": false
+    },
+    {
+      "date": "20200602",
+      "nav": 3.053998,
+      "cash": false
+    },
+    {
+      "date": "20200702",
+      "nav": 3.500754,
+      "cash": false
+    },
+    {
+      "date": "20200804",
+      "nav": 3.888309,
+      "cash": false
+    },
+    {
+      "date": "20200902",
+      "nav": 4.126979,
+      "cash": false
+    },
+    {
+      "date": "20201012",
+      "nav": 4.009899,
+      "cash": false
+    },
+    {
+      "date": "20201103",
+      "nav": 3.67246,
+      "cash": false
+    },
+    {
+      "date": "20201202",
+      "nav": 3.791601,
+      "cash": false
+    },
+    {
+      "date": "20210105",
+      "nav": 3.886857,
+      "cash": false
+    },
+    {
+      "date": "20210202",
+      "nav": 4.007604,
+      "cash": false
+    },
+    {
+      "date": "20210302",
+      "nav": 4.279388,
+      "cash": false
+    },
+    {
+      "date": "20210402",
+      "nav": 4.457213,
+      "cash": false
+    },
+    {
+      "date": "20210507",
+      "nav": 4.847177,
+      "cash": false
+    },
+    {
+      "date": "20210602",
+      "nav": 5.047506,
+      "cash": false
+    },
+    {
+      "date": "20210702",
+      "nav": 5.404563,
+      "cash": false
+    },
+    {
+      "date": "20210803",
+      "nav": 5.644888,
+      "cash": false
+    },
+    {
+      "date": "20210902",
+      "nav": 5.950149,
+      "cash": false
+    },
+    {
+      "date": "20211011",
+      "nav": 6.357021,
+      "cash": false
+    },
+    {
+      "date": "20211102",
+      "nav": 6.022144,
+      "cash": false
+    },
+    {
+      "date": "20211202",
+      "nav": 6.527199,
+      "cash": false
+    },
+    {
+      "date": "20220105",
+      "nav": 7.118746,
+      "cash": false
+    },
+    {
+      "date": "20220208",
+      "nav": 7.065418,
+      "cash": false
+    },
+    {
+      "date": "20220302",
+      "nav": 7.594368,
+      "cash": false
+    },
+    {
+      "date": "20220406",
+      "nav": 7.135637,
+      "cash": false
+    },
+    {
+      "date": "20220506",
+      "nav": 6.272053,
+      "cash": false
+    },
+    {
+      "date": "20220602",
+      "nav": 7.748216,
+      "cash": false
+    },
+    {
+      "date": "20220704",
+      "nav": 8.340242,
+      "cash": false
+    },
+    {
+      "date": "20220802",
+      "nav": 8.493213,
+      "cash": false
+    },
+    {
+      "date": "20220902",
+      "nav": 8.548005,
+      "cash": false
+    },
+    {
+      "date": "20221011",
+      "nav": 7.941931,
+      "cash": false
+    },
+    {
+      "date": "20221102",
+      "nav": 9.013252,
+      "cash": false
+    },
+    {
+      "date": "20221202",
+      "nav": 9.797528,
+      "cash": false
+    },
+    {
+      "date": "20230104",
+      "nav": 9.696293,
+      "cash": false
+    },
+    {
+      "date": "20230202",
+      "nav": 10.160721,
+      "cash": false
+    },
+    {
+      "date": "20230302",
+      "nav": 10.507856,
+      "cash": false
+    },
+    {
+      "date": "20230404",
+      "nav": 10.207579,
+      "cash": false
+    },
+    {
+      "date": "20230505",
+      "nav": 9.970756,
+      "cash": false
+    },
+    {
+      "date": "20230602",
+      "nav": 9.778687,
+      "cash": false
+    },
+    {
+      "date": "20230704",
+      "nav": 10.249821,
+      "cash": false
+    },
+    {
+      "date": "20230802",
+      "nav": 10.756956,
+      "cash": false
+    },
+    {
+      "date": "20230904",
+      "nav": 10.336931,
+      "cash": false
+    },
+    {
+      "date": "20231010",
+      "nav": 10.592008,
+      "cash": false
+    },
+    {
+      "date": "20231102",
+      "nav": 10.473905,
+      "cash": false
+    },
+    {
+      "date": "20231204",
+      "nav": 10.702631,
+      "cash": false
+    },
+    {
+      "date": "20240103",
+      "nav": 10.638268,
+      "cash": false
+    },
+    {
+      "date": "20240202",
+      "nav": 11.149846,
+      "cash": false
+    },
+    {
+      "date": "20240304",
+      "nav": 12.212981,
+      "cash": false
+    },
+    {
+      "date": "20240402",
+      "nav": 13.992965,
+      "cash": false
+    },
+    {
+      "date": "20240507",
+      "nav": 14.598713,
+      "cash": false
+    },
+    {
+      "date": "20240604",
+      "nav": 13.876165,
+      "cash": false
+    },
+    {
+      "date": "20240702",
+      "nav": 13.44341,
+      "cash": false
+    },
+    {
+      "date": "20240802",
+      "nav": 16.403304,
+      "cash": false
+    },
+    {
+      "date": "20240903",
+      "nav": 15.502637,
+      "cash": false
+    },
+    {
+      "date": "20241009",
+      "nav": 19.658799,
+      "cash": false
+    },
+    {
+      "date": "20241104",
+      "nav": 18.380922,
+      "cash": false
+    },
+    {
+      "date": "20241203",
+      "nav": 19.136407,
+      "cash": false
+    },
+    {
+      "date": "20250103",
+      "nav": 18.976343,
+      "cash": false
+    },
+    {
+      "date": "20250206",
+      "nav": 18.843309,
+      "cash": false
+    },
+    {
+      "date": "20250304",
+      "nav": 18.807002,
+      "cash": false
+    },
+    {
+      "date": "20250402",
+      "nav": 19.387895,
+      "cash": false
+    },
+    {
+      "date": "20250507",
+      "nav": 19.317384,
+      "cash": false
+    },
+    {
+      "date": "20250604",
+      "nav": 19.14653,
+      "cash": false
+    },
+    {
+      "date": "20250702",
+      "nav": 20.32979,
+      "cash": false
+    },
+    {
+      "date": "20250804",
+      "nav": 21.126797,
+      "cash": false
+    },
+    {
+      "date": "20250902",
+      "nav": 21.870976,
+      "cash": false
+    },
+    {
+      "date": "20251010",
+      "nav": 22.071033,
+      "cash": false
+    },
+    {
+      "date": "20251104",
+      "nav": 22.798504,
+      "cash": false
+    },
+    {
+      "date": "20251202",
+      "nav": 23.628166,
+      "cash": false
+    },
+    {
+      "date": "20260106",
+      "nav": 24.44051,
+      "cash": false
+    },
+    {
+      "date": "20260203",
+      "nav": 24.545979,
+      "cash": false
+    },
+    {
+      "date": "20260303",
+      "nav": 25.016208,
+      "cash": false
+    },
+    {
+      "date": "20260402",
+      "nav": 23.656549,
+      "cash": false
+    },
+    {
+      "date": "20260507",
+      "nav": 25.335999,
+      "cash": false
+    },
+    {
+      "date": "20260602",
+      "nav": 23.720863,
+      "cash": false
+    }
+  ],
+  "v14_navc": [
+    {
+      "date": "20170206",
+      "nav": 1.000781,
+      "cash": false
+    },
+    {
+      "date": "20170302",
+      "nav": 1.00003,
+      "cash": true
+    },
+    {
+      "date": "20170406",
+      "nav": 1.01349,
+      "cash": false
+    },
+    {
+      "date": "20170503",
+      "nav": 0.965222,
+      "cash": false
+    },
+    {
+      "date": "20170602",
+      "nav": 0.964498,
+      "cash": true
+    },
+    {
+      "date": "20170704",
+      "nav": 0.964498,
+      "cash": true
+    },
+    {
+      "date": "20170802",
+      "nav": 1.05242,
+      "cash": false
+    },
+    {
+      "date": "20170904",
+      "nav": 1.078304,
+      "cash": false
+    },
+    {
+      "date": "20171010",
+      "nav": 1.095718,
+      "cash": false
+    },
+    {
+      "date": "20171102",
+      "nav": 1.103613,
+      "cash": false
+    },
+    {
+      "date": "20171204",
+      "nav": 1.102785,
+      "cash": true
+    },
+    {
+      "date": "20180103",
+      "nav": 1.102785,
+      "cash": true
+    },
+    {
+      "date": "20180202",
+      "nav": 1.120032,
+      "cash": false
+    },
+    {
+      "date": "20180302",
+      "nav": 1.113788,
+      "cash": false
+    },
+    {
+      "date": "20180403",
+      "nav": 1.257742,
+      "cash": false
+    },
+    {
+      "date": "20180503",
+      "nav": 1.242078,
+      "cash": false
+    },
+    {
+      "date": "20180604",
+      "nav": 1.241147,
+      "cash": true
+    },
+    {
+      "date": "20180703",
+      "nav": 1.241147,
+      "cash": true
+    },
+    {
+      "date": "20180802",
+      "nav": 1.241147,
+      "cash": true
+    },
+    {
+      "date": "20180904",
+      "nav": 1.241147,
+      "cash": true
+    },
+    {
+      "date": "20181009",
+      "nav": 1.241147,
+      "cash": true
+    },
+    {
+      "date": "20181105",
+      "nav": 1.241147,
+      "cash": true
+    },
+    {
+      "date": "20181205",
+      "nav": 1.410146,
+      "cash": false
+    },
+    {
+      "date": "20190107",
+      "nav": 1.372267,
+      "cash": false
+    },
+    {
+      "date": "20190211",
+      "nav": 1.371238,
+      "cash": true
+    },
+    {
+      "date": "20190304",
+      "nav": 1.371238,
+      "cash": true
+    },
+    {
+      "date": "20190403",
+      "nav": 1.549489,
+      "cash": false
+    },
+    {
+      "date": "20190507",
+      "nav": 1.391471,
+      "cash": false
+    },
+    {
+      "date": "20190604",
+      "nav": 1.390428,
+      "cash": true
+    },
+    {
+      "date": "20190702",
+      "nav": 1.390428,
+      "cash": true
+    },
+    {
+      "date": "20190802",
+      "nav": 1.263076,
+      "cash": false
+    },
+    {
+      "date": "20190903",
+      "nav": 1.262129,
+      "cash": true
+    },
+    {
+      "date": "20191009",
+      "nav": 1.241204,
+      "cash": false
+    },
+    {
+      "date": "20191104",
+      "nav": 1.240273,
+      "cash": true
+    },
+    {
+      "date": "20191203",
+      "nav": 1.240273,
+      "cash": true
+    },
+    {
+      "date": "20200103",
+      "nav": 1.240273,
+      "cash": true
+    },
+    {
+      "date": "20200204",
+      "nav": 0.998739,
+      "cash": false
+    },
+    {
+      "date": "20200303",
+      "nav": 0.99799,
+      "cash": true
+    },
+    {
+      "date": "20200402",
+      "nav": 0.879016,
+      "cash": false
+    },
+    {
+      "date": "20200507",
+      "nav": 0.878357,
+      "cash": true
+    },
+    {
+      "date": "20200602",
+      "nav": 0.953268,
+      "cash": false
+    },
+    {
+      "date": "20200702",
+      "nav": 1.092718,
+      "cash": false
+    },
+    {
+      "date": "20200804",
+      "nav": 1.213688,
+      "cash": false
+    },
+    {
+      "date": "20200902",
+      "nav": 1.288186,
+      "cash": false
+    },
+    {
+      "date": "20201012",
+      "nav": 1.251641,
+      "cash": false
+    },
+    {
+      "date": "20201103",
+      "nav": 1.250703,
+      "cash": true
+    },
+    {
+      "date": "20201202",
+      "nav": 1.250703,
+      "cash": true
+    },
+    {
+      "date": "20210105",
+      "nav": 1.282999,
+      "cash": false
+    },
+    {
+      "date": "20210202",
+      "nav": 1.282037,
+      "cash": true
+    },
+    {
+      "date": "20210302",
+      "nav": 1.282037,
+      "cash": true
+    },
+    {
+      "date": "20210402",
+      "nav": 1.336208,
+      "cash": false
+    },
+    {
+      "date": "20210507",
+      "nav": 1.453113,
+      "cash": false
+    },
+    {
+      "date": "20210602",
+      "nav": 1.452024,
+      "cash": true
+    },
+    {
+      "date": "20210702",
+      "nav": 1.555537,
+      "cash": false
+    },
+    {
+      "date": "20210803",
+      "nav": 1.554371,
+      "cash": true
+    },
+    {
+      "date": "20210902",
+      "nav": 1.639515,
+      "cash": false
+    },
+    {
+      "date": "20211011",
+      "nav": 1.751625,
+      "cash": false
+    },
+    {
+      "date": "20211102",
+      "nav": 1.750312,
+      "cash": true
+    },
+    {
+      "date": "20211202",
+      "nav": 1.750312,
+      "cash": true
+    },
+    {
+      "date": "20220105",
+      "nav": 1.910164,
+      "cash": false
+    },
+    {
+      "date": "20220208",
+      "nav": 1.895855,
+      "cash": false
+    },
+    {
+      "date": "20220302",
+      "nav": 1.894433,
+      "cash": true
+    },
+    {
+      "date": "20220406",
+      "nav": 1.781422,
+      "cash": false
+    },
+    {
+      "date": "20220506",
+      "nav": 1.780086,
+      "cash": true
+    },
+    {
+      "date": "20220602",
+      "nav": 1.780086,
+      "cash": true
+    },
+    {
+      "date": "20220704",
+      "nav": 1.917345,
+      "cash": false
+    },
+    {
+      "date": "20220802",
+      "nav": 1.952511,
+      "cash": false
+    },
+    {
+      "date": "20220902",
+      "nav": 1.965108,
+      "cash": false
+    },
+    {
+      "date": "20221011",
+      "nav": 1.963634,
+      "cash": true
+    },
+    {
+      "date": "20221102",
+      "nav": 1.963634,
+      "cash": true
+    },
+    {
+      "date": "20221202",
+      "nav": 2.135969,
+      "cash": false
+    },
+    {
+      "date": "20230104",
+      "nav": 2.113899,
+      "cash": false
+    },
+    {
+      "date": "20230202",
+      "nav": 2.112314,
+      "cash": true
+    },
+    {
+      "date": "20230302",
+      "nav": 2.185958,
+      "cash": false
+    },
+    {
+      "date": "20230404",
+      "nav": 2.123491,
+      "cash": false
+    },
+    {
+      "date": "20230505",
+      "nav": 2.074225,
+      "cash": false
+    },
+    {
+      "date": "20230602",
+      "nav": 2.072669,
+      "cash": true
+    },
+    {
+      "date": "20230704",
+      "nav": 2.072669,
+      "cash": true
+    },
+    {
+      "date": "20230802",
+      "nav": 2.176774,
+      "cash": false
+    },
+    {
+      "date": "20230904",
+      "nav": 2.091778,
+      "cash": false
+    },
+    {
+      "date": "20231010",
+      "nav": 2.143395,
+      "cash": false
+    },
+    {
+      "date": "20231102",
+      "nav": 2.141788,
+      "cash": true
+    },
+    {
+      "date": "20231204",
+      "nav": 2.190166,
+      "cash": false
+    },
+    {
+      "date": "20240103",
+      "nav": 2.176995,
+      "cash": false
+    },
+    {
+      "date": "20240202",
+      "nav": 2.281683,
+      "cash": false
+    },
+    {
+      "date": "20240304",
+      "nav": 2.279972,
+      "cash": true
+    },
+    {
+      "date": "20240402",
+      "nav": 2.613977,
+      "cash": false
+    },
+    {
+      "date": "20240507",
+      "nav": 2.727135,
+      "cash": false
+    },
+    {
+      "date": "20240604",
+      "nav": 2.592158,
+      "cash": false
+    },
+    {
+      "date": "20240702",
+      "nav": 2.590214,
+      "cash": true
+    },
+    {
+      "date": "20240802",
+      "nav": 2.590214,
+      "cash": true
+    },
+    {
+      "date": "20240903",
+      "nav": 2.449934,
+      "cash": false
+    },
+    {
+      "date": "20241009",
+      "nav": 2.448096,
+      "cash": true
+    },
+    {
+      "date": "20241104",
+      "nav": 2.290799,
+      "cash": false
+    },
+    {
+      "date": "20241203",
+      "nav": 2.384955,
+      "cash": false
+    },
+    {
+      "date": "20250103",
+      "nav": 2.365006,
+      "cash": false
+    },
+    {
+      "date": "20250206",
+      "nav": 2.363232,
+      "cash": true
+    },
+    {
+      "date": "20250304",
+      "nav": 2.360083,
+      "cash": false
+    },
+    {
+      "date": "20250402",
+      "nav": 2.432979,
+      "cash": false
+    },
+    {
+      "date": "20250507",
+      "nav": 2.431154,
+      "cash": true
+    },
+    {
+      "date": "20250604",
+      "nav": 2.411354,
+      "cash": false
+    },
+    {
+      "date": "20250702",
+      "nav": 2.560376,
+      "cash": false
+    },
+    {
+      "date": "20250804",
+      "nav": 2.660752,
+      "cash": false
+    },
+    {
+      "date": "20250902",
+      "nav": 2.754476,
+      "cash": false
+    },
+    {
+      "date": "20251010",
+      "nav": 2.779671,
+      "cash": false
+    },
+    {
+      "date": "20251104",
+      "nav": 2.871291,
+      "cash": false
+    },
+    {
+      "date": "20251202",
+      "nav": 2.97578,
+      "cash": false
+    },
+    {
+      "date": "20260106",
+      "nav": 2.973548,
+      "cash": true
+    },
+    {
+      "date": "20260203",
+      "nav": 2.98861,
+      "cash": false
+    },
+    {
+      "date": "20260303",
+      "nav": 2.986369,
+      "cash": true
+    },
+    {
+      "date": "20260402",
+      "nav": 2.826147,
+      "cash": false
+    },
+    {
+      "date": "20260507",
+      "nav": 2.824027,
+      "cash": true
+    },
+    {
+      "date": "20260602",
+      "nav": 2.646117,
+      "cash": false
+    }
+  ]
+}

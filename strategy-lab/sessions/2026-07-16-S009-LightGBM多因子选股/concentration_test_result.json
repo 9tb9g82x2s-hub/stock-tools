@@ -1,0 +1,38 @@
+{
+  "top_5": {
+    "annual_return": 0.46904051073663755,
+    "gross_annual_return": 0.48548216788302967,
+    "total_return": 36.402562290596165,
+    "max_drawdown": -0.2007761705226807,
+    "win_rate": 0.6106194690265486,
+    "sharpe_ratio": 1.327257733807735,
+    "n_periods": 113
+  },
+  "top_10": {
+    "annual_return": 0.46119760919496766,
+    "gross_annual_return": 0.47731083871209323,
+    "total_return": 34.563893984030514,
+    "max_drawdown": -0.24678622176162768,
+    "win_rate": 0.6991150442477876,
+    "sharpe_ratio": 1.474958797919598,
+    "n_periods": 113
+  },
+  "top_15": {
+    "annual_return": 0.4390385877815055,
+    "gross_annual_return": 0.4547543426525542,
+    "total_return": 29.797500697224955,
+    "max_drawdown": -0.22452576520837098,
+    "win_rate": 0.6637168141592921,
+    "sharpe_ratio": 1.4570987566648188,
+    "n_periods": 113
+  },
+  "top_20": {
+    "annual_return": 0.4096938127096288,
+    "gross_annual_return": 0.4249623789884842,
+    "total_return": 24.366378762846182,
+    "max_drawdown": -0.20859718189426546,
+    "win_rate": 0.6460176991150443,
+    "sharpe_ratio": 1.4573260490802071,
+    "n_periods": 113
+  }
+}

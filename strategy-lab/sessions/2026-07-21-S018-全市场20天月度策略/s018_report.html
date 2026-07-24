@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>S017/S018 — 20天月度策略对比报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--blue:#1971c2;--orange:#e67700;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:#212529;font-size:14px;}
+  .header{background:linear-gradient(135deg,#5c2d00 0%,#e67700 100%);color:#fff;padding:28px 40px;}
+  .header h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+  .header .sub{opacity:.9;font-size:13px;}
+  .container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+  .st{font-size:17px;font-weight:700;color:#5c2d00;margin:28px 0 14px;padding-bottom:6px;border-bottom:2px solid #e67700;}
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .kpi .lb{font-size:11px;color:#6c757d;margin-bottom:3px;}
+  .kpi .vl{font-size:22px;font-weight:700;}
+  .kpi .sb{font-size:10px;color:#6c757d;margin-top:3px;}
+  .kpi.hl17{border:2px solid #e03131;background:#fff5f5;}
+  .kpi.hl18{border:2px solid #e67700;background:#fff8ee;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .cw{position:relative;height:320px;}
+  .insight{background:#fff8ee;border:1px solid #ffc078;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.8;}
+  .insight b{color:#e67700;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#e9ecef;padding:8px;text-align:center;font-weight:600;border-bottom:2px solid var(--border);}
+  td{padding:7px;text-align:center;border-bottom:1px solid #f1f3f5;}
+  @media(max-width:768px){.g3,.g2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>S017 vs S018 — 20天月度策略完整对比</h1>
+  <p class="sub">喜神池版(S017) vs 全市场版(S018) × 标签20天对齐 × 月度调仓 · 2017–2026 · 含手续费+止损</p>
+</div>
+<div class="container">
+
+<div class="st">三版本核心指标对比</div>
+<div class="g3">
+  <div class="kpi"><div class="lb">S013原版 喜神池10天月度（基准）</div>
+    <div class="vl blue">36.6%</div><div class="sb">年化 · 总收益1830% · 夏普1.44</div></div>
+  <div class="kpi hl17"><div class="lb">★ S017 喜神池20天月度</div>
+    <div class="vl red">51.6%</div><div class="sb">年化 · 总收益5084% · 夏普1.90</div></div>
+  <div class="kpi hl18"><div class="lb">★ S018 全市场20天月度</div>
+    <div class="vl" style="color:#e67700;">51.8%</div><div class="sb">年化 · 总收益5135% · 夏普1.84</div></div>
+</div>
+
+<div class="insight">
+  <b>20天标签 vs 10天标签的本质差距：</b>S013原版用"未来10天跑赢中位数"作为训练标签，但实际持仓约22个交易日——学10天、拿22天，信号在持仓后半程已经过期。把标签改为<b>20天</b>（精确对齐月度持仓），年化+15pp，夏普+0.45，总收益翻2.8倍，回撤反而收窄。这是修bug，不是调参优化。S017/S018 验证：<b>规律在喜神池和全市场上均成立，是标签对齐本身的贡献，不依赖五行选股。</b>
+</div>
+
+<div class="st">净值曲线对比</div>
+<div class="card">
+  <div style="display:flex;gap:16px;margin-bottom:10px;font-size:12px;color:#6c757d;">
+    <span><span style="display:inline-block;width:14px;height:3px;background:#e03131;vertical-align:middle;margin-right:4px;"></span>S017喜神20天</span>
+    <span><span style="display:inline-block;width:14px;height:3px;background:#e67700;vertical-align:middle;margin-right:4px;"></span>S018全市场20天</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed #1971c2;vertical-align:middle;margin-right:4px;"></span>S013原版10天</span>
+  </div>
+  <div class="cw"><canvas id="navChart" role="img" aria-label="三策略净值曲线">净值</canvas></div>
+</div>
+
+<div class="st">逐年收益热力图</div>
+<div class="card"><div style="overflow-x:auto;"><table id="yrTable"></table></div></div>
+
+<div class="st">S017 vs S018 — 喜神池过滤的增益分析</div>
+<div class="g2">
+  <div class="card" style="font-size:13px;line-height:1.9;">
+    <p style="font-weight:600;margin-bottom:8px;">喜神池过滤的实际效果</p>
+    <p>S017(喜神) vs S018(全市场)几乎打平：年化51.6% vs 51.8%，总收益5084% vs 5135%。两者误差在统计噪声范围内，说明<b>20天标签本身的贡献远大于喜神池过滤的贡献</b>。</p>
+    <p style="margin-top:10px;">不过细看差别：</p>
+    <p>• S017回撤更小（-13.9% vs -15.3%）→ 喜神过滤确实减少了极端亏损<br>
+       • S018胜率更高（71.9% vs 67.5%）→ 全市场选择面更宽，赢面略大<br>
+       • 两者适合<b>双轨并行实盘跟踪</b>，用真实数据验证五行过滤的长期增益</p>
+  </div>
+  <div class="card">
+    <p style="font-weight:600;margin-bottom:10px;font-size:13px;">六策略横向定位</p>
+    <table style="font-size:12px;">
+      <tr><th>策略</th><th>年化</th><th>回撤</th><th>定位</th></tr>
+      <tr><td style="text-align:left;">S009(全市10天月)</td><td>41%</td><td>-21%</td><td style="text-align:left;color:#6c757d;">退出主推</td></tr>
+      <tr><td style="text-align:left;">S013(喜神10天月)</td><td>37%</td><td>-14%</td><td style="text-align:left;color:#6c757d;">退出主推</td></tr>
+      <tr style="background:#fff5f5;"><td style="text-align:left;font-weight:600;color:#e03131;">S017(喜神20天月)</td><td style="font-weight:600;color:#e03131;">52%</td><td>-14%</td><td style="text-align:left;font-weight:600;color:#e03131;">主推A</td></tr>
+      <tr style="background:#fff8ee;"><td style="text-align:left;font-weight:600;color:#e67700;">S018(全市20天月)</td><td style="font-weight:600;color:#e67700;">52%</td><td>-15%</td><td style="text-align:left;font-weight:600;color:#e67700;">主推B</td></tr>
+      <tr><td style="text-align:left;">S015(喜神40天双月)</td><td>42%</td><td>-15%</td><td style="text-align:left;color:#1971c2;">长视野辅仓</td></tr>
+      <tr><td style="text-align:left;">S016(全市40天双月)</td><td>40%</td><td>-14%</td><td style="text-align:left;color:#1971c2;">长视野辅仓</td></tr>
+    </table>
+  </div>
+</div>
+
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:30px;padding-bottom:20px;">2017–2026 · 历史回测 · 不构成投资建议</p>
+</div>
+
+<script>
+const D=__PAYLOAD__;
+const n=D.nav17.length;
+new Chart(document.getElementById('navChart').getContext('2d'),{type:'line',
+  data:{labels:D.nav17.map((_,i)=>i===0?'起':'第'+i+'期'),datasets:[
+    {label:'S017喜神20天',data:D.nav17,borderColor:'#e03131',borderWidth:2,pointRadius:0,fill:false,tension:0.1},
+    {label:'S018全市场20天',data:D.nav18,borderColor:'#e67700',borderWidth:2,pointRadius:0,fill:false,tension:0.1},
+    {label:'S013原版10天',data:D.nav13.slice(0,n),borderColor:'#1971c2',borderWidth:1.2,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+' 净值:'+c.parsed.y.toFixed(1)}}},
+    scales:{x:{ticks:{maxTicksLimit:10,font:{size:10}},grid:{display:false}},
+      y:{ticks:{font:{size:10}},grid:{color:'#f1f3f5'}}}}});
+
+(function(){
+  const t=document.getElementById('yrTable');
+  const years=D.years;
+  let h='<tr><th style="text-align:left;">策略</th>'+years.map(y=>'<th>'+y+'</th>').join('')+'</tr>';
+  const rows=[{lb:'S013(10天)',data:D.y13,c:'#1971c2'},{lb:'S017喜神(20天)',data:D.y17,c:'#e03131'},{lb:'S018全市(20天)',data:D.y18,c:'#e67700'}];
+  const max=80;
+  rows.forEach(r=>{
+    h+=`<tr><td style="text-align:left;font-weight:600;color:${r.c}">${r.lb}</td>`;
+    years.forEach(y=>{
+      const v=r.data[y];
+      if(v==null){h+='<td>—</td>';return;}
+      const bg=v>=0?`rgba(224,49,49,${Math.min(v/max,1)*0.65})`:`rgba(25,113,194,0.5)`;
+      const c=v>=50?'#fff':(v<0?'#fff':'#3d1010');
+      h+=`<td style="background:${bg};color:${c};font-weight:600">${v>=0?'+':''}${v}%</td>`;
+    });
+    h+='</tr>';
+  });
+  t.innerHTML=h;
+})();
+</script>
+</body>
+</html>

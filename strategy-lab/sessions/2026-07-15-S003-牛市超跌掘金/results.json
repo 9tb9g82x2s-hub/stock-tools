@@ -1,0 +1,39 @@
+{
+  "strategy_name": "S003-牛市超跌掘金",
+  "created_date": "2026-07-15",
+  "strategy_type": "均值回归",
+  "metrics": {
+    "total_return": -0.0068,
+    "annual_return": null,
+    "win_rate": 0.43,
+    "max_drawdown": null,
+    "sharpe_ratio": null,
+    "total_trades": 14
+  },
+  "aux_metrics": {
+    "note": "信号仅14个/4.5年，★★★(OBV背离)子集表现好但仅8次信号"
+  },
+  "variants": [
+    {
+      "name": "全部信号 80天持有",
+      "total_trades": 14,
+      "win_rate": 0.43,
+      "avg_return": -0.0068,
+      "benchmark_return": 0.0568,
+      "excess_return": -0.0636
+    },
+    {
+      "name": "★★★ OBV背离子集 80天持有",
+      "total_trades": 8,
+      "win_rate": 0.75,
+      "avg_return": 0.0668
+    }
+  ],
+  "ai_analysis": {
+    "model": "manual",
+    "summary": "信号太少无统计意义。跑输随机基准，未吃到牛市红利。★★★子集表现好但仅8次。结论：需优化或放弃。",
+    "confidence": "高"
+  },
+  "notes": "回测区间2022-2026，牛市月18/55(33%)。结论：信号太少、跑输基准、需放松条件或保留★★★子集。",
+  "status": "不推荐实盘"
+}

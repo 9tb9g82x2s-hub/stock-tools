@@ -1,0 +1,924 @@
+{
+  "version_A_no_cash": {
+    "wang_mean_pct": 3.76,
+    "weak_mean_pct": 2.38,
+    "wang_periods": 65,
+    "weak_periods": 48,
+    "wang_cum_pct": 812.7,
+    "weak_cum_pct": 177.9
+  },
+  "version_B_with_cash": {
+    "A_total_pct": 2436.6,
+    "A_annual_pct": 40.97,
+    "A_mdd_pct": -20.9,
+    "B_total_pct": 927.2,
+    "B_annual_pct": 28.07,
+    "B_mdd_pct": -30.9
+  },
+  "per_period": [
+    {
+      "rebalance_date": 20170103,
+      "buy_date": 20170104,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": -0.009011
+    },
+    {
+      "rebalance_date": 20170203,
+      "buy_date": 20170206,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.087164
+    },
+    {
+      "rebalance_date": 20170301,
+      "buy_date": 20170302,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": -0.004026
+    },
+    {
+      "rebalance_date": 20170405,
+      "buy_date": 20170406,
+      "wuxing": "土",
+      "dizhi": "辰",
+      "is_wang": false,
+      "period_return": -0.061513
+    },
+    {
+      "rebalance_date": 20170502,
+      "buy_date": 20170503,
+      "wuxing": "土",
+      "dizhi": "辰",
+      "is_wang": false,
+      "period_return": 0.013216
+    },
+    {
+      "rebalance_date": 20170601,
+      "buy_date": 20170602,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.09027
+    },
+    {
+      "rebalance_date": 20170703,
+      "buy_date": 20170704,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.043922
+    },
+    {
+      "rebalance_date": 20170801,
+      "buy_date": 20170802,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": 0.044103
+    },
+    {
+      "rebalance_date": 20170901,
+      "buy_date": 20170904,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": -0.00204
+    },
+    {
+      "rebalance_date": 20171009,
+      "buy_date": 20171010,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": -0.014214
+    },
+    {
+      "rebalance_date": 20171101,
+      "buy_date": 20171102,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": -0.006419
+    },
+    {
+      "rebalance_date": 20171201,
+      "buy_date": 20171204,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": 0.046317
+    },
+    {
+      "rebalance_date": 20180102,
+      "buy_date": 20180103,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": 0.029707
+    },
+    {
+      "rebalance_date": 20180201,
+      "buy_date": 20180202,
+      "wuxing": "土",
+      "dizhi": "丑",
+      "is_wang": false,
+      "period_return": 0.046979
+    },
+    {
+      "rebalance_date": 20180301,
+      "buy_date": 20180302,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.141742
+    },
+    {
+      "rebalance_date": 20180402,
+      "buy_date": 20180403,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": 0.050268
+    },
+    {
+      "rebalance_date": 20180502,
+      "buy_date": 20180503,
+      "wuxing": "土",
+      "dizhi": "辰",
+      "is_wang": false,
+      "period_return": -0.004366
+    },
+    {
+      "rebalance_date": 20180601,
+      "buy_date": 20180604,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": -0.066466
+    },
+    {
+      "rebalance_date": 20180702,
+      "buy_date": 20180703,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.030809
+    },
+    {
+      "rebalance_date": 20180801,
+      "buy_date": 20180802,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": -0.027795
+    },
+    {
+      "rebalance_date": 20180903,
+      "buy_date": 20180904,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": 0.012571
+    },
+    {
+      "rebalance_date": 20181008,
+      "buy_date": 20181009,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.003991
+    },
+    {
+      "rebalance_date": 20181101,
+      "buy_date": 20181105,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.137891
+    },
+    {
+      "rebalance_date": 20181203,
+      "buy_date": 20181205,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": -0.01697
+    },
+    {
+      "rebalance_date": 20190102,
+      "buy_date": 20190107,
+      "wuxing": "土",
+      "dizhi": "丑",
+      "is_wang": false,
+      "period_return": 0.032801
+    },
+    {
+      "rebalance_date": 20190201,
+      "buy_date": 20190211,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.252259
+    },
+    {
+      "rebalance_date": 20190301,
+      "buy_date": 20190304,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.130376
+    },
+    {
+      "rebalance_date": 20190402,
+      "buy_date": 20190403,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": -0.110728
+    },
+    {
+      "rebalance_date": 20190506,
+      "buy_date": 20190507,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.02456
+    },
+    {
+      "rebalance_date": 20190603,
+      "buy_date": 20190604,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.037757
+    },
+    {
+      "rebalance_date": 20190701,
+      "buy_date": 20190702,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": -0.113641
+    },
+    {
+      "rebalance_date": 20190801,
+      "buy_date": 20190802,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": 0.113611
+    },
+    {
+      "rebalance_date": 20190902,
+      "buy_date": 20190903,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": 0.003292
+    },
+    {
+      "rebalance_date": 20191008,
+      "buy_date": 20191009,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.078755
+    },
+    {
+      "rebalance_date": 20191101,
+      "buy_date": 20191104,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": -0.030943
+    },
+    {
+      "rebalance_date": 20191202,
+      "buy_date": 20191203,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": 0.019558
+    },
+    {
+      "rebalance_date": 20200102,
+      "buy_date": 20200103,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": -0.198993
+    },
+    {
+      "rebalance_date": 20200203,
+      "buy_date": 20200204,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.203341
+    },
+    {
+      "rebalance_date": 20200302,
+      "buy_date": 20200303,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": -0.067102
+    },
+    {
+      "rebalance_date": 20200401,
+      "buy_date": 20200402,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": 0.193843
+    },
+    {
+      "rebalance_date": 20200506,
+      "buy_date": 20200507,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.071302
+    },
+    {
+      "rebalance_date": 20200601,
+      "buy_date": 20200602,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.164295
+    },
+    {
+      "rebalance_date": 20200701,
+      "buy_date": 20200702,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.12242
+    },
+    {
+      "rebalance_date": 20200803,
+      "buy_date": 20200804,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": 0.038715
+    },
+    {
+      "rebalance_date": 20200901,
+      "buy_date": 20200902,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": -0.037911
+    },
+    {
+      "rebalance_date": 20201009,
+      "buy_date": 20201012,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": -0.040099
+    },
+    {
+      "rebalance_date": 20201102,
+      "buy_date": 20201103,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.111405
+    },
+    {
+      "rebalance_date": 20201201,
+      "buy_date": 20201202,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": 0.03665
+    },
+    {
+      "rebalance_date": 20210104,
+      "buy_date": 20210105,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": 0.003495
+    },
+    {
+      "rebalance_date": 20210201,
+      "buy_date": 20210202,
+      "wuxing": "土",
+      "dizhi": "丑",
+      "is_wang": false,
+      "period_return": 0.105202
+    },
+    {
+      "rebalance_date": 20210301,
+      "buy_date": 20210302,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.035769
+    },
+    {
+      "rebalance_date": 20210401,
+      "buy_date": 20210402,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": 0.052078
+    },
+    {
+      "rebalance_date": 20210506,
+      "buy_date": 20210507,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.008375
+    },
+    {
+      "rebalance_date": 20210601,
+      "buy_date": 20210602,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": -0.006313
+    },
+    {
+      "rebalance_date": 20210701,
+      "buy_date": 20210702,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.105513
+    },
+    {
+      "rebalance_date": 20210802,
+      "buy_date": 20210803,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": 0.101107
+    },
+    {
+      "rebalance_date": 20210901,
+      "buy_date": 20210902,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": 0.048948
+    },
+    {
+      "rebalance_date": 20211008,
+      "buy_date": 20211011,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": -0.05054
+    },
+    {
+      "rebalance_date": 20211101,
+      "buy_date": 20211102,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.13684
+    },
+    {
+      "rebalance_date": 20211201,
+      "buy_date": 20211202,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": 0.033157
+    },
+    {
+      "rebalance_date": 20220104,
+      "buy_date": 20220105,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": -0.019561
+    },
+    {
+      "rebalance_date": 20220207,
+      "buy_date": 20220208,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.061413
+    },
+    {
+      "rebalance_date": 20220301,
+      "buy_date": 20220302,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.059386
+    },
+    {
+      "rebalance_date": 20220401,
+      "buy_date": 20220406,
+      "wuxing": "土",
+      "dizhi": "辰",
+      "is_wang": false,
+      "period_return": -0.127828
+    },
+    {
+      "rebalance_date": 20220505,
+      "buy_date": 20220506,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.247878
+    },
+    {
+      "rebalance_date": 20220601,
+      "buy_date": 20220602,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.081818
+    },
+    {
+      "rebalance_date": 20220701,
+      "buy_date": 20220704,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.041085
+    },
+    {
+      "rebalance_date": 20220801,
+      "buy_date": 20220802,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": -0.020484
+    },
+    {
+      "rebalance_date": 20220901,
+      "buy_date": 20220902,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": -0.052203
+    },
+    {
+      "rebalance_date": 20221010,
+      "buy_date": 20221011,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.107286
+    },
+    {
+      "rebalance_date": 20221101,
+      "buy_date": 20221102,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.068186
+    },
+    {
+      "rebalance_date": 20221201,
+      "buy_date": 20221202,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": -0.013811
+    },
+    {
+      "rebalance_date": 20230103,
+      "buy_date": 20230104,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": 0.076206
+    },
+    {
+      "rebalance_date": 20230201,
+      "buy_date": 20230202,
+      "wuxing": "土",
+      "dizhi": "丑",
+      "is_wang": false,
+      "period_return": 0.013712
+    },
+    {
+      "rebalance_date": 20230301,
+      "buy_date": 20230302,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": -0.016206
+    },
+    {
+      "rebalance_date": 20230403,
+      "buy_date": 20230404,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": -0.04038
+    },
+    {
+      "rebalance_date": 20230504,
+      "buy_date": 20230505,
+      "wuxing": "土",
+      "dizhi": "辰",
+      "is_wang": false,
+      "period_return": -0.012305
+    },
+    {
+      "rebalance_date": 20230601,
+      "buy_date": 20230602,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.02707
+    },
+    {
+      "rebalance_date": 20230703,
+      "buy_date": 20230704,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.051273
+    },
+    {
+      "rebalance_date": 20230801,
+      "buy_date": 20230802,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": -0.039737
+    },
+    {
+      "rebalance_date": 20230901,
+      "buy_date": 20230904,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": 0.006228
+    },
+    {
+      "rebalance_date": 20231009,
+      "buy_date": 20231010,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": -0.010219
+    },
+    {
+      "rebalance_date": 20231101,
+      "buy_date": 20231102,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.017643
+    },
+    {
+      "rebalance_date": 20231201,
+      "buy_date": 20231204,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": -0.009034
+    },
+    {
+      "rebalance_date": 20240102,
+      "buy_date": 20240103,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": 0.040076
+    },
+    {
+      "rebalance_date": 20240201,
+      "buy_date": 20240202,
+      "wuxing": "土",
+      "dizhi": "丑",
+      "is_wang": false,
+      "period_return": 0.077532
+    },
+    {
+      "rebalance_date": 20240301,
+      "buy_date": 20240304,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.153562
+    },
+    {
+      "rebalance_date": 20240401,
+      "buy_date": 20240402,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": 0.043976
+    },
+    {
+      "rebalance_date": 20240506,
+      "buy_date": 20240507,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": -0.056403
+    },
+    {
+      "rebalance_date": 20240603,
+      "buy_date": 20240604,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": -0.016554
+    },
+    {
+      "rebalance_date": 20240701,
+      "buy_date": 20240702,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.104023
+    },
+    {
+      "rebalance_date": 20240801,
+      "buy_date": 20240802,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": -0.05037
+    },
+    {
+      "rebalance_date": 20240902,
+      "buy_date": 20240903,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": 0.299431
+    },
+    {
+      "rebalance_date": 20241008,
+      "buy_date": 20241009,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": -0.050117
+    },
+    {
+      "rebalance_date": 20241101,
+      "buy_date": 20241104,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.024142
+    },
+    {
+      "rebalance_date": 20241202,
+      "buy_date": 20241203,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": 0.01515
+    },
+    {
+      "rebalance_date": 20250102,
+      "buy_date": 20250103,
+      "wuxing": "水",
+      "dizhi": "子",
+      "is_wang": true,
+      "period_return": -0.012412
+    },
+    {
+      "rebalance_date": 20250205,
+      "buy_date": 20250206,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.021706
+    },
+    {
+      "rebalance_date": 20250303,
+      "buy_date": 20250304,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": 0.023135
+    },
+    {
+      "rebalance_date": 20250401,
+      "buy_date": 20250402,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": -0.005499
+    },
+    {
+      "rebalance_date": 20250506,
+      "buy_date": 20250507,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": -0.00475
+    },
+    {
+      "rebalance_date": 20250603,
+      "buy_date": 20250604,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": 0.08256
+    },
+    {
+      "rebalance_date": 20250701,
+      "buy_date": 20250702,
+      "wuxing": "火",
+      "dizhi": "午",
+      "is_wang": true,
+      "period_return": 0.030849
+    },
+    {
+      "rebalance_date": 20250801,
+      "buy_date": 20250804,
+      "wuxing": "土",
+      "dizhi": "未",
+      "is_wang": false,
+      "period_return": 0.050106
+    },
+    {
+      "rebalance_date": 20250901,
+      "buy_date": 20250902,
+      "wuxing": "金",
+      "dizhi": "申",
+      "is_wang": false,
+      "period_return": -0.021274
+    },
+    {
+      "rebalance_date": 20251009,
+      "buy_date": 20251010,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.033381
+    },
+    {
+      "rebalance_date": 20251103,
+      "buy_date": 20251104,
+      "wuxing": "土",
+      "dizhi": "戌",
+      "is_wang": false,
+      "period_return": 0.02092
+    },
+    {
+      "rebalance_date": 20251201,
+      "buy_date": 20251202,
+      "wuxing": "水",
+      "dizhi": "亥",
+      "is_wang": true,
+      "period_return": 0.025163
+    },
+    {
+      "rebalance_date": 20260105,
+      "buy_date": 20260106,
+      "wuxing": "土",
+      "dizhi": "丑",
+      "is_wang": false,
+      "period_return": 0.036389
+    },
+    {
+      "rebalance_date": 20260202,
+      "buy_date": 20260203,
+      "wuxing": "土",
+      "dizhi": "丑",
+      "is_wang": false,
+      "period_return": 0.016306
+    },
+    {
+      "rebalance_date": 20260302,
+      "buy_date": 20260303,
+      "wuxing": "木",
+      "dizhi": "寅",
+      "is_wang": true,
+      "period_return": -0.067765
+    },
+    {
+      "rebalance_date": 20260401,
+      "buy_date": 20260402,
+      "wuxing": "木",
+      "dizhi": "卯",
+      "is_wang": true,
+      "period_return": 0.100072
+    },
+    {
+      "rebalance_date": 20260506,
+      "buy_date": 20260507,
+      "wuxing": "火",
+      "dizhi": "巳",
+      "is_wang": true,
+      "period_return": -0.00052
+    }
+  ]
+}

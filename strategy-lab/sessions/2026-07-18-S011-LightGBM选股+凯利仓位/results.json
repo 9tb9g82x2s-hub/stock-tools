@@ -1,0 +1,3983 @@
+{
+  "strategy_name": "S011-LightGBM选股+凯利仓位",
+  "created_date": "2026-07-18",
+  "strategy_type": "LightGBM分类器选股+概率校准+两层凯利仓位管理",
+  "metrics": {
+    "total_return": 3.499,
+    "annual_return": 0.1732,
+    "win_rate": 0.4779,
+    "max_drawdown": -0.2598,
+    "sharpe_ratio": 1.0721,
+    "total_trades": 113
+  },
+  "cost_analysis": {
+    "gross_annual_return": 0.1809,
+    "net_annual_return": 0.1732,
+    "cost_drag_annualized": 0.0077,
+    "avg_turnover_per_period": 0.5577,
+    "avg_cost_per_period": 0.000556,
+    "buy_commission_rate": 0.00025,
+    "sell_commission_rate": 0.00025,
+    "stamp_tax_rate": 0.0005
+  },
+  "kelly_analysis": {
+    "avg_exposure": 0.5932,
+    "min_exposure": 0.0,
+    "max_exposure": 1.0,
+    "empty_periods": 32,
+    "kelly_half_factor": 0.5,
+    "single_stock_cap": 0.2,
+    "portfolio_corr_assumption": 0.3
+  },
+  "aux_metrics": {
+    "avg_holdings_per_period": 28.5,
+    "first_rebalance": "20170103",
+    "last_rebalance": "20260506",
+    "n_features": 33,
+    "train_window_months": 12,
+    "candidate_max": 30
+  },
+  "nav_curve": [
+    {
+      "date": "20170206",
+      "nav": 0.999436
+    },
+    {
+      "date": "20170302",
+      "nav": 1.057459
+    },
+    {
+      "date": "20170406",
+      "nav": 1.061173
+    },
+    {
+      "date": "20170503",
+      "nav": 1.000481
+    },
+    {
+      "date": "20170602",
+      "nav": 0.999756
+    },
+    {
+      "date": "20170704",
+      "nav": 0.999756
+    },
+    {
+      "date": "20170802",
+      "nav": 1.047698
+    },
+    {
+      "date": "20170904",
+      "nav": 1.083887
+    },
+    {
+      "date": "20171010",
+      "nav": 1.086816
+    },
+    {
+      "date": "20171102",
+      "nav": 1.084267
+    },
+    {
+      "date": "20171204",
+      "nav": 1.083481
+    },
+    {
+      "date": "20180103",
+      "nav": 1.083481
+    },
+    {
+      "date": "20180202",
+      "nav": 1.086063
+    },
+    {
+      "date": "20180302",
+      "nav": 1.085941
+    },
+    {
+      "date": "20180403",
+      "nav": 1.149455
+    },
+    {
+      "date": "20180503",
+      "nav": 1.149019
+    },
+    {
+      "date": "20180604",
+      "nav": 1.151987
+    },
+    {
+      "date": "20180703",
+      "nav": 1.150885
+    },
+    {
+      "date": "20180802",
+      "nav": 1.152189
+    },
+    {
+      "date": "20180904",
+      "nav": 1.148305
+    },
+    {
+      "date": "20181009",
+      "nav": 1.148182
+    },
+    {
+      "date": "20181105",
+      "nav": 1.148182
+    },
+    {
+      "date": "20181205",
+      "nav": 1.22648
+    },
+    {
+      "date": "20190107",
+      "nav": 1.203905
+    },
+    {
+      "date": "20190211",
+      "nav": 1.226629
+    },
+    {
+      "date": "20190304",
+      "nav": 1.415455
+    },
+    {
+      "date": "20190403",
+      "nav": 1.591414
+    },
+    {
+      "date": "20190507",
+      "nav": 1.44306
+    },
+    {
+      "date": "20190604",
+      "nav": 1.441978
+    },
+    {
+      "date": "20190702",
+      "nav": 1.441978
+    },
+    {
+      "date": "20190802",
+      "nav": 1.324413
+    },
+    {
+      "date": "20190903",
+      "nav": 1.323453
+    },
+    {
+      "date": "20191009",
+      "nav": 1.341337
+    },
+    {
+      "date": "20191104",
+      "nav": 1.426248
+    },
+    {
+      "date": "20191203",
+      "nav": 1.414212
+    },
+    {
+      "date": "20200103",
+      "nav": 1.460988
+    },
+    {
+      "date": "20200204",
+      "nav": 1.178819
+    },
+    {
+      "date": "20200303",
+      "nav": 1.177935
+    },
+    {
+      "date": "20200402",
+      "nav": 1.177935
+    },
+    {
+      "date": "20200507",
+      "nav": 1.349189
+    },
+    {
+      "date": "20200602",
+      "nav": 1.451551
+    },
+    {
+      "date": "20200702",
+      "nav": 1.673631
+    },
+    {
+      "date": "20200804",
+      "nav": 1.867556
+    },
+    {
+      "date": "20200902",
+      "nav": 2.022928
+    },
+    {
+      "date": "20201012",
+      "nav": 1.973041
+    },
+    {
+      "date": "20201103",
+      "nav": 1.917076
+    },
+    {
+      "date": "20201202",
+      "nav": 2.013395
+    },
+    {
+      "date": "20210105",
+      "nav": 2.012563
+    },
+    {
+      "date": "20210202",
+      "nav": 2.012563
+    },
+    {
+      "date": "20210302",
+      "nav": 2.012563
+    },
+    {
+      "date": "20210402",
+      "nav": 2.086033
+    },
+    {
+      "date": "20210507",
+      "nav": 2.180303
+    },
+    {
+      "date": "20210602",
+      "nav": 2.222689
+    },
+    {
+      "date": "20210702",
+      "nav": 2.212923
+    },
+    {
+      "date": "20210803",
+      "nav": 2.390739
+    },
+    {
+      "date": "20210902",
+      "nav": 2.547271
+    },
+    {
+      "date": "20211011",
+      "nav": 2.664204
+    },
+    {
+      "date": "20211102",
+      "nav": 2.533504
+    },
+    {
+      "date": "20211202",
+      "nav": 2.543758
+    },
+    {
+      "date": "20220105",
+      "nav": 2.683655
+    },
+    {
+      "date": "20220208",
+      "nav": 2.872972
+    },
+    {
+      "date": "20220302",
+      "nav": 2.987
+    },
+    {
+      "date": "20220406",
+      "nav": 2.984906
+    },
+    {
+      "date": "20220506",
+      "nav": 2.984906
+    },
+    {
+      "date": "20220602",
+      "nav": 2.984906
+    },
+    {
+      "date": "20220704",
+      "nav": 3.2135
+    },
+    {
+      "date": "20220802",
+      "nav": 3.325246
+    },
+    {
+      "date": "20220902",
+      "nav": 3.278644
+    },
+    {
+      "date": "20221011",
+      "nav": 3.123832
+    },
+    {
+      "date": "20221102",
+      "nav": 3.121895
+    },
+    {
+      "date": "20221202",
+      "nav": 3.166177
+    },
+    {
+      "date": "20230104",
+      "nav": 3.114302
+    },
+    {
+      "date": "20230202",
+      "nav": 3.320247
+    },
+    {
+      "date": "20230302",
+      "nav": 3.372329
+    },
+    {
+      "date": "20230404",
+      "nav": 3.310859
+    },
+    {
+      "date": "20230505",
+      "nav": 3.235193
+    },
+    {
+      "date": "20230602",
+      "nav": 3.234125
+    },
+    {
+      "date": "20230704",
+      "nav": 3.319888
+    },
+    {
+      "date": "20230802",
+      "nav": 3.495797
+    },
+    {
+      "date": "20230904",
+      "nav": 3.354907
+    },
+    {
+      "date": "20231010",
+      "nav": 3.430278
+    },
+    {
+      "date": "20231102",
+      "nav": 3.406979
+    },
+    {
+      "date": "20231204",
+      "nav": 3.491669
+    },
+    {
+      "date": "20240103",
+      "nav": 3.45376
+    },
+    {
+      "date": "20240202",
+      "nav": 3.498155
+    },
+    {
+      "date": "20240304",
+      "nav": 3.496577
+    },
+    {
+      "date": "20240402",
+      "nav": 3.496577
+    },
+    {
+      "date": "20240507",
+      "nav": 3.648063
+    },
+    {
+      "date": "20240604",
+      "nav": 3.463566
+    },
+    {
+      "date": "20240702",
+      "nav": 3.460968
+    },
+    {
+      "date": "20240802",
+      "nav": 3.460968
+    },
+    {
+      "date": "20240903",
+      "nav": 3.460968
+    },
+    {
+      "date": "20241009",
+      "nav": 3.460968
+    },
+    {
+      "date": "20241104",
+      "nav": 3.460968
+    },
+    {
+      "date": "20241203",
+      "nav": 3.460968
+    },
+    {
+      "date": "20250103",
+      "nav": 3.467785
+    },
+    {
+      "date": "20250206",
+      "nav": 3.465184
+    },
+    {
+      "date": "20250304",
+      "nav": 3.465184
+    },
+    {
+      "date": "20250402",
+      "nav": 3.551162
+    },
+    {
+      "date": "20250507",
+      "nav": 3.548499
+    },
+    {
+      "date": "20250604",
+      "nav": 3.521337
+    },
+    {
+      "date": "20250702",
+      "nav": 3.767793
+    },
+    {
+      "date": "20250804",
+      "nav": 3.911635
+    },
+    {
+      "date": "20250902",
+      "nav": 4.081407
+    },
+    {
+      "date": "20251010",
+      "nav": 4.012777
+    },
+    {
+      "date": "20251104",
+      "nav": 4.17001
+    },
+    {
+      "date": "20251202",
+      "nav": 4.245396
+    },
+    {
+      "date": "20260106",
+      "nav": 4.254179
+    },
+    {
+      "date": "20260203",
+      "nav": 4.412524
+    },
+    {
+      "date": "20260303",
+      "nav": 4.509556
+    },
+    {
+      "date": "20260402",
+      "nav": 4.229285
+    },
+    {
+      "date": "20260507",
+      "nav": 4.610875
+    },
+    {
+      "date": "20260602",
+      "nav": 4.499022
+    }
+  ],
+  "trades_summary": [
+    {
+      "rebalance_date": "20240603",
+      "buy_date": "20240604",
+      "next_date": "20240701",
+      "sell_date": "20240702",
+      "holdings": [
+        {
+          "code": "600360.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300163.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "603023.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300300.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "603608.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601288.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601939.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601398.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601988.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600784.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000506.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "002141.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601006.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600008.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002479.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600982.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600033.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000937.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600018.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "603759.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600177.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600273.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000507.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "002154.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "603115.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600028.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "603167.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600020.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002233.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601158.SH",
+          "weight": 0.0
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 0.0,
+      "portfolio_mu": 0.01346,
+      "portfolio_sigma": 0.038595,
+      "oos_mu": -0.003216,
+      "oos_sigma": 0.073983,
+      "oos_n": 2866,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.00075,
+      "period_return": -0.00075,
+      "turnover": 0.5,
+      "win_count": 12
+    },
+    {
+      "rebalance_date": "20240701",
+      "buy_date": "20240702",
+      "next_date": "20240801",
+      "sell_date": "20240802",
+      "holdings": [
+        {
+          "code": "000506.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "300300.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600000.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601169.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601988.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002490.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600015.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000001.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "301315.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601288.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601006.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601818.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600919.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601229.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600360.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601916.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600020.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600018.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601339.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601668.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600028.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000900.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601939.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "605186.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000011.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600036.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601963.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601997.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600033.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300840.SZ",
+          "weight": 0.0
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 0.0,
+      "portfolio_mu": 0.006072,
+      "portfolio_sigma": 0.029893,
+      "oos_mu": -0.024916,
+      "oos_sigma": 0.055826,
+      "oos_n": 2868,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.0,
+      "period_return": 0.0,
+      "turnover": 0.0,
+      "win_count": 19
+    },
+    {
+      "rebalance_date": "20240801",
+      "buy_date": "20240802",
+      "next_date": "20240902",
+      "sell_date": "20240903",
+      "holdings": [
+        {
+          "code": "603883.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600279.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600829.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601727.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600496.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002696.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "000498.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601949.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600528.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600248.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "603012.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600908.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600704.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600051.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600874.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600728.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601186.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600812.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600167.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002523.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600787.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600736.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600284.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "688425.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600035.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300485.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600784.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601868.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601319.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000507.SZ",
+          "weight": 0.0
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 0.0,
+      "portfolio_mu": 0.006701,
+      "portfolio_sigma": 0.033953,
+      "oos_mu": -0.011547,
+      "oos_sigma": 0.060946,
+      "oos_n": 3231,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.0,
+      "period_return": 0.0,
+      "turnover": 0.0,
+      "win_count": 3
+    },
+    {
+      "rebalance_date": "20240902",
+      "buy_date": "20240903",
+      "next_date": "20241008",
+      "sell_date": "20241009",
+      "holdings": [
+        {
+          "code": "300573.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "688639.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300641.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "301487.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "603086.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600232.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601688.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600551.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000719.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "603585.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "301039.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "301421.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601003.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600022.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600366.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002399.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600100.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000407.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "002461.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "688455.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "603558.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002228.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601686.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600298.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600535.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000651.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601216.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600526.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "603608.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002034.SZ",
+          "weight": 0.0
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 0.0,
+      "portfolio_mu": 0.002761,
+      "portfolio_sigma": 0.034464,
+      "oos_mu": -0.009824,
+      "oos_sigma": 0.059792,
+      "oos_n": 3236,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.0,
+      "period_return": 0.0,
+      "turnover": 0.0,
+      "win_count": 30
+    },
+    {
+      "rebalance_date": "20241008",
+      "buy_date": "20241009",
+      "next_date": "20241101",
+      "sell_date": "20241104",
+      "holdings": [],
+      "n_holdings": 0,
+      "exposure": 0.0,
+      "portfolio_mu": 0.0,
+      "portfolio_sigma": 0.0,
+      "oos_mu": 0.057265,
+      "oos_sigma": 0.124468,
+      "oos_n": 2881,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.0,
+      "period_return": 0.0,
+      "turnover": 0.0,
+      "win_count": 0
+    },
+    {
+      "rebalance_date": "20241101",
+      "buy_date": "20241104",
+      "next_date": "20241202",
+      "sell_date": "20241203",
+      "holdings": [],
+      "n_holdings": 0,
+      "exposure": 0.0,
+      "portfolio_mu": 0.0,
+      "portfolio_sigma": 0.0,
+      "oos_mu": 0.095786,
+      "oos_sigma": 0.117366,
+      "oos_n": 2884,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.0,
+      "period_return": 0.0,
+      "turnover": 0.0,
+      "win_count": 0
+    },
+    {
+      "rebalance_date": "20241202",
+      "buy_date": "20241203",
+      "next_date": "20250102",
+      "sell_date": "20250103",
+      "holdings": [
+        {
+          "code": "601398.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601288.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601006.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600035.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601838.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600798.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600033.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603071.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601166.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601658.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601368.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000001.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601998.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601988.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600746.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603538.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601857.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002381.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601939.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601169.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600969.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605068.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600287.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603817.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600668.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600191.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601328.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002034.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002825.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000967.SZ",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.008638,
+      "portfolio_sigma": 0.03835,
+      "oos_mu": 0.020457,
+      "oos_sigma": 0.072203,
+      "oos_n": 2889,
+      "candidate_pool_size": 30,
+      "gross_return": 0.002219,
+      "trading_cost": 0.00025,
+      "period_return": 0.001969,
+      "turnover": 0.5,
+      "win_count": 15
+    },
+    {
+      "rebalance_date": "20250102",
+      "buy_date": "20250103",
+      "next_date": "20250205",
+      "sell_date": "20250206",
+      "holdings": [
+        {
+          "code": "601009.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601963.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600926.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601577.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600777.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002966.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600019.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601658.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600016.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601006.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "603167.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601998.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601187.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600795.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300705.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "301618.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600887.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002078.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601088.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300049.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600015.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "688090.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601598.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600020.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300050.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "002948.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "603323.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002226.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600028.SH",
+          "weight": 0.0
+        }
+      ],
+      "n_holdings": 29,
+      "exposure": 0.0,
+      "portfolio_mu": 0.012364,
+      "portfolio_sigma": 0.031874,
+      "oos_mu": -0.002099,
+      "oos_sigma": 0.064962,
+      "oos_n": 3258,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.00075,
+      "period_return": -0.00075,
+      "turnover": 0.5,
+      "win_count": 12
+    },
+    {
+      "rebalance_date": "20250205",
+      "buy_date": "20250206",
+      "next_date": "20250303",
+      "sell_date": "20250304",
+      "holdings": [
+        {
+          "code": "300159.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600130.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601009.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600016.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601988.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601398.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600787.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300308.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "002952.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601288.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "001270.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "300827.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600926.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601169.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002700.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "300394.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "300040.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601229.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300563.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "300829.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "605218.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300101.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "002885.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600346.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601216.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600000.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600830.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600838.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002203.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "000886.SZ",
+          "weight": 0.0
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 0.0,
+      "portfolio_mu": 0.011857,
+      "portfolio_sigma": 0.039026,
+      "oos_mu": -0.014102,
+      "oos_sigma": 0.086631,
+      "oos_n": 2903,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.0,
+      "period_return": 0.0,
+      "turnover": 0.0,
+      "win_count": 18
+    },
+    {
+      "rebalance_date": "20250303",
+      "buy_date": "20250304",
+      "next_date": "20250401",
+      "sell_date": "20250402",
+      "holdings": [
+        {
+          "code": "600000.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301171.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688588.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688183.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605333.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603363.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300502.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600066.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601665.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002251.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000933.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600577.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002595.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601818.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603239.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002463.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601997.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601577.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300822.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300811.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600346.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688018.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688205.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603308.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600642.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300394.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601500.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603499.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603036.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601916.SH",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.003086,
+      "portfolio_sigma": 0.032879,
+      "oos_mu": 0.028882,
+      "oos_sigma": 0.062309,
+      "oos_n": 2545,
+      "candidate_pool_size": 30,
+      "gross_return": 0.025062,
+      "trading_cost": 0.00025,
+      "period_return": 0.024812,
+      "turnover": 0.5,
+      "win_count": 20
+    },
+    {
+      "rebalance_date": "20250401",
+      "buy_date": "20250402",
+      "next_date": "20250506",
+      "sell_date": "20250507",
+      "holdings": [
+        {
+          "code": "002911.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600919.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "603053.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600210.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600177.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601825.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601816.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600035.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "002643.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "601988.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600018.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600741.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600061.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600103.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601009.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600108.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000713.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "603081.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601006.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "688459.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "605077.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600305.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600283.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "300756.SZ",
+          "weight": 0.0
+        },
+        {
+          "code": "600008.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "688090.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601187.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "600064.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "601398.SH",
+          "weight": 0.0
+        },
+        {
+          "code": "000617.SZ",
+          "weight": 0.0
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 0.0,
+      "portfolio_mu": 0.015133,
+      "portfolio_sigma": 0.038728,
+      "oos_mu": -0.004385,
+      "oos_sigma": 0.081028,
+      "oos_n": 2913,
+      "candidate_pool_size": 30,
+      "gross_return": 0.0,
+      "trading_cost": 0.00075,
+      "period_return": -0.00075,
+      "turnover": 0.5,
+      "win_count": 19
+    },
+    {
+      "rebalance_date": "20250506",
+      "buy_date": "20250507",
+      "next_date": "20250603",
+      "sell_date": "20250604",
+      "holdings": [
+        {
+          "code": "603800.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688073.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301323.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300956.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "003019.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600039.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300657.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601619.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600031.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300159.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000429.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002244.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301010.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002527.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688127.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605068.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601166.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000729.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600350.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300996.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601330.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002992.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603516.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600390.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300445.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300715.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301080.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002975.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600035.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601033.SH",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.025195,
+      "portfolio_sigma": 0.046866,
+      "oos_mu": 0.033699,
+      "oos_sigma": 0.103572,
+      "oos_n": 2920,
+      "candidate_pool_size": 30,
+      "gross_return": -0.007405,
+      "trading_cost": 0.00025,
+      "period_return": -0.007655,
+      "turnover": 0.5,
+      "win_count": 15
+    },
+    {
+      "rebalance_date": "20250603",
+      "buy_date": "20250604",
+      "next_date": "20250701",
+      "sell_date": "20250702",
+      "holdings": [
+        {
+          "code": "001299.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "001331.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301019.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600961.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002749.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000920.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600873.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000672.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600382.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002887.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601218.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600711.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603511.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002636.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603307.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301010.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601330.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000411.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002913.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603199.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601128.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603883.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605001.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600166.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002479.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600097.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002817.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600320.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000715.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600063.SH",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.027051,
+      "portfolio_sigma": 0.044535,
+      "oos_mu": 0.04476,
+      "oos_sigma": 0.089771,
+      "oos_n": 2927,
+      "candidate_pool_size": 30,
+      "gross_return": 0.070923,
+      "trading_cost": 0.000933,
+      "period_return": 0.069989,
+      "turnover": 0.9333,
+      "win_count": 27
+    },
+    {
+      "rebalance_date": "20250701",
+      "buy_date": "20250702",
+      "next_date": "20250801",
+      "sell_date": "20250804",
+      "holdings": [
+        {
+          "code": "002999.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688350.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601077.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601963.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "003037.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603681.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605005.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600576.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603193.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000757.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301397.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002228.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600060.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002483.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603020.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300032.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600626.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688597.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002958.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688330.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603916.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002498.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301175.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301329.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000719.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603357.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601528.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688468.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301386.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "605155.SH",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.014834,
+      "portfolio_sigma": 0.034614,
+      "oos_mu": 0.023279,
+      "oos_sigma": 0.06235,
+      "oos_n": 2931,
+      "candidate_pool_size": 30,
+      "gross_return": 0.039177,
+      "trading_cost": 0.001,
+      "period_return": 0.038177,
+      "turnover": 1.0,
+      "win_count": 23
+    },
+    {
+      "rebalance_date": "20250801",
+      "buy_date": "20250804",
+      "next_date": "20250901",
+      "sell_date": "20250902",
+      "holdings": [
+        {
+          "code": "603619.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002065.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "001333.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603365.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002615.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603194.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600130.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002469.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300791.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603078.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000733.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603808.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688455.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605167.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603172.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "001322.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "605567.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002696.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301314.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300749.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301113.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600814.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600746.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603233.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002160.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600232.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000668.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "001259.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "001260.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600493.SH",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.015789,
+      "portfolio_sigma": 0.061225,
+      "oos_mu": 0.033429,
+      "oos_sigma": 0.108012,
+      "oos_n": 3305,
+      "candidate_pool_size": 30,
+      "gross_return": 0.044402,
+      "trading_cost": 0.001,
+      "period_return": 0.043402,
+      "turnover": 1.0,
+      "win_count": 21
+    },
+    {
+      "rebalance_date": "20250901",
+      "buy_date": "20250902",
+      "next_date": "20251009",
+      "sell_date": "20251010",
+      "holdings": [
+        {
+          "code": "002391.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600249.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002293.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603017.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603477.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603967.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600573.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603899.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603102.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600300.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600993.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603836.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002226.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300741.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300308.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300901.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600078.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002096.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300159.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600620.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002255.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002969.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600221.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601033.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600022.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605500.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002825.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600515.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "001279.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002992.SZ",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.015007,
+      "portfolio_sigma": 0.034928,
+      "oos_mu": 0.026708,
+      "oos_sigma": 0.064079,
+      "oos_n": 3311,
+      "candidate_pool_size": 30,
+      "gross_return": -0.015815,
+      "trading_cost": 0.001,
+      "period_return": -0.016815,
+      "turnover": 1.0,
+      "win_count": 10
+    },
+    {
+      "rebalance_date": "20251009",
+      "buy_date": "20251010",
+      "next_date": "20251103",
+      "sell_date": "20251104",
+      "holdings": [
+        {
+          "code": "600749.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300859.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002958.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603367.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601997.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603787.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603325.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601916.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300977.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603848.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000690.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "003012.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688151.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301429.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603577.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600826.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002511.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688425.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600493.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000050.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688021.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605598.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603916.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301006.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300335.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301331.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "605050.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600573.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600644.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603076.SH",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.015328,
+      "portfolio_sigma": 0.039246,
+      "oos_mu": 0.011211,
+      "oos_sigma": 0.071103,
+      "oos_n": 2947,
+      "candidate_pool_size": 30,
+      "gross_return": 0.04015,
+      "trading_cost": 0.000967,
+      "period_return": 0.039183,
+      "turnover": 0.9667,
+      "win_count": 20
+    },
+    {
+      "rebalance_date": "20251103",
+      "buy_date": "20251104",
+      "next_date": "20251201",
+      "sell_date": "20251202",
+      "holdings": [
+        {
+          "code": "688596.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603300.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603216.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301429.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300977.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002566.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301327.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688108.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601577.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000931.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300920.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688193.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603860.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600851.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688468.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300030.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301210.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "605266.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300026.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600573.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300265.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300559.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "001387.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "605567.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688099.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002732.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300564.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603309.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600488.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002488.SZ",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.012075,
+      "portfolio_sigma": 0.03986,
+      "oos_mu": 0.016509,
+      "oos_sigma": 0.07205,
+      "oos_n": 2951,
+      "candidate_pool_size": 30,
+      "gross_return": 0.018978,
+      "trading_cost": 0.0009,
+      "period_return": 0.018078,
+      "turnover": 0.9,
+      "win_count": 10
+    },
+    {
+      "rebalance_date": "20251201",
+      "buy_date": "20251202",
+      "next_date": "20260105",
+      "sell_date": "20260106",
+      "holdings": [
+        {
+          "code": "688226.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "603151.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "688067.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "601636.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "605258.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "688357.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "688588.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "688371.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "300950.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "603192.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "600375.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "601218.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "603050.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "603173.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "300378.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "603006.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "688151.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "002926.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "688360.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "300645.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "300079.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "002838.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "603101.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "603527.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "301190.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "603191.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "603181.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "605186.SH",
+          "weight": 0.006
+        },
+        {
+          "code": "002065.SZ",
+          "weight": 0.006
+        },
+        {
+          "code": "002609.SZ",
+          "weight": 0.006
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 0.1787,
+      "portfolio_mu": 0.013333,
+      "portfolio_sigma": 0.03754,
+      "oos_mu": 0.001737,
+      "oos_sigma": 0.06972,
+      "oos_n": 2955,
+      "candidate_pool_size": 30,
+      "gross_return": 0.002863,
+      "trading_cost": 0.000795,
+      "period_return": 0.002069,
+      "turnover": 0.5893,
+      "win_count": 17
+    },
+    {
+      "rebalance_date": "20260105",
+      "buy_date": "20260106",
+      "next_date": "20260202",
+      "sell_date": "20260203",
+      "holdings": [
+        {
+          "code": "600741.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002402.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600884.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300443.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002236.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600031.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688352.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600167.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605020.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688577.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603285.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603909.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688419.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688138.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300507.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688466.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002106.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002838.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300440.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600846.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603501.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603637.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000875.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688728.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002001.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601717.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301046.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603960.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000576.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301155.SZ",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.012602,
+      "portfolio_sigma": 0.034733,
+      "oos_mu": 0.010684,
+      "oos_sigma": 0.069267,
+      "oos_n": 3330,
+      "candidate_pool_size": 30,
+      "gross_return": 0.037599,
+      "trading_cost": 0.000378,
+      "period_return": 0.037221,
+      "turnover": 0.5834,
+      "win_count": 16
+    },
+    {
+      "rebalance_date": "20260202",
+      "buy_date": "20260203",
+      "next_date": "20260302",
+      "sell_date": "20260303",
+      "holdings": [
+        {
+          "code": "603516.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300715.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600202.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301392.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "605218.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600992.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605255.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600711.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002566.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300535.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301151.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688073.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301006.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603073.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301298.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603041.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603800.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600561.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600830.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002700.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601798.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605258.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603976.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688772.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301418.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "688151.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688466.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605001.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600883.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300709.SZ",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.011786,
+      "portfolio_sigma": 0.033385,
+      "oos_mu": 0.019147,
+      "oos_sigma": 0.066466,
+      "oos_n": 3335,
+      "candidate_pool_size": 30,
+      "gross_return": 0.022957,
+      "trading_cost": 0.000967,
+      "period_return": 0.02199,
+      "turnover": 0.9667,
+      "win_count": 20
+    },
+    {
+      "rebalance_date": "20260302",
+      "buy_date": "20260303",
+      "next_date": "20260401",
+      "sell_date": "20260402",
+      "holdings": [
+        {
+          "code": "600977.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603817.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603176.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600846.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603039.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000567.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000735.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601566.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301155.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300388.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601288.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002943.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603100.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600015.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688095.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603759.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "688656.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002320.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002390.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301006.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301130.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000701.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002558.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301065.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601598.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002475.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "601888.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002210.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301167.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300251.SZ",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.016195,
+      "portfolio_sigma": 0.042432,
+      "oos_mu": 0.013248,
+      "oos_sigma": 0.080961,
+      "oos_n": 2600,
+      "candidate_pool_size": 30,
+      "gross_return": -0.061184,
+      "trading_cost": 0.000967,
+      "period_return": -0.06215,
+      "turnover": 0.9667,
+      "win_count": 7
+    },
+    {
+      "rebalance_date": "20260401",
+      "buy_date": "20260402",
+      "next_date": "20260506",
+      "sell_date": "20260507",
+      "holdings": [
+        {
+          "code": "603681.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "300945.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300877.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600391.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603979.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000426.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600141.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603155.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600595.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600531.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "002918.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "000060.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "603993.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "605288.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "601020.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000758.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600230.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "301286.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600966.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600961.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000603.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "002518.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300200.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "600475.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600392.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "600456.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "603320.SH",
+          "weight": 0.0333
+        },
+        {
+          "code": "000612.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "301266.SZ",
+          "weight": 0.0333
+        },
+        {
+          "code": "300274.SZ",
+          "weight": 0.0333
+        }
+      ],
+      "n_holdings": 30,
+      "exposure": 1.0,
+      "portfolio_mu": 0.01653,
+      "portfolio_sigma": 0.038021,
+      "oos_mu": 0.014898,
+      "oos_sigma": 0.08071,
+      "oos_n": 2977,
+      "candidate_pool_size": 30,
+      "gross_return": 0.091226,
+      "trading_cost": 0.001,
+      "period_return": 0.090226,
+      "turnover": 1.0,
+      "win_count": 22
+    },
+    {
+      "rebalance_date": "20260506",
+      "buy_date": "20260507",
+      "next_date": "20260601",
+      "sell_date": "20260602",
+      "holdings": [
+        {
+          "code": "300749.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "001260.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "603096.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "603860.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "301011.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "600850.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "300502.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "300800.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "603176.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "300857.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "301000.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "301622.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "301308.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "301413.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "301167.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "603587.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "688335.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "300439.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "300604.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "300425.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "301611.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "688196.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "600694.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "688092.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "600561.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "300856.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "300703.SZ",
+          "weight": 0.029
+        },
+        {
+          "code": "600202.SH",
+          "weight": 0.029
+        },
+        {
+          "code": "301155.SZ",
+          "weight": 0.029
+        }
+      ],
+      "n_holdings": 29,
+      "exposure": 0.8415,
+      "portfolio_mu": 0.012651,
+      "portfolio_sigma": 0.038705,
+      "oos_mu": 0.012354,
+      "oos_sigma": 0.084235,
+      "oos_n": 2981,
+      "candidate_pool_size": 30,
+      "gross_return": -0.023298,
+      "trading_cost": 0.00096,
+      "period_return": -0.024258,
+      "turnover": 0.9208,
+      "win_count": 7
+    }
+  ],
+  "stocks": [
+    {
+      "code": "300749.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "001260.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "603096.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "603860.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "301011.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "600850.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "300502.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "300800.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "603176.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "300857.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "301000.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "301622.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "301308.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "301413.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "301167.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "603587.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "688335.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "300439.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "300604.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "300425.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "301611.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "688196.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "600694.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "688092.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "600561.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "300856.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "300703.SZ",
+      "weight": 0.029
+    },
+    {
+      "code": "600202.SH",
+      "weight": 0.029
+    },
+    {
+      "code": "301155.SZ",
+      "weight": 0.029
+    }
+  ],
+  "factor_history_recent": [
+    {
+      "rebalance_date": "20260105",
+      "feature_importance": {
+        "mom_5": 0.013833,
+        "mom_10": 0.009833,
+        "mom_20": 0.031,
+        "mom_60": 0.061667,
+        "mom_120": 0.0765,
+        "turnover_rate": 0.025167,
+        "turnover_rate_f": 0.0465,
+        "volume_ratio": 0.014333,
+        "vol_chg_20": 0.026,
+        "bias_5": 0.013667,
+        "bias_10": 0.0085,
+        "bias_20": 0.017167,
+        "bias_60": 0.038167,
+        "macd_dif": 0.034833,
+        "macd_dea": 0.043,
+        "macd": 0.028333,
+        "kdj_k": 0.0135,
+        "kdj_d": 0.023167,
+        "kdj_j": 0.018833,
+        "rsi_6": 0.004333,
+        "rsi_12": 0.015167,
+        "rsi_24": 0.021,
+        "cci": 0.010167,
+        "boll_pct": 0.013333,
+        "boll_width": 0.062167,
+        "pe": 0.047,
+        "pe_ttm": 0.0535,
+        "pb": 0.059333,
+        "ps": 0.039667,
+        "ps_ttm": 0.0465,
+        "dv_ttm": 0.0415,
+        "net_mf_ratio": 0.0125,
+        "lg_buy_ratio": 0.029833
+      }
+    },
+    {
+      "rebalance_date": "20260202",
+      "feature_importance": {
+        "mom_5": 0.0135,
+        "mom_10": 0.011,
+        "mom_20": 0.027333,
+        "mom_60": 0.063,
+        "mom_120": 0.0785,
+        "turnover_rate": 0.027833,
+        "turnover_rate_f": 0.049,
+        "volume_ratio": 0.016167,
+        "vol_chg_20": 0.026167,
+        "bias_5": 0.013667,
+        "bias_10": 0.008667,
+        "bias_20": 0.014333,
+        "bias_60": 0.035333,
+        "macd_dif": 0.028333,
+        "macd_dea": 0.039,
+        "macd": 0.031333,
+        "kdj_k": 0.010667,
+        "kdj_d": 0.028833,
+        "kdj_j": 0.0185,
+        "rsi_6": 0.006667,
+        "rsi_12": 0.016,
+        "rsi_24": 0.022333,
+        "cci": 0.006833,
+        "boll_pct": 0.014333,
+        "boll_width": 0.059167,
+        "pe": 0.047833,
+        "pe_ttm": 0.052167,
+        "pb": 0.059667,
+        "ps": 0.041,
+        "ps_ttm": 0.0425,
+        "dv_ttm": 0.053,
+        "net_mf_ratio": 0.0125,
+        "lg_buy_ratio": 0.024833
+      }
+    },
+    {
+      "rebalance_date": "20260302",
+      "feature_importance": {
+        "mom_5": 0.014333,
+        "mom_10": 0.012167,
+        "mom_20": 0.025667,
+        "mom_60": 0.063167,
+        "mom_120": 0.079,
+        "turnover_rate": 0.026833,
+        "turnover_rate_f": 0.048167,
+        "volume_ratio": 0.015167,
+        "vol_chg_20": 0.025833,
+        "bias_5": 0.016667,
+        "bias_10": 0.0115,
+        "bias_20": 0.011333,
+        "bias_60": 0.0315,
+        "macd_dif": 0.029333,
+        "macd_dea": 0.036,
+        "macd": 0.025167,
+        "kdj_k": 0.015167,
+        "kdj_d": 0.027333,
+        "kdj_j": 0.016167,
+        "rsi_6": 0.009333,
+        "rsi_12": 0.014333,
+        "rsi_24": 0.0245,
+        "cci": 0.0095,
+        "boll_pct": 0.013167,
+        "boll_width": 0.057667,
+        "pe": 0.053667,
+        "pe_ttm": 0.060833,
+        "pb": 0.0535,
+        "ps": 0.042333,
+        "ps_ttm": 0.0395,
+        "dv_ttm": 0.050667,
+        "net_mf_ratio": 0.015667,
+        "lg_buy_ratio": 0.024833
+      }
+    },
+    {
+      "rebalance_date": "20260401",
+      "feature_importance": {
+        "mom_5": 0.0145,
+        "mom_10": 0.019333,
+        "mom_20": 0.028167,
+        "mom_60": 0.051,
+        "mom_120": 0.059167,
+        "turnover_rate": 0.025,
+        "turnover_rate_f": 0.049667,
+        "volume_ratio": 0.018833,
+        "vol_chg_20": 0.024,
+        "bias_5": 0.014167,
+        "bias_10": 0.007667,
+        "bias_20": 0.015333,
+        "bias_60": 0.0285,
+        "macd_dif": 0.033833,
+        "macd_dea": 0.033833,
+        "macd": 0.026667,
+        "kdj_k": 0.013,
+        "kdj_d": 0.032,
+        "kdj_j": 0.02,
+        "rsi_6": 0.0055,
+        "rsi_12": 0.014833,
+        "rsi_24": 0.022167,
+        "cci": 0.0085,
+        "boll_pct": 0.013,
+        "boll_width": 0.053167,
+        "pe": 0.056333,
+        "pe_ttm": 0.061,
+        "pb": 0.058833,
+        "ps": 0.0445,
+        "ps_ttm": 0.045333,
+        "dv_ttm": 0.052333,
+        "net_mf_ratio": 0.016333,
+        "lg_buy_ratio": 0.0335
+      }
+    },
+    {
+      "rebalance_date": "20260506",
+      "feature_importance": {
+        "mom_5": 0.010333,
+        "mom_10": 0.011333,
+        "mom_20": 0.023,
+        "mom_60": 0.052,
+        "mom_120": 0.063333,
+        "turnover_rate": 0.023167,
+        "turnover_rate_f": 0.046167,
+        "volume_ratio": 0.017333,
+        "vol_chg_20": 0.021833,
+        "bias_5": 0.011333,
+        "bias_10": 0.009833,
+        "bias_20": 0.01,
+        "bias_60": 0.035167,
+        "macd_dif": 0.037833,
+        "macd_dea": 0.041833,
+        "macd": 0.0325,
+        "kdj_k": 0.013,
+        "kdj_d": 0.024333,
+        "kdj_j": 0.017833,
+        "rsi_6": 0.008167,
+        "rsi_12": 0.016167,
+        "rsi_24": 0.0235,
+        "cci": 0.009333,
+        "boll_pct": 0.01,
+        "boll_width": 0.041,
+        "pe": 0.0535,
+        "pe_ttm": 0.058,
+        "pb": 0.071833,
+        "ps": 0.043667,
+        "ps_ttm": 0.047,
+        "dv_ttm": 0.066833,
+        "net_mf_ratio": 0.014667,
+        "lg_buy_ratio": 0.034167
+      }
+    },
+    {
+      "rebalance_date": "20260601",
+      "feature_importance": {
+        "mom_5": 0.0105,
+        "mom_10": 0.014667,
+        "mom_20": 0.026333,
+        "mom_60": 0.045167,
+        "mom_120": 0.069333,
+        "turnover_rate": 0.0235,
+        "turnover_rate_f": 0.047833,
+        "volume_ratio": 0.018833,
+        "vol_chg_20": 0.022667,
+        "bias_5": 0.009833,
+        "bias_10": 0.01,
+        "bias_20": 0.008833,
+        "bias_60": 0.027667,
+        "macd_dif": 0.033833,
+        "macd_dea": 0.041167,
+        "macd": 0.040167,
+        "kdj_k": 0.011,
+        "kdj_d": 0.030167,
+        "kdj_j": 0.016167,
+        "rsi_6": 0.008167,
+        "rsi_12": 0.016,
+        "rsi_24": 0.0185,
+        "cci": 0.008667,
+        "boll_pct": 0.007,
+        "boll_width": 0.042,
+        "pe": 0.056,
+        "pe_ttm": 0.063167,
+        "pb": 0.072667,
+        "ps": 0.044,
+        "ps_ttm": 0.047667,
+        "dv_ttm": 0.067167,
+        "net_mf_ratio": 0.013833,
+        "lg_buy_ratio": 0.0275
+      }
+    }
+  ],
+  "ai_analysis": {
+    "model": "LightGBM分类器(S009同款) + 概率校准mu/sigma + 两层Kelly(33features)",
+    "summary": "月度调仓113期，年化17.3%(毛18.1%)，胜率47.8%，最大回撤-26.0%，夏普1.07，平均总仓位59.3%，平均换手率55.8%/期。",
+    "confidence": "中"
+  }
+}

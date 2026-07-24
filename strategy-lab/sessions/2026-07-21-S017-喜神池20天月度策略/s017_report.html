@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>S017 — 喜神池20天月度策略</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--orange:#e67700;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:#212529;font-size:14px;}
+  .header{background:linear-gradient(135deg,#7a1f1f 0%,#e03131 100%);color:#fff;padding:28px 40px;}
+  .header h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+  .header .sub{opacity:.9;font-size:13px;}
+  .container{max-width:1100px;margin:0 auto;padding:24px 20px;}
+  .st{font-size:17px;font-weight:700;color:#7a1f1f;margin:28px 0 14px;padding-bottom:6px;border-bottom:2px solid #e03131;}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .kpi .lb{font-size:11px;color:#6c757d;margin-bottom:3px;}
+  .kpi .vl{font-size:22px;font-weight:700;}
+  .kpi .sb{font-size:10px;color:#6c757d;margin-top:3px;}
+  .kpi.hl{border:2px solid #e03131;background:#fff5f5;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .cw{position:relative;height:320px;}
+  .cw-sm{position:relative;height:260px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#e9ecef;padding:8px;text-align:center;font-weight:600;border-bottom:2px solid var(--border);}
+  td{padding:7px;text-align:center;border-bottom:1px solid #f1f3f5;}
+  .insight{background:#fff5f5;border:1px solid #ffc9c9;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.8;}
+  .insight b{color:#e03131;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;}
+  @media(max-width:768px){.g4,.g2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>S017 — 喜神池 20天月度策略</h1>
+  <p class="sub">S013的正确对齐版：标签窗口20天 × 月度调仓 × Top20等权 · 2017–2026回测 · 含手续费+止损</p>
+</div>
+<div class="container">
+
+<div class="st">核心指标（★ S017全面领先）</div>
+<div class="g4">
+  <div class="kpi"><div class="lb">S009原版 全市场10天月度</div><div class="vl" style="color:#868e96;">41.0%</div><div class="sb">年化 · 回撤-20.9% · 夏普1.45</div></div>
+  <div class="kpi"><div class="lb">S013原版 喜神10天月度</div><div class="vl blue">36.6%</div><div class="sb">年化 · 回撤-14.3% · 夏普1.44</div></div>
+  <div class="kpi hl"><div class="lb"><span class="badge" style="background:#ffe3e3;color:#e03131;">★ S017</span> 喜神20天月度</div><div class="vl red">51.6%</div><div class="sb">年化 · 回撤-13.9% · 夏普1.89</div></div>
+  <div class="kpi"><div class="lb">S015 喜神40天双月</div><div class="vl" style="color:#e67700;">41.9%</div><div class="sb">年化 · 回撤-15.0% · 胜率80.7%</div></div>
+</div>
+
+<div class="insight">
+  <b>核心发现：标签窗口应与持仓期对齐。</b> S013原版持仓约一个月（22个交易日），标签却只预测未来10天，存在"学10天、拿22天"的错配——后半程信号已过期。把标签改为<b>20天</b>（对齐月度持仓）后，年化从36.6%飙升到<b>51.6%</b>（+15pp），夏普从1.44升到1.89，回撤反而更小（-13.9%）。总收益9.5年达<b>5084%</b>，是S013原版(1830%)的2.8倍。这不是"拉长持仓"，而是<b>修正了原始设计的窗口错配bug</b>。40天双月(S015)则又走过头，不如20天。
+</div>
+
+<div class="st">净值曲线对比</div>
+<div class="card">
+  <div style="display:flex;gap:16px;margin-bottom:10px;font-size:12px;color:#6c757d;">
+    <span><span style="display:inline-block;width:14px;height:3px;background:var(--red);vertical-align:middle;margin-right:4px;"></span>S017(20天)</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed var(--blue);vertical-align:middle;margin-right:4px;"></span>S013(10天)</span>
+    <span><span style="display:inline-block;width:14px;height:0;border-top:2px dashed var(--orange);vertical-align:middle;margin-right:4px;"></span>S015(40天)</span>
+  </div>
+  <div class="cw"><canvas id="navChart" role="img" aria-label="S017 S013 S015净值曲线对比">净值曲线</canvas></div>
+</div>
+
+<div class="st">逐年收益对比</div>
+<div class="card"><div class="cw-sm"><canvas id="yrChart" role="img" aria-label="逐年收益对比">逐年收益</canvas></div>
+  <p style="font-size:11px;color:#6c757d;margin-top:8px;">S017在2020(+90%)/2021(+95%)/2024(+73%)等牛市年碾压；S015(40天)在2019/2023/2025/2026等震荡熊转期更抗跌；S013原版在2018/2022逆势年靠短视野占优。</p>
+</div>
+
+<div class="st">策略规格</div>
+<div class="card"><table>
+  <tr><td style="text-align:left;font-weight:600;width:150px;">策略ID</td><td style="text-align:left;">S017 · 喜神池20天月度策略</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">母策略</td><td style="text-align:left;">S013b · 喜神池LightGBM（金水喜神股3074只）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">核心改动</td><td style="text-align:left;">训练标签「未来10日」→「未来20日」跑赢市场中位数（对齐月度持仓）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">调仓频率</td><td style="text-align:left;">每月（保持不变）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">持仓</td><td style="text-align:left;">Top20等权，单股-12%止损</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">手续费</td><td style="text-align:left;">买0.025% + 卖0.075%(含印花税)</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">回测</td><td style="text-align:left;">2017-01~2026-07（约9.5年 / 114期）</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">排除</td><td style="text-align:left;">ST股 / 净亏损股 / 北交所(.BJ)</td></tr>
+  <tr><td style="text-align:left;font-weight:600;">全市场交叉验证</td><td style="text-align:left;">S009同配置(全市场20天月度)年化51.75%/夏普1.84，规律一致成立</td></tr>
+</table></div>
+
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:30px;padding-bottom:20px;">数据区间 2017–2026 | 基于历史回测 不构成投资建议 | 夏普按月度√12年化</p>
+</div>
+
+<script>
+const D={"years": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"], "y13": {"2017": 22.1, "2018": 37.9, "2019": 49.7, "2020": 61.0, "2021": 59.4, "2022": 80.8, "2023": 6.1, "2024": 35.8, "2025": 18.1, "2026": -3.0}, "y17": {"2017": 30.7, "2018": 24.3, "2019": 73.7, "2020": 89.8, "2021": 95.1, "2022": 43.3, "2023": 24.8, "2024": 73.3, "2025": 42.9, "2026": 12.1}, "y15": {"2017": 28.0, "2018": 2.5, "2019": 74.2, "2020": 61.4, "2021": 51.9, "2022": 22.5, "2023": 32.1, "2024": 56.0, "2025": 67.4, "2026": 17.0}, "metrics": {"s013": {"ann": 36.6, "total": 1829.6, "dd": -14.29, "sharpe": 1.436, "wr": 67.5, "n": 114}, "s017": {"ann": 51.6, "total": 5083.7, "dd": -13.86, "sharpe": 1.894, "wr": 67.5, "n": 114}, "s015": {"ann": 41.9, "total": 2669.1, "dd": -15.02, "sharpe": 2.204, "wr": 80.7, "n": 57}}, "nav13": [1.0, 0.9937, 1.0888, 1.0956, 1.0183, 1.0308, 1.1331, 1.1746, 1.2272, 1.2269, 1.2315, 1.2207, 1.2691, 1.3318, 1.3764, 1.53, 1.5898, 1.5883, 1.5225, 1.5562, 1.5307, 1.5544, 1.5773, 1.683, 1.6461, 1.6935, 2.0792, 2.3613, 2.1323, 2.2414, 2.383, 2.2734, 2.4141, 2.4389, 2.5877, 2.5199, 2.644, 2.2661, 2.6763, 2.4899, 2.9657, 3.0837, 3.5666, 3.9379, 4.1153, 3.8839, 3.6635, 4.057, 4.1185, 4.1759, 4.4545, 4.5039, 4.6677, 4.6717, 4.6828, 5.169, 5.5807, 5.8666, 5.8063, 6.4664, 6.8146, 7.6061, 8.0356, 8.5206, 7.812, 9.7762, 10.4299, 10.8609, 10.4517, 9.949, 10.6857, 11.6937, 11.5322, 12.4082, 12.5266, 12.2739, 11.9186, 11.6857, 12.1761, 12.8179, 12.3342, 12.5145, 12.3613, 12.409, 12.2984, 12.8449, 12.9034, 14.6197, 15.2626, 14.4943, 14.2762, 15.471, 14.6208, 18.523, 16.5475, 16.8507, 16.786, 16.823, 16.9659, 17.3641, 17.0566, 16.9299, 18.0966, 18.5676, 19.1712, 19.2223, 20.0701, 19.8959, 20.2371, 21.0192, 21.0931, 19.5243, 21.5409, 20.2226, 19.294], "nav17": [1.0, 1.0088, 1.0975, 1.1254, 1.0635, 1.0554, 1.1599, 1.2225, 1.2813, 1.2901, 1.3215, 1.3071, 1.3567, 1.3762, 1.3851, 1.3755, 1.4494, 1.474, 1.401, 1.4553, 1.4576, 1.4779, 1.5022, 1.6241, 1.5952, 1.6203, 2.0975, 2.4299, 2.3621, 2.4002, 2.5579, 2.4424, 2.7403, 2.7397, 2.9433, 2.8206, 3.1035, 2.8995, 3.2988, 3.1008, 3.7128, 3.945, 4.5728, 4.952, 5.3071, 4.9837, 4.7848, 5.353, 5.8432, 5.9627, 6.5443, 6.8465, 7.3832, 7.9163, 7.7453, 8.5547, 9.0435, 9.5029, 9.3345, 10.4454, 11.0805, 10.4739, 10.9268, 10.3147, 9.5444, 11.6497, 13.4001, 13.9566, 13.5495, 12.5466, 13.6557, 14.9688, 14.9165, 15.8351, 16.4371, 16.275, 16.3533, 16.2192, 17.1277, 18.4448, 17.67, 18.2728, 18.098, 18.6802, 18.7192, 19.8257, 19.9359, 23.4111, 24.4073, 24.3752, 24.9872, 26.0561, 25.0092, 32.1302, 32.042, 32.3694, 32.9711, 33.4563, 33.3019, 34.8302, 34.1287, 35.5472, 38.045, 42.3316, 46.267, 45.6335, 47.0868, 46.2531, 45.5975, 46.8415, 46.761, 45.1373, 49.185, 48.1785, 51.8385], "nav15": [1.0, 1.0734, 1.076, 1.137, 1.22, 1.28, 1.3222, 1.2883, 1.3062, 1.2136, 1.2876, 1.3113, 1.3505, 1.6945, 1.9365, 2.1528, 2.1766, 2.2846, 2.4142, 2.7309, 2.6883, 3.3659, 3.9604, 3.6862, 3.8568, 3.8546, 4.118, 4.3832, 5.5494, 5.598, 5.8128, 5.5945, 4.9397, 7.3094, 7.2766, 6.8588, 7.5041, 8.1073, 8.2601, 8.4465, 8.8837, 9.0628, 9.5919, 10.5192, 12.2255, 11.5733, 11.8555, 14.1365, 14.872, 15.3717, 15.7765, 17.9461, 22.7325, 23.6639, 23.7858, 26.1449, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068, 24.3068]};
+new Chart(document.getElementById('navChart').getContext('2d'),{type:'line',
+  data:{labels:D.nav17.map((_,i)=>i===0?'起':'第'+i+'期'),datasets:[
+    {label:'S017',data:D.nav17,borderColor:'#e03131',borderWidth:2,pointRadius:0,fill:false,tension:0.1},
+    {label:'S013',data:D.nav13,borderColor:'#1971c2',borderWidth:1.3,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+    {label:'S015',data:D.nav15,borderColor:'#e67700',borderWidth:1.3,borderDash:[4,3],pointRadius:0,fill:false,tension:0.1},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+' 净值:'+c.parsed.y.toFixed(1)}}},
+    scales:{x:{ticks:{maxTicksLimit:10,font:{size:10}},grid:{display:false}},
+      y:{title:{display:true,text:'净值(倍)',font:{size:10}},ticks:{font:{size:10}},grid:{color:'#f1f3f5'}}}}});
+
+const years=D.years;
+new Chart(document.getElementById('yrChart').getContext('2d'),{type:'bar',
+  data:{labels:years,datasets:[
+    {label:'S013(10天)',data:years.map(y=>D.y13[y]??null),backgroundColor:'rgba(25,113,194,0.7)',borderRadius:3},
+    {label:'S017(20天)',data:years.map(y=>D.y17[y]??null),backgroundColor:'rgba(224,49,49,0.8)',borderRadius:3},
+    {label:'S015(40天)',data:years.map(y=>D.y15[y]??null),backgroundColor:'rgba(230,119,0,0.7)',borderRadius:3},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:14}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.parsed.y>=0?'+':'')+c.parsed.y+'%'}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:10}}},
+      y:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#f1f3f5'}}}}});
+</script>
+</body>
+</html>

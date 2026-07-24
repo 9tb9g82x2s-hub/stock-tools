@@ -1,0 +1,50 @@
+{
+  "strategy_name": "S002-五行生克",
+  "created_date": "2026-07-08",
+  "strategy_type": "多因子",
+  "metrics": {
+    "total_return": 13.42,
+    "annual_return": 0.29,
+    "win_rate": null,
+    "max_drawdown": -0.13,
+    "sharpe_ratio": null,
+    "total_trades": 120
+  },
+  "aux_metrics": {
+    "note": "月度轮动，每月调仓一次，10.5年约120次调仓"
+  },
+  "variants": [
+    {
+      "name": "双策略切换（最优）",
+      "total_return": 13.42,
+      "annual_return": 0.29,
+      "max_drawdown": -0.13,
+      "start_capital": "100万",
+      "end_capital": "1442万",
+      "period": "2016-2026"
+    },
+    {
+      "name": "纯五行（木水火）",
+      "total_return": 6.39,
+      "annual_return": 0.21,
+      "max_drawdown": -0.20,
+      "start_capital": "100万",
+      "end_capital": "739万",
+      "period": "2016-2026"
+    },
+    {
+      "name": "旺相休囚死",
+      "total_return": 0.766,
+      "annual_return": 0.056,
+      "max_drawdown": -0.491,
+      "period": "2016-2026"
+    }
+  ],
+  "stocks": [],
+  "ai_analysis": {
+    "model": "manual",
+    "summary": "农历干支五行行业轮动策略，双模式切换（牛熊判断+五行择时）。10.5年回测年化29%、回撤13%，表现优秀。但行业ETF替代存在执行困难，且五行分类争议较大。",
+    "confidence": "中"
+  },
+  "notes": "策略代码在 ~/WorkBuddy/2026-07-06-12-11-56/wuxing-stock/。实盘需解决行业→ETF映射问题。目前未被策略实验室正式纳入实盘执行范围。"
+}

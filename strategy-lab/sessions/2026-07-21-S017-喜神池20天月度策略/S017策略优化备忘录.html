@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>S017 策略优化备忘录 v2（修正版）</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f6fa;color:#2c3e50;font-size:14px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding:30px 22px}
+h1{font-size:24px;color:#1a1a2e;margin-bottom:4px}
+.sub{color:#7f8c8d;font-size:13px;margin-bottom:8px}
+.date{color:#95a5a6;font-size:12px;margin-bottom:26px}
+.sec{background:#fff;border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.sec h2{font-size:17px;color:#1a1a2e;margin-bottom:16px;padding-left:11px;border-left:4px solid #e74c3c}
+.verdict-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.vcard{flex:1;min-width:200px;border-radius:9px;padding:16px 18px;color:#fff}
+.vcard.bad{background:linear-gradient(135deg,#16a085,#1abc9c)}
+.vcard.neutral{background:linear-gradient(135deg,#e67e22,#f39c12)}
+.vcard .icon{font-size:20px;margin-bottom:6px}
+.vcard .t{font-size:15px;font-weight:700;margin-bottom:6px}
+.vcard .d{font-size:12.5px;opacity:.95;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+th{background:#f0f2f8;color:#34495e;font-weight:600;padding:9px 11px;text-align:right}
+th:first-child{text-align:left}
+td{padding:8px 11px;border-bottom:1px solid #f0f0f0;text-align:right}
+td:first-child{text-align:left;font-weight:500}
+tr:hover{background:#fafbff}
+.hl{color:#c0392b;font-weight:700}
+.dim{color:#16a085;font-weight:700}
+.box{border-radius:8px;padding:14px 18px;font-size:13px;line-height:1.75;margin-top:12px}
+.box.blue{background:#eef6fc;border-left:4px solid #2980b9}
+.box.red{background:#fdf0ee;border-left:4px solid #e74c3c}
+.box.green{background:#eafaf5;border-left:4px solid #16a085}
+.box.gold{background:#fff9e6;border-left:4px solid #f0c040}
+.box.err{background:#fbeee6;border-left:5px solid #d35400}
+.box strong{color:#1a1a2e}
+.tag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:4px;margin-right:6px;font-weight:600}
+.tag.b{background:#e8f8f3;color:#16a085}
+.tag.n{background:#fef5e7;color:#e67e22}
+ol{padding-left:22px;margin-top:8px}
+ol li{margin-bottom:7px}
+.small{font-size:12px;color:#95a5a6;margin-top:10px}
+.strike{text-decoration:line-through;color:#b2bec3}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>S017 策略优化备忘录 <span style="font-size:15px;color:#d35400">v2 · 修正版</span></h1>
+  <div class="sub">喜神池 LightGBM 月度调仓 Top20 · 三轮想法验证结论汇总</div>
+  <div class="date">回测区间 2017-01 ~ 2026-06（114期） · 修正于 2026-07-24（更正 v1 加码分母错误）</div>
+
+  <!-- 🔴 纠错栏 -->
+  <div class="sec">
+    <h2 style="border-left-color:#d35400">🔴 重要更正：v1「加码有效」结论已被推翻</h2>
+    <div class="box err">
+      <strong>v1 备忘录说加码能把年化从 51.4% 提到 54.0%（+2.6%）——这个结论是错的，已作废。</strong><br><br>
+      <strong>错在哪：</strong>加码回测有个分母记账错误。加码那笔「额外投入的资金」在第8天进场，它赚的利润被算进了<em>分子</em>，但<em>分母</em>却仍然只按 1 份初始本金计算，没把额外投入的钱算进去。等于<strong>用 1 份本金的分母，去装 1.5 份本金赚的钱</strong>，收益率自然虚高。<br><br>
+      <strong>修正后真相（同口径、隔离交易成本对比）：</strong>
+      <table>
+        <tr><th>方案</th><th>年化（正确分母）</th><th>vs基准</th></tr>
+        <tr><td>基准（不加码）</td><td class="hl">53.2%</td><td>—</td></tr>
+        <tr><td>加码 K=8 · 2倍 · 前25%</td><td class="dim">48.0%</td><td class="dim">-5.2%</td></tr>
+        <tr><td>加码 K=8 · 3倍 · 前25%</td><td class="dim">44.5%</td><td class="dim">-8.7%</td></tr>
+      </table>
+      <div style="margin-top:10px"><strong>加码在所有参数下都跑输基准，边际回报为负 → 结论从「✅采纳」反转为「❌否决」。</strong>
+      根因：加码钱第8天才进场，只能吃后半段涨幅，而牛股大头在前8天就跑完了；用半份本金追一段已泄气的行情，边际ROI远低于原始仓位。</div>
+    </div>
+  </div>
+
+  <!-- 基准 -->
+  <div class="sec">
+    <h2>📊 策略基准盘（含交易成本）</h2>
+    <table>
+      <tr><th>指标</th><th>年化收益</th><th>10年净值</th><th>最大回撤</th><th>夏普</th><th>月度胜率</th></tr>
+      <tr><td>原 S017 等权</td><td class="hl">51.4%</td><td>51.3x</td><td class="dim">-13.9%</td><td>1.90</td><td>68.4%</td></tr>
+    </table>
+    <div class="box gold">
+      <strong>选股画像（关键前提）：</strong>S017 靠机器学习多因子打分选票，<strong>不是趋势跟随</strong>。
+      选中当日仅 11.5% 是均线完全多头排列，翻倍大牛股（&gt;50%）中 <strong>0% 来自完全多头</strong>。
+      真正的 alpha 来自「高换手 + 近期回调 + 中大市值成长股」的潜伏低吸——买的是启动<em>前</em>的票，不是走强<em>后</em>的票。
+    </div>
+  </div>
+
+  <!-- 三轮结论总览 -->
+  <div class="sec">
+    <h2>🎯 三个想法验证 · 最终裁定（全否决）</h2>
+    <div class="verdict-row">
+      <div class="vcard bad">
+        <div class="icon">❌</div>
+        <div class="t">想法1：跟随加码</div>
+        <div class="d">第8天对领涨票追加权重。<br><b>修正分母后跑输基准 5-9个点</b></div>
+      </div>
+      <div class="vcard bad">
+        <div class="icon">❌</div>
+        <div class="t">想法2：空跑集中</div>
+        <div class="d">前期空仓，等强者出来再全押。<br><b>踏空主升段，-21%年化</b></div>
+      </div>
+      <div class="vcard neutral">
+        <div class="icon">⚠️</div>
+        <div class="t">想法3：延长持有</div>
+        <div class="d">强势股拿40/80天博大趋势。<br><b>资金效率腰斩，20天最优</b></div>
+      </div>
+    </div>
+    <div class="box blue">
+      <strong>一句话总纲：</strong>三个增强想法没有一个真能加分。这个策略的钱<strong>应该第一天就平摊到20只、吃满约20天持有期</strong>——原骨架本身已是最优解。
+    </div>
+  </div>
+
+  <!-- 想法1 -->
+  <div class="sec">
+    <h2><span class="tag b">❌ 否决</span>想法1：持有期跟随加码</h2>
+    <p>让市场先跑几天，把额外资金压到已领涨的票上（强者恒强）。方向直觉合理，但数据不支持。</p>
+    <table>
+      <tr><th>方案（正确分母）</th><th>年化</th><th>vs基准</th></tr>
+      <tr><td>基准（不加码）</td><td class="hl">53.2%</td><td>—</td></tr>
+      <tr><td>K=3 · 2倍 · 前25%</td><td class="dim">49.6%</td><td class="dim">-3.6%</td></tr>
+      <tr><td>K=8 · 2倍 · 前25%</td><td class="dim">48.0%</td><td class="dim">-5.2%</td></tr>
+      <tr><td>K=8 · 3倍 · 前25%</td><td class="dim">44.5%</td><td class="dim">-8.7%</td></tr>
+    </table>
+    <div class="box red">
+      <strong>为什么无效：</strong>虽然"早期强→后续也不差"确实存在（这点没错），但<strong>加码资金只能吃第8天之后的后半段涨幅</strong>，而牛股的主升浪在前8天就走完了。追加进去的钱边际回报低于原始平摊仓位，摊进分母反而拉低整体资金效率。加得越多（3倍）拖累越大。<br>
+      <span class="small">注：v1 得出 +2.6% 是因为分母漏算了加码资金，属记账错误，非真实收益。</span>
+    </div>
+  </div>
+
+  <!-- 想法2 -->
+  <div class="sec">
+    <h2><span class="tag b">❌ 否决</span>想法2：空跑后集中投入</h2>
+    <p>组合选出后前期空仓不投钱，等强势股跑出来后把全部资金集中押上去。</p>
+    <table>
+      <tr><th>方案</th><th>年化</th><th>净值</th><th>回撤</th><th>vs基准</th></tr>
+      <tr><td>基准（原等权）</td><td>51.4%</td><td>51.3x</td><td>-13.9%</td><td>—</td></tr>
+      <tr><td>最优（K=3 Top10）</td><td class="dim">29.9%</td><td>12.0x</td><td>-15.6%</td><td class="dim">-21.5%</td></tr>
+      <tr><td>最差（K=5 Top3）</td><td class="dim">15.5%</td><td>3.9x</td><td>-34.7%</td><td class="dim">-35.9%</td></tr>
+    </table>
+    <div class="box red">
+      <strong>为什么有害：</strong>牛股大头涨幅前K天就跑完了（第10天大牛股中位已 +27%）。空跑=系统性踏空最肥一段，第K天追进去买的是阶段高位。叠加集中度暴增（20只→3~10只），回撤放大到 -15%~-35%。全部12组参数无一跑赢基准。
+    </div>
+  </div>
+
+  <!-- 想法3 -->
+  <div class="sec">
+    <h2><span class="tag n">⚠️ 保留</span>想法3：强势股延长持有期</h2>
+    <p>把第8天识别的强势股（Top5），持有期从20天延长到40/80天。此项为单笔收益口径，无分母bug。</p>
+    <table>
+      <tr><th>持有期</th><th>单笔平均</th><th>中位</th><th>胜率</th><th>止损率</th><th>大牛率</th><th>日均收益</th></tr>
+      <tr style="background:#fff9e6"><td><b>20天</b></td><td>+11.52%</td><td>+7.69%</td><td class="hl">86.1%</td><td class="dim">2.1%</td><td>2.6%</td><td class="hl">0.576%/天</td></tr>
+      <tr><td>40天</td><td>+13.28%</td><td>+8.20%</td><td>76.8%</td><td>6.8%</td><td>6.1%</td><td>0.332%/天</td></tr>
+      <tr><td>80天</td><td class="hl">+15.34%</td><td>+8.58%</td><td>68.8%</td><td class="dim">17.9%</td><td class="hl">9.5%</td><td class="dim">0.192%/天</td></tr>
+    </table>
+    <div class="box gold">
+      <strong>表面陷阱：</strong>拿越久单笔平均收益越高、抓大牛概率越高。<br>
+      <strong>真相：</strong>①中位数几乎不动（均值全靠少数大牛拉动）②胜率下滑、止损率飙到18% ③<strong>资金效率腰斩</strong>：日均收益 0.576%→0.192%，周转变慢实际更亏。<br>
+      <strong>结论：20天是甜蜜点。</strong>这些是"前期强、后期均值回归"的博弈品种，不是能长拿的趋势票。
+    </div>
+  </div>
+
+  <!-- 最终行动 -->
+  <div class="sec">
+    <h2>🏁 最终行动建议</h2>
+    <div class="box blue">
+      <ol>
+        <li><strong>保持原骨架不动（这就是最优解）：</strong>喜神池LightGBM选股 + Top20等权 + 约20天月度调仓 + -12%止损，年化 51.4%。三个增强想法验证下来没一个真能加分。</li>
+        <li><strong>不要做加码</strong>——修正分母后边际回报为负，跑输基准5~9个点。</li>
+        <li><strong>不要做空跑等待</strong>——踏空牛股主升段，年化直接腰斩。</li>
+        <li><strong>不要延长持有期</strong>——资金效率腰斩，20天最优。</li>
+        <li><strong>不要加均线多头过滤</strong>——会系统性错过全部翻倍股（大牛股0%来自多头排列）。</li>
+        <li><strong>资金用法结论：</strong>每一份钱从第一天平摊在20只上，让时间和分散度自己发挥，是这个策略的最佳资金配置。</li>
+      </ol>
+    </div>
+    <div class="box err" style="margin-top:14px">
+      <strong>📌 方法论教训（已固化为自查清单）：</strong>本次 v1 的加码错误源于「分子记了加码资金的利润、分母却没算加码资金的本金」。
+      今后所有涉及资金变动（加码/减仓/杠杆/再平衡）的收益率测算，都必须先核对：<strong>新投入的资金是否已计入分母、分子分母时间口径是否一致</strong>。已建立回测自查清单强制走查。
+    </div>
+    <div class="small">
+      口径说明：基准与空跑/长持含双边佣金0.025%+印花税0.05%；加码修正对比为隔离成本的纯分母测试（53.2% vs 51.4% 的差异即来自是否计成本）。前复权价，开盘买入/开盘卖出，全程-12%止损。本备忘录为历史回测统计，不构成实盘建议。
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

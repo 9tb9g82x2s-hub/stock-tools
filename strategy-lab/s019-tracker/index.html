@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S019 实盘追踪</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--bg:#f5f6f8;--card:#fff;--border:#e5e7eb;--text:#1a1a1a;--muted:#6b7280;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);font-size:14px;padding-bottom:30px;}
+  .topbar{background:linear-gradient(135deg,#5c1a1a,#c92a2a);color:#fff;padding:18px 20px;}
+  .topbar h1{font-size:19px;font-weight:600;}
+  .topbar .sub{font-size:12px;opacity:.9;margin-top:3px;}
+  .wrap{max-width:1000px;margin:0 auto;padding:16px;}
+  .hero{background:var(--card);border-radius:14px;padding:22px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .hero .pnl-big{font-size:38px;font-weight:700;line-height:1.1;}
+  .hero .pnl-pct{font-size:18px;font-weight:600;margin-left:8px;}
+  .hero .lb{font-size:12px;color:var(--muted);margin-bottom:6px;}
+  .hero .meta{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+  .hero .meta b{color:var(--text);font-size:14px;font-weight:600;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+  .stat{background:var(--card);border-radius:12px;padding:14px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .stat .v{font-size:20px;font-weight:700;}
+  .stat .l{font-size:11px;color:var(--muted);margin-top:3px;}
+  .card{background:var(--card);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .card h2{font-size:15px;font-weight:600;margin-bottom:14px;}
+  .cw{position:relative;height:260px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:right;padding:8px 6px;color:var(--muted);font-weight:500;font-size:11px;border-bottom:1px solid var(--border);}
+  th:first-child{text-align:left;}
+  td{text-align:right;padding:9px 6px;border-bottom:1px solid #f3f4f6;}
+  td:first-child{text-align:left;}
+  .up{color:var(--red);}.dn{color:var(--green);}.flat{color:var(--muted);}
+  .bar{height:4px;border-radius:2px;margin-top:3px;}
+  .tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:4px;}
+  .tag-stop{background:#fee2e2;color:#b91c1c;}
+  .rk{display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:50%;background:#f3f4f6;color:var(--muted);font-size:10px;margin-right:6px;}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr);}.hero .pnl-big{font-size:30px;}.industry-col{display:none;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>📈 S019 实盘追踪</h1>
+  <div class="sub" id="subBar">加载中…</div>
+</div>
+<div class="wrap">
+  <div class="hero">
+    <div class="lb">当前浮动盈亏</div>
+    <div><span class="pnl-big" id="pnlBig">—</span><span class="pnl-pct" id="pnlPct"></span></div>
+    <div class="meta" id="heroMeta"></div>
+  </div>
+  <div class="grid4" id="statGrid"></div>
+  <div class="card">
+    <h2>净值曲线</h2>
+    <div class="cw"><canvas id="navChart" role="img" aria-label="组合净值曲线">净值曲线</canvas></div>
+  </div>
+  <div class="card">
+    <h2>持仓明细 <span style="font-weight:400;color:var(--muted);font-size:12px;">(按涨跌排序)</span></h2>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr>
+        <th>股票</th><th class="industry-col">行业</th><th>成本价</th><th>现价</th>
+        <th>涨跌</th><th>市值</th><th>浮盈</th>
+      </tr></thead>
+      <tbody id="posBody"></tbody>
+    </table>
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:11px;">数据每晚自动更新 · 模拟盘跟踪 · 不构成投资建议</p>
+</div>
+<script id="dataScript" type="application/json">{"summary": {"strategy": "S019 高频10日换仓", "buy_date": "2026-07-21", "sell_date_expected": "2026-08-04", "capital": 1000000, "total_cost": 882723.0, "cash": 117277.0, "cur_market_value": 842871.0, "cur_nav": 0.9601, "cur_pnl": -39852.0, "cur_pnl_pct": -4.51, "days_held": 4, "latest_date": "2026-07-24", "n_stop": 3, "n_win": 2, "n_lose": 18, "updated_at": "2026-07-24 22:35:31"}, "nav_curve": [{"date": "2026-07-21", "nav": 1.0, "market_value": 882723.0, "pnl": 0.0, "pnl_pct": 0.0}, {"date": "2026-07-22", "nav": 0.9723, "market_value": 855054.0, "pnl": -27669.0, "pnl_pct": -3.13}, {"date": "2026-07-23", "nav": 0.979, "market_value": 861710.0, "pnl": -21013.0, "pnl_pct": -2.38}, {"date": "2026-07-24", "nav": 0.9601, "market_value": 842871.0, "pnl": -39852.0, "pnl_pct": -4.51}], "holdings": [{"code": "605198.SH", "name": "安德利", "industry": "软饮料", "buy_price": 49.52, "cur_price": 54.63, "lots": 10, "shares": 1000, "cost": 49520.0, "market_value": 54630.0, "pnl": 5110.0, "pnl_pct": 10.32, "stop_line": 43.58, "is_stop": false}, {"code": "002008.SZ", "name": "大族激光", "industry": "专用机械", "buy_price": 100.89, "cur_price": 101.76, "lots": 4, "shares": 400, "cost": 40356.0, "market_value": 40704.0, "pnl": 348.0, "pnl_pct": 0.86, "stop_line": 88.78, "is_stop": false}, {"code": "300749.SZ", "name": "顶固集创", "industry": "家居用品", "buy_price": 17.15, "cur_price": 17.11, "lots": 29, "shares": 2900, "cost": 49735.0, "market_value": 49619.0, "pnl": -116.0, "pnl_pct": -0.23, "stop_line": 15.09, "is_stop": false}, {"code": "688800.SH", "name": "瑞可达", "industry": "元器件", "buy_price": 60.0, "cur_price": 59.2, "lots": 8, "shares": 800, "cost": 48000.0, "market_value": 47360.0, "pnl": -640.0, "pnl_pct": -1.33, "stop_line": 52.8, "is_stop": false}, {"code": "603936.SH", "name": "博敏电子", "industry": "元器件", "buy_price": 14.04, "cur_price": 13.74, "lots": 35, "shares": 3500, "cost": 49140.0, "market_value": 48090.0, "pnl": -1050.0, "pnl_pct": -2.14, "stop_line": 12.36, "is_stop": false}, {"code": "688551.SH", "name": "科威尔", "industry": "专用机械", "buy_price": 39.58, "cur_price": 38.66, "lots": 12, "shares": 1200, "cost": 47496.0, "market_value": 46392.0, "pnl": -1104.0, "pnl_pct": -2.32, "stop_line": 34.83, "is_stop": false}, {"code": "600563.SH", "name": "法拉电子", "industry": "元器件", "buy_price": 130.48, "cur_price": 126.86, "lots": 3, "shares": 300, "cost": 39144.0, "market_value": 38058.0, "pnl": -1086.0, "pnl_pct": -2.77, "stop_line": 114.82, "is_stop": false}, {"code": "603115.SH", "name": "海星股份", "industry": "铝", "buy_price": 69.9, "cur_price": 67.17, "lots": 7, "shares": 700, "cost": 48930.0, "market_value": 47019.0, "pnl": -1911.0, "pnl_pct": -3.91, "stop_line": 61.51, "is_stop": false}, {"code": "002929.SZ", "name": "润建股份", "industry": "通信设备", "buy_price": 52.08, "cur_price": 49.9, "lots": 9, "shares": 900, "cost": 46872.0, "market_value": 44910.0, "pnl": -1962.0, "pnl_pct": -4.19, "stop_line": 45.83, "is_stop": false}, {"code": "688456.SH", "name": "有研粉材", "industry": "铜", "buy_price": 78.0, "cur_price": 74.54, "lots": 6, "shares": 600, "cost": 46800.0, "market_value": 44724.0, "pnl": -2076.0, "pnl_pct": -4.44, "stop_line": 68.64, "is_stop": false}, {"code": "300975.SZ", "name": "商络电子", "industry": "元器件", "buy_price": 27.05, "cur_price": 25.85, "lots": 18, "shares": 1800, "cost": 48690.0, "market_value": 46530.0, "pnl": -2160.0, "pnl_pct": -4.44, "stop_line": 23.8, "is_stop": false}, {"code": "688536.SH", "name": "思瑞浦", "industry": "半导体", "buy_price": 258.97, "cur_price": 244.3, "lots": 1, "shares": 100, "cost": 25897.0, "market_value": 24430.0, "pnl": -1467.0, "pnl_pct": -5.66, "stop_line": 227.89, "is_stop": false}, {"code": "688531.SH", "name": "日联科技", "industry": "专用机械", "buy_price": 131.0, "cur_price": 123.42, "lots": 3, "shares": 300, "cost": 39300.0, "market_value": 37026.0, "pnl": -2274.0, "pnl_pct": -5.79, "stop_line": 115.28, "is_stop": false}, {"code": "601126.SH", "name": "四方股份", "industry": "电气设备", "buy_price": 44.84, "cur_price": 41.72, "lots": 11, "shares": 1100, "cost": 49324.0, "market_value": 45892.0, "pnl": -3432.0, "pnl_pct": -6.96, "stop_line": 39.46, "is_stop": false}, {"code": "688312.SH", "name": "燕麦科技", "industry": "专用机械", "buy_price": 47.86, "cur_price": 44.18, "lots": 10, "shares": 1000, "cost": 47860.0, "market_value": 44180.0, "pnl": -3680.0, "pnl_pct": -7.69, "stop_line": 42.12, "is_stop": false}, {"code": "688112.SH", "name": "鼎阳科技", "industry": "电器仪表", "buy_price": 53.04, "cur_price": 48.8, "lots": 9, "shares": 900, "cost": 47736.0, "market_value": 43920.0, "pnl": -3816.0, "pnl_pct": -7.99, "stop_line": 46.68, "is_stop": false}, {"code": "688308.SH", "name": "欧科亿", "industry": "机械基件", "buy_price": 101.68, "cur_price": 92.01, "lots": 4, "shares": 400, "cost": 40672.0, "market_value": 36804.0, "pnl": -3868.0, "pnl_pct": -9.51, "stop_line": 89.48, "is_stop": false}, {"code": "301308.SZ", "name": "江波龙", "industry": "半导体", "buy_price": 421.86, "cur_price": 370.01, "lots": 1, "shares": 100, "cost": 42186.0, "market_value": 37001.0, "pnl": -5185.0, "pnl_pct": -12.29, "stop_line": 371.24, "is_stop": true}, {"code": "600487.SH", "name": "亨通光电", "industry": "通信设备", "buy_price": 59.96, "cur_price": 52.43, "lots": 8, "shares": 800, "cost": 47968.0, "market_value": 41944.0, "pnl": -6024.0, "pnl_pct": -12.56, "stop_line": 52.76, "is_stop": true}, {"code": "688525.SH", "name": "佰维存储", "industry": "半导体", "buy_price": 270.97, "cur_price": 236.38, "lots": 1, "shares": 100, "cost": 27097.0, "market_value": 23638.0, "pnl": -3459.0, "pnl_pct": -12.77, "stop_line": 238.45, "is_stop": true}]}</script>
+<script>
+const D = JSON.parse(document.getElementById('dataScript').textContent);
+const s = D.summary;
+const fmt = (v,d=0)=>Number(v).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmtW = v=>(v/1e4).toFixed(2)+'万';
+const cls = v=>v>0?'up':v<0?'dn':'flat';
+const sign = v=>v>0?'+':'';
+
+document.getElementById('subBar').textContent =
+  `${s.strategy} · 建仓 ${s.buy_date} · 数据至 ${s.latest_date} · 更新于 ${s.updated_at}`;
+
+const pb=document.getElementById('pnlBig');
+pb.textContent = `${sign(s.cur_pnl)}${fmt(s.cur_pnl)}元`;
+pb.className = 'pnl-big '+cls(s.cur_pnl);
+const pp=document.getElementById('pnlPct');
+pp.textContent = `${sign(s.cur_pnl_pct)}${s.cur_pnl_pct}%`;
+pp.className = 'pnl-pct '+cls(s.cur_pnl_pct);
+
+document.getElementById('heroMeta').innerHTML =
+  `<span>总资产 <b>${fmtW(s.cur_market_value + s.cash)}</b></span>`+
+  `<span>持仓市值 <b>${fmtW(s.cur_market_value)}</b></span>`+
+  `<span>现金 <b>${fmtW(s.cash)}</b></span>`+
+  `<span>净值 <b>${s.cur_nav}</b></span>`;
+
+const stats=[
+  {v:s.days_held+'天',l:'持仓天数'},
+  {v:s.n_win+'/'+(s.n_win+s.n_lose+ (20-s.n_win-s.n_lose)),l:'盈利个股',c:'up'},
+  {v:s.n_lose,l:'亏损个股',c:'dn'},
+  {v:s.n_stop,l:'触及止损',c:s.n_stop>0?'dn':'flat'},
+];
+document.getElementById('statGrid').innerHTML = stats.map(x=>
+  `<div class="stat"><div class="v ${x.c||''}">${x.v}</div><div class="l">${x.l}</div></div>`).join('');
+
+new Chart(document.getElementById('navChart'),{
+  type:'line',
+  data:{labels:D.nav_curve.map(p=>p.date.slice(5)),
+    datasets:[{data:D.nav_curve.map(p=>p.pnl_pct),borderColor:'#c92a2a',
+      backgroundColor:'rgba(201,42,42,0.08)',borderWidth:2,pointRadius:3,fill:true,tension:0.15}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'累计收益 '+(c.parsed.y>=0?'+':'')+c.parsed.y+'%'}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#6b7280'}},
+      y:{ticks:{callback:v=>v+'%',font:{size:10},color:'#6b7280'},grid:{color:'#f3f4f6'}}}}
+});
+
+const maxAbs = Math.max(...D.holdings.map(h=>Math.abs(h.pnl_pct)),1);
+document.getElementById('posBody').innerHTML = D.holdings.map((h,i)=>{
+  const c=cls(h.pnl_pct);
+  const barColor = h.pnl_pct>0?'#e03131':h.pnl_pct<0?'#2f9e44':'#d1d5db';
+  const barW = Math.abs(h.pnl_pct)/maxAbs*100;
+  return `<tr>
+    <td><span class="rk">${i+1}</span><b>${h.name}</b><br>
+       <span style="color:#9ca3af;font-size:11px;margin-left:24px;">${h.code}</span>
+       ${h.is_stop?'<span class="tag tag-stop">止损</span>':''}
+       <div class="bar" style="width:${barW}%;background:${barColor};margin-left:24px;"></div></td>
+    <td class="industry-col" style="color:#9ca3af;font-size:12px;">${h.industry||'—'}</td>
+    <td>${h.buy_price}</td>
+    <td><b>${h.cur_price}</b></td>
+    <td class="${c}">${sign(h.pnl_pct)}${h.pnl_pct}%</td>
+    <td style="color:#6b7280;">${fmtW(h.market_value)}</td>
+    <td class="${c}">${sign(h.pnl)}${fmt(h.pnl)}</td>
+  </tr>`;
+}).join('');
+</script>
+</body>
+</html>

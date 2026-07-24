@@ -1,0 +1,1782 @@
+{
+  "strategy": "S009-PIT(时点还原黑名单)",
+  "metrics": {
+    "total_return": 22.7209,
+    "annual_return": 0.3997,
+    "win_rate": 0.646,
+    "max_drawdown": -0.1955,
+    "sharpe_ratio": 1.365,
+    "total_trades": 113
+  },
+  "yearly": [
+    {
+      "year": "2017",
+      "periods": 12,
+      "return_pct": 32.06,
+      "avg_pit_loss": 0,
+      "avg_win": 10.8
+    },
+    {
+      "year": "2018",
+      "periods": 12,
+      "return_pct": 15.86,
+      "avg_pit_loss": 0,
+      "avg_win": 11.3
+    },
+    {
+      "year": "2019",
+      "periods": 12,
+      "return_pct": 73.63,
+      "avg_pit_loss": 0,
+      "avg_win": 11.8
+    },
+    {
+      "year": "2020",
+      "periods": 12,
+      "return_pct": 46.31,
+      "avg_pit_loss": 525,
+      "avg_win": 12.2
+    },
+    {
+      "year": "2021",
+      "periods": 12,
+      "return_pct": 83.15,
+      "avg_pit_loss": 588,
+      "avg_win": 13.3
+    },
+    {
+      "year": "2022",
+      "periods": 12,
+      "return_pct": 36.21,
+      "avg_pit_loss": 777,
+      "avg_win": 10.6
+    },
+    {
+      "year": "2023",
+      "periods": 12,
+      "return_pct": 9.71,
+      "avg_pit_loss": 962,
+      "avg_win": 9.8
+    },
+    {
+      "year": "2024",
+      "periods": 12,
+      "return_pct": 78.38,
+      "avg_pit_loss": 1130,
+      "avg_win": 12.9
+    },
+    {
+      "year": "2025",
+      "periods": 12,
+      "return_pct": 28.79,
+      "avg_pit_loss": 1274,
+      "avg_win": 11.7
+    },
+    {
+      "year": "2026",
+      "periods": 5,
+      "return_pct": -2.94,
+      "avg_pit_loss": 1306,
+      "avg_win": 9.2
+    }
+  ],
+  "nav_curve": [
+    {
+      "date": "20170206",
+      "nav": 1.000781
+    },
+    {
+      "date": "20170302",
+      "nav": 1.067996
+    },
+    {
+      "date": "20170406",
+      "nav": 1.08157
+    },
+    {
+      "date": "20170503",
+      "nav": 1.03006
+    },
+    {
+      "date": "20170602",
+      "nav": 1.009022
+    },
+    {
+      "date": "20170704",
+      "nav": 1.12189
+    },
+    {
+      "date": "20170802",
+      "nav": 1.223374
+    },
+    {
+      "date": "20170904",
+      "nav": 1.253462
+    },
+    {
+      "date": "20171010",
+      "nav": 1.273705
+    },
+    {
+      "date": "20171102",
+      "nav": 1.282882
+    },
+    {
+      "date": "20171204",
+      "nav": 1.271456
+    },
+    {
+      "date": "20180103",
+      "nav": 1.320646
+    },
+    {
+      "date": "20180202",
+      "nav": 1.340376
+    },
+    {
+      "date": "20180302",
+      "nav": 1.332902
+    },
+    {
+      "date": "20180403",
+      "nav": 1.505177
+    },
+    {
+      "date": "20180503",
+      "nav": 1.486432
+    },
+    {
+      "date": "20180604",
+      "nav": 1.430105
+    },
+    {
+      "date": "20180703",
+      "nav": 1.33312
+    },
+    {
+      "date": "20180802",
+      "nav": 1.380248
+    },
+    {
+      "date": "20180904",
+      "nav": 1.359169
+    },
+    {
+      "date": "20181009",
+      "nav": 1.375727
+    },
+    {
+      "date": "20181105",
+      "nav": 1.384783
+    },
+    {
+      "date": "20181205",
+      "nav": 1.572302
+    },
+    {
+      "date": "20190107",
+      "nav": 1.530068
+    },
+    {
+      "date": "20190211",
+      "nav": 1.574885
+    },
+    {
+      "date": "20190304",
+      "nav": 2.080979
+    },
+    {
+      "date": "20190403",
+      "nav": 2.350035
+    },
+    {
+      "date": "20190507",
+      "nav": 2.110376
+    },
+    {
+      "date": "20190604",
+      "nav": 2.22324
+    },
+    {
+      "date": "20190702",
+      "nav": 2.293724
+    },
+    {
+      "date": "20190802",
+      "nav": 2.081919
+    },
+    {
+      "date": "20190903",
+      "nav": 2.333144
+    },
+    {
+      "date": "20191009",
+      "nav": 2.292713
+    },
+    {
+      "date": "20191104",
+      "nav": 2.472504
+    },
+    {
+      "date": "20191203",
+      "nav": 2.405236
+    },
+    {
+      "date": "20200103",
+      "nav": 2.656647
+    },
+    {
+      "date": "20200204",
+      "nav": 2.137291
+    },
+    {
+      "date": "20200303",
+      "nav": 2.689398
+    },
+    {
+      "date": "20200402",
+      "nav": 2.367039
+    },
+    {
+      "date": "20200507",
+      "nav": 2.815691
+    },
+    {
+      "date": "20200602",
+      "nav": 3.053998
+    },
+    {
+      "date": "20200702",
+      "nav": 3.500754
+    },
+    {
+      "date": "20200804",
+      "nav": 3.888309
+    },
+    {
+      "date": "20200902",
+      "nav": 4.126979
+    },
+    {
+      "date": "20201012",
+      "nav": 4.009899
+    },
+    {
+      "date": "20201103",
+      "nav": 3.67246
+    },
+    {
+      "date": "20201202",
+      "nav": 3.791601
+    },
+    {
+      "date": "20210105",
+      "nav": 3.886857
+    },
+    {
+      "date": "20210202",
+      "nav": 4.007604
+    },
+    {
+      "date": "20210302",
+      "nav": 4.279388
+    },
+    {
+      "date": "20210402",
+      "nav": 4.457213
+    },
+    {
+      "date": "20210507",
+      "nav": 4.847177
+    },
+    {
+      "date": "20210602",
+      "nav": 5.047506
+    },
+    {
+      "date": "20210702",
+      "nav": 5.404563
+    },
+    {
+      "date": "20210803",
+      "nav": 5.644888
+    },
+    {
+      "date": "20210902",
+      "nav": 5.950149
+    },
+    {
+      "date": "20211011",
+      "nav": 6.357021
+    },
+    {
+      "date": "20211102",
+      "nav": 6.022144
+    },
+    {
+      "date": "20211202",
+      "nav": 6.527199
+    },
+    {
+      "date": "20220105",
+      "nav": 7.118746
+    },
+    {
+      "date": "20220208",
+      "nav": 7.065418
+    },
+    {
+      "date": "20220302",
+      "nav": 7.594368
+    },
+    {
+      "date": "20220406",
+      "nav": 7.135637
+    },
+    {
+      "date": "20220506",
+      "nav": 6.272053
+    },
+    {
+      "date": "20220602",
+      "nav": 7.748216
+    },
+    {
+      "date": "20220704",
+      "nav": 8.340242
+    },
+    {
+      "date": "20220802",
+      "nav": 8.493213
+    },
+    {
+      "date": "20220902",
+      "nav": 8.548005
+    },
+    {
+      "date": "20221011",
+      "nav": 7.941931
+    },
+    {
+      "date": "20221102",
+      "nav": 9.013252
+    },
+    {
+      "date": "20221202",
+      "nav": 9.797528
+    },
+    {
+      "date": "20230104",
+      "nav": 9.696293
+    },
+    {
+      "date": "20230202",
+      "nav": 10.160721
+    },
+    {
+      "date": "20230302",
+      "nav": 10.507856
+    },
+    {
+      "date": "20230404",
+      "nav": 10.207579
+    },
+    {
+      "date": "20230505",
+      "nav": 9.970756
+    },
+    {
+      "date": "20230602",
+      "nav": 9.778687
+    },
+    {
+      "date": "20230704",
+      "nav": 10.249821
+    },
+    {
+      "date": "20230802",
+      "nav": 10.756956
+    },
+    {
+      "date": "20230904",
+      "nav": 10.336931
+    },
+    {
+      "date": "20231010",
+      "nav": 10.592008
+    },
+    {
+      "date": "20231102",
+      "nav": 10.473905
+    },
+    {
+      "date": "20231204",
+      "nav": 10.702631
+    },
+    {
+      "date": "20240103",
+      "nav": 10.638268
+    },
+    {
+      "date": "20240202",
+      "nav": 11.149846
+    },
+    {
+      "date": "20240304",
+      "nav": 12.212981
+    },
+    {
+      "date": "20240402",
+      "nav": 13.992965
+    },
+    {
+      "date": "20240507",
+      "nav": 14.598713
+    },
+    {
+      "date": "20240604",
+      "nav": 13.876165
+    },
+    {
+      "date": "20240702",
+      "nav": 13.44341
+    },
+    {
+      "date": "20240802",
+      "nav": 16.403304
+    },
+    {
+      "date": "20240903",
+      "nav": 15.502637
+    },
+    {
+      "date": "20241009",
+      "nav": 19.658799
+    },
+    {
+      "date": "20241104",
+      "nav": 18.380922
+    },
+    {
+      "date": "20241203",
+      "nav": 19.136407
+    },
+    {
+      "date": "20250103",
+      "nav": 18.976343
+    },
+    {
+      "date": "20250206",
+      "nav": 18.843309
+    },
+    {
+      "date": "20250304",
+      "nav": 18.807002
+    },
+    {
+      "date": "20250402",
+      "nav": 19.387895
+    },
+    {
+      "date": "20250507",
+      "nav": 19.317384
+    },
+    {
+      "date": "20250604",
+      "nav": 19.14653
+    },
+    {
+      "date": "20250702",
+      "nav": 20.32979
+    },
+    {
+      "date": "20250804",
+      "nav": 21.126797
+    },
+    {
+      "date": "20250902",
+      "nav": 21.870976
+    },
+    {
+      "date": "20251010",
+      "nav": 22.071033
+    },
+    {
+      "date": "20251104",
+      "nav": 22.798504
+    },
+    {
+      "date": "20251202",
+      "nav": 23.628166
+    },
+    {
+      "date": "20260106",
+      "nav": 24.44051
+    },
+    {
+      "date": "20260203",
+      "nav": 24.545979
+    },
+    {
+      "date": "20260303",
+      "nav": 25.016208
+    },
+    {
+      "date": "20260402",
+      "nav": 23.656549
+    },
+    {
+      "date": "20260507",
+      "nav": 25.335999
+    },
+    {
+      "date": "20260602",
+      "nav": 23.720863
+    }
+  ],
+  "trades": [
+    {
+      "rebalance_date": "20170103",
+      "buy_date": "20170104",
+      "sell_date": "20170206",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.001031,
+      "period_return": 0.000781,
+      "win_count": 6,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20170203",
+      "buy_date": "20170206",
+      "sell_date": "20170302",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.068011,
+      "period_return": 0.067163,
+      "win_count": 17,
+      "n_holdings": 19
+    },
+    {
+      "rebalance_date": "20170301",
+      "buy_date": "20170302",
+      "sell_date": "20170406",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.013709,
+      "period_return": 0.012709,
+      "win_count": 9,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20170405",
+      "buy_date": "20170406",
+      "sell_date": "20170503",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.046625,
+      "period_return": -0.047625,
+      "win_count": 2,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20170502",
+      "buy_date": "20170503",
+      "sell_date": "20170602",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.019523,
+      "period_return": -0.020423,
+      "win_count": 9,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20170601",
+      "buy_date": "20170602",
+      "sell_date": "20170704",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.112758,
+      "period_return": 0.111858,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20170703",
+      "buy_date": "20170704",
+      "sell_date": "20170802",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.091408,
+      "period_return": 0.090458,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20170801",
+      "buy_date": "20170802",
+      "sell_date": "20170904",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.025543,
+      "period_return": 0.024594,
+      "win_count": 12,
+      "n_holdings": 18
+    },
+    {
+      "rebalance_date": "20170901",
+      "buy_date": "20170904",
+      "sell_date": "20171010",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.016987,
+      "period_return": 0.01615,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20171009",
+      "buy_date": "20171010",
+      "sell_date": "20171102",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.008105,
+      "period_return": 0.007205,
+      "win_count": 11,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20171101",
+      "buy_date": "20171102",
+      "sell_date": "20171204",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.007907,
+      "period_return": -0.008907,
+      "win_count": 8,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20171201",
+      "buy_date": "20171204",
+      "sell_date": "20180103",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.039638,
+      "period_return": 0.038688,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20180102",
+      "buy_date": "20180103",
+      "sell_date": "20180202",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.01589,
+      "period_return": 0.01494,
+      "win_count": 13,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20180201",
+      "buy_date": "20180202",
+      "sell_date": "20180302",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.004626,
+      "period_return": -0.005576,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20180301",
+      "buy_date": "20180302",
+      "sell_date": "20180403",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.130247,
+      "period_return": 0.129247,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20180402",
+      "buy_date": "20180403",
+      "sell_date": "20180503",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.011453,
+      "period_return": -0.012453,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20180502",
+      "buy_date": "20180503",
+      "sell_date": "20180604",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.036995,
+      "period_return": -0.037894,
+      "win_count": 5,
+      "n_holdings": 19
+    },
+    {
+      "rebalance_date": "20180601",
+      "buy_date": "20180604",
+      "sell_date": "20180703",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.066817,
+      "period_return": -0.067817,
+      "win_count": 4,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20180702",
+      "buy_date": "20180703",
+      "sell_date": "20180802",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.036302,
+      "period_return": 0.035352,
+      "win_count": 13,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20180801",
+      "buy_date": "20180802",
+      "sell_date": "20180904",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.014272,
+      "period_return": -0.015272,
+      "win_count": 8,
+      "n_holdings": 19
+    },
+    {
+      "rebalance_date": "20180903",
+      "buy_date": "20180904",
+      "sell_date": "20181009",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.012923,
+      "period_return": 0.012183,
+      "win_count": 16,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20181008",
+      "buy_date": "20181009",
+      "sell_date": "20181105",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.007083,
+      "period_return": 0.006583,
+      "win_count": 13,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20181101",
+      "buy_date": "20181105",
+      "sell_date": "20181205",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.136414,
+      "period_return": 0.135414,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20181203",
+      "buy_date": "20181205",
+      "sell_date": "20190107",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.025861,
+      "period_return": -0.026861,
+      "win_count": 6,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20190102",
+      "buy_date": "20190107",
+      "sell_date": "20190211",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.030141,
+      "period_return": 0.029291,
+      "win_count": 12,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20190201",
+      "buy_date": "20190211",
+      "sell_date": "20190304",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.322353,
+      "period_return": 0.321353,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20190301",
+      "buy_date": "20190304",
+      "sell_date": "20190403",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.130243,
+      "period_return": 0.129293,
+      "win_count": 19,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20190402",
+      "buy_date": "20190403",
+      "sell_date": "20190507",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.101031,
+      "period_return": -0.101981,
+      "win_count": 1,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20190506",
+      "buy_date": "20190507",
+      "sell_date": "20190604",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.054481,
+      "period_return": 0.053481,
+      "win_count": 12,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20190603",
+      "buy_date": "20190604",
+      "sell_date": "20190702",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.032703,
+      "period_return": 0.031703,
+      "win_count": 17,
+      "n_holdings": 19
+    },
+    {
+      "rebalance_date": "20190701",
+      "buy_date": "20190702",
+      "sell_date": "20190802",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.091341,
+      "period_return": -0.092341,
+      "win_count": 1,
+      "n_holdings": 18
+    },
+    {
+      "rebalance_date": "20190801",
+      "buy_date": "20190802",
+      "sell_date": "20190903",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.12167,
+      "period_return": 0.12067,
+      "win_count": 17,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20190902",
+      "buy_date": "20190903",
+      "sell_date": "20191009",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.016329,
+      "period_return": -0.017329,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20191008",
+      "buy_date": "20191009",
+      "sell_date": "20191104",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.079419,
+      "period_return": 0.078419,
+      "win_count": 14,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20191101",
+      "buy_date": "20191104",
+      "sell_date": "20191203",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.026356,
+      "period_return": -0.027206,
+      "win_count": 4,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20191202",
+      "buy_date": "20191203",
+      "sell_date": "20200103",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": 0.105418,
+      "period_return": 0.104526,
+      "win_count": 14,
+      "n_holdings": 15
+    },
+    {
+      "rebalance_date": "20200102",
+      "buy_date": "20200103",
+      "sell_date": "20200204",
+      "n_blacklist": 227,
+      "n_pit_loss": 0,
+      "gross_return": -0.194493,
+      "period_return": -0.195493,
+      "win_count": 1,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200203",
+      "buy_date": "20200204",
+      "sell_date": "20200303",
+      "n_blacklist": 232,
+      "n_pit_loss": 5,
+      "gross_return": 0.259271,
+      "period_return": 0.258321,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200302",
+      "buy_date": "20200303",
+      "sell_date": "20200402",
+      "n_blacklist": 230,
+      "n_pit_loss": 3,
+      "gross_return": -0.118963,
+      "period_return": -0.119863,
+      "win_count": 4,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200401",
+      "buy_date": "20200402",
+      "sell_date": "20200507",
+      "n_blacklist": 252,
+      "n_pit_loss": 27,
+      "gross_return": 0.190541,
+      "period_return": 0.189541,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200506",
+      "buy_date": "20200507",
+      "sell_date": "20200602",
+      "n_blacklist": 1079,
+      "n_pit_loss": 945,
+      "gross_return": 0.085536,
+      "period_return": 0.084636,
+      "win_count": 16,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200601",
+      "buy_date": "20200602",
+      "sell_date": "20200702",
+      "n_blacklist": 1062,
+      "n_pit_loss": 923,
+      "gross_return": 0.147136,
+      "period_return": 0.146286,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200701",
+      "buy_date": "20200702",
+      "sell_date": "20200804",
+      "n_blacklist": 1073,
+      "n_pit_loss": 937,
+      "gross_return": 0.111656,
+      "period_return": 0.110706,
+      "win_count": 14,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200803",
+      "buy_date": "20200804",
+      "sell_date": "20200902",
+      "n_blacklist": 1078,
+      "n_pit_loss": 938,
+      "gross_return": 0.062281,
+      "period_return": 0.061381,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20200901",
+      "buy_date": "20200902",
+      "sell_date": "20201012",
+      "n_blacklist": 841,
+      "n_pit_loss": 698,
+      "gross_return": -0.027369,
+      "period_return": -0.028369,
+      "win_count": 7,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20201009",
+      "buy_date": "20201012",
+      "sell_date": "20201103",
+      "n_blacklist": 851,
+      "n_pit_loss": 708,
+      "gross_return": -0.083202,
+      "period_return": -0.084152,
+      "win_count": 4,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20201102",
+      "buy_date": "20201103",
+      "sell_date": "20201202",
+      "n_blacklist": 714,
+      "n_pit_loss": 560,
+      "gross_return": 0.033392,
+      "period_return": 0.032442,
+      "win_count": 13,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20201201",
+      "buy_date": "20201202",
+      "sell_date": "20210105",
+      "n_blacklist": 719,
+      "n_pit_loss": 565,
+      "gross_return": 0.026073,
+      "period_return": 0.025123,
+      "win_count": 14,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210104",
+      "buy_date": "20210105",
+      "sell_date": "20210202",
+      "n_blacklist": 736,
+      "n_pit_loss": 582,
+      "gross_return": 0.031965,
+      "period_return": 0.031065,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210201",
+      "buy_date": "20210202",
+      "sell_date": "20210302",
+      "n_blacklist": 734,
+      "n_pit_loss": 581,
+      "gross_return": 0.068717,
+      "period_return": 0.067817,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210301",
+      "buy_date": "20210302",
+      "sell_date": "20210402",
+      "n_blacklist": 740,
+      "n_pit_loss": 587,
+      "gross_return": 0.042504,
+      "period_return": 0.041554,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210401",
+      "buy_date": "20210402",
+      "sell_date": "20210507",
+      "n_blacklist": 717,
+      "n_pit_loss": 562,
+      "gross_return": 0.088491,
+      "period_return": 0.087491,
+      "win_count": 16,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210506",
+      "buy_date": "20210507",
+      "sell_date": "20210602",
+      "n_blacklist": 805,
+      "n_pit_loss": 652,
+      "gross_return": 0.042279,
+      "period_return": 0.041329,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210601",
+      "buy_date": "20210602",
+      "sell_date": "20210702",
+      "n_blacklist": 801,
+      "n_pit_loss": 648,
+      "gross_return": 0.071539,
+      "period_return": 0.070739,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210701",
+      "buy_date": "20210702",
+      "sell_date": "20210803",
+      "n_blacklist": 806,
+      "n_pit_loss": 656,
+      "gross_return": 0.045367,
+      "period_return": 0.044467,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210802",
+      "buy_date": "20210803",
+      "sell_date": "20210902",
+      "n_blacklist": 800,
+      "n_pit_loss": 640,
+      "gross_return": 0.055027,
+      "period_return": 0.054077,
+      "win_count": 14,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20210901",
+      "buy_date": "20210902",
+      "sell_date": "20211011",
+      "n_blacklist": 679,
+      "n_pit_loss": 521,
+      "gross_return": 0.06928,
+      "period_return": 0.06838,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20211008",
+      "buy_date": "20211011",
+      "sell_date": "20211102",
+      "n_blacklist": 674,
+      "n_pit_loss": 516,
+      "gross_return": -0.051928,
+      "period_return": -0.052678,
+      "win_count": 3,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20211101",
+      "buy_date": "20211102",
+      "sell_date": "20211202",
+      "n_blacklist": 702,
+      "n_pit_loss": 555,
+      "gross_return": 0.084816,
+      "period_return": 0.083866,
+      "win_count": 16,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20211201",
+      "buy_date": "20211202",
+      "sell_date": "20220105",
+      "n_blacklist": 714,
+      "n_pit_loss": 567,
+      "gross_return": 0.091578,
+      "period_return": 0.090628,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220104",
+      "buy_date": "20220105",
+      "sell_date": "20220208",
+      "n_blacklist": 718,
+      "n_pit_loss": 571,
+      "gross_return": -0.006591,
+      "period_return": -0.007491,
+      "win_count": 7,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220207",
+      "buy_date": "20220208",
+      "sell_date": "20220302",
+      "n_blacklist": 721,
+      "n_pit_loss": 575,
+      "gross_return": 0.075815,
+      "period_return": 0.074865,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220301",
+      "buy_date": "20220302",
+      "sell_date": "20220406",
+      "n_blacklist": 723,
+      "n_pit_loss": 576,
+      "gross_return": -0.059404,
+      "period_return": -0.060404,
+      "win_count": 2,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220401",
+      "buy_date": "20220406",
+      "sell_date": "20220506",
+      "n_blacklist": 719,
+      "n_pit_loss": 570,
+      "gross_return": -0.120024,
+      "period_return": -0.121024,
+      "win_count": 1,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220505",
+      "buy_date": "20220506",
+      "sell_date": "20220602",
+      "n_blacklist": 1022,
+      "n_pit_loss": 906,
+      "gross_return": 0.236356,
+      "period_return": 0.235356,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220601",
+      "buy_date": "20220602",
+      "sell_date": "20220704",
+      "n_blacklist": 1040,
+      "n_pit_loss": 920,
+      "gross_return": 0.077358,
+      "period_return": 0.076408,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220701",
+      "buy_date": "20220704",
+      "sell_date": "20220802",
+      "n_blacklist": 1033,
+      "n_pit_loss": 918,
+      "gross_return": 0.019341,
+      "period_return": 0.018341,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20220801",
+      "buy_date": "20220802",
+      "sell_date": "20220902",
+      "n_blacklist": 1046,
+      "n_pit_loss": 929,
+      "gross_return": 0.007401,
+      "period_return": 0.006451,
+      "win_count": 10,
+      "n_holdings": 19
+    },
+    {
+      "rebalance_date": "20220901",
+      "buy_date": "20220902",
+      "sell_date": "20221011",
+      "n_blacklist": 975,
+      "n_pit_loss": 850,
+      "gross_return": -0.070006,
+      "period_return": -0.070902,
+      "win_count": 3,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20221010",
+      "buy_date": "20221011",
+      "sell_date": "20221102",
+      "n_blacklist": 971,
+      "n_pit_loss": 846,
+      "gross_return": 0.135894,
+      "period_return": 0.134894,
+      "win_count": 19,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20221101",
+      "buy_date": "20221102",
+      "sell_date": "20221202",
+      "n_blacklist": 950,
+      "n_pit_loss": 833,
+      "gross_return": 0.088014,
+      "period_return": 0.087014,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20221201",
+      "buy_date": "20221202",
+      "sell_date": "20230104",
+      "n_blacklist": 947,
+      "n_pit_loss": 830,
+      "gross_return": -0.009383,
+      "period_return": -0.010333,
+      "win_count": 9,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230103",
+      "buy_date": "20230104",
+      "sell_date": "20230202",
+      "n_blacklist": 946,
+      "n_pit_loss": 829,
+      "gross_return": 0.048897,
+      "period_return": 0.047897,
+      "win_count": 13,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230201",
+      "buy_date": "20230202",
+      "sell_date": "20230302",
+      "n_blacklist": 947,
+      "n_pit_loss": 830,
+      "gross_return": 0.035114,
+      "period_return": 0.034164,
+      "win_count": 17,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230301",
+      "buy_date": "20230302",
+      "sell_date": "20230404",
+      "n_blacklist": 945,
+      "n_pit_loss": 827,
+      "gross_return": -0.027676,
+      "period_return": -0.028576,
+      "win_count": 6,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230403",
+      "buy_date": "20230404",
+      "sell_date": "20230505",
+      "n_blacklist": 953,
+      "n_pit_loss": 837,
+      "gross_return": -0.022251,
+      "period_return": -0.023201,
+      "win_count": 7,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230504",
+      "buy_date": "20230505",
+      "sell_date": "20230602",
+      "n_blacklist": 1191,
+      "n_pit_loss": 1089,
+      "gross_return": -0.018463,
+      "period_return": -0.019263,
+      "win_count": 5,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230601",
+      "buy_date": "20230602",
+      "sell_date": "20230704",
+      "n_blacklist": 1181,
+      "n_pit_loss": 1083,
+      "gross_return": 0.04918,
+      "period_return": 0.04818,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230703",
+      "buy_date": "20230704",
+      "sell_date": "20230802",
+      "n_blacklist": 1175,
+      "n_pit_loss": 1076,
+      "gross_return": 0.050477,
+      "period_return": 0.049477,
+      "win_count": 17,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230801",
+      "buy_date": "20230802",
+      "sell_date": "20230904",
+      "n_blacklist": 1161,
+      "n_pit_loss": 1065,
+      "gross_return": -0.038097,
+      "period_return": -0.039047,
+      "win_count": 2,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20230901",
+      "buy_date": "20230904",
+      "sell_date": "20231010",
+      "n_blacklist": 1070,
+      "n_pit_loss": 964,
+      "gross_return": 0.025676,
+      "period_return": 0.024676,
+      "win_count": 12,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20231009",
+      "buy_date": "20231010",
+      "sell_date": "20231102",
+      "n_blacklist": 1071,
+      "n_pit_loss": 965,
+      "gross_return": -0.0102,
+      "period_return": -0.01115,
+      "win_count": 5,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20231101",
+      "buy_date": "20231102",
+      "sell_date": "20231204",
+      "n_blacklist": 1095,
+      "n_pit_loss": 991,
+      "gross_return": 0.022838,
+      "period_return": 0.021838,
+      "win_count": 12,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20231201",
+      "buy_date": "20231204",
+      "sell_date": "20240103",
+      "n_blacklist": 1095,
+      "n_pit_loss": 991,
+      "gross_return": -0.005164,
+      "period_return": -0.006014,
+      "win_count": 6,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240102",
+      "buy_date": "20240103",
+      "sell_date": "20240202",
+      "n_blacklist": 1095,
+      "n_pit_loss": 991,
+      "gross_return": 0.048738,
+      "period_return": 0.048088,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240201",
+      "buy_date": "20240202",
+      "sell_date": "20240304",
+      "n_blacklist": 1094,
+      "n_pit_loss": 990,
+      "gross_return": 0.0962,
+      "period_return": 0.09535,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240301",
+      "buy_date": "20240304",
+      "sell_date": "20240402",
+      "n_blacklist": 1092,
+      "n_pit_loss": 988,
+      "gross_return": 0.146745,
+      "period_return": 0.145745,
+      "win_count": 19,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240401",
+      "buy_date": "20240402",
+      "sell_date": "20240507",
+      "n_blacklist": 1093,
+      "n_pit_loss": 991,
+      "gross_return": 0.04429,
+      "period_return": 0.04329,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240506",
+      "buy_date": "20240507",
+      "sell_date": "20240604",
+      "n_blacklist": 1309,
+      "n_pit_loss": 1222,
+      "gross_return": -0.048644,
+      "period_return": -0.049494,
+      "win_count": 5,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240603",
+      "buy_date": "20240604",
+      "sell_date": "20240702",
+      "n_blacklist": 1296,
+      "n_pit_loss": 1217,
+      "gross_return": -0.030237,
+      "period_return": -0.031187,
+      "win_count": 7,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240701",
+      "buy_date": "20240702",
+      "sell_date": "20240802",
+      "n_blacklist": 1291,
+      "n_pit_loss": 1205,
+      "gross_return": 0.220924,
+      "period_return": 0.220174,
+      "win_count": 14,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240801",
+      "buy_date": "20240802",
+      "sell_date": "20240903",
+      "n_blacklist": 1324,
+      "n_pit_loss": 1239,
+      "gross_return": -0.053908,
+      "period_return": -0.054908,
+      "win_count": 1,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20240902",
+      "buy_date": "20240903",
+      "sell_date": "20241009",
+      "n_blacklist": 1230,
+      "n_pit_loss": 1149,
+      "gross_return": 0.269094,
+      "period_return": 0.268094,
+      "win_count": 20,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20241008",
+      "buy_date": "20241009",
+      "sell_date": "20241104",
+      "n_blacklist": 1230,
+      "n_pit_loss": 1149,
+      "gross_return": -0.064003,
+      "period_return": -0.065003,
+      "win_count": 6,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20241101",
+      "buy_date": "20241104",
+      "sell_date": "20241203",
+      "n_blacklist": 1287,
+      "n_pit_loss": 1213,
+      "gross_return": 0.042102,
+      "period_return": 0.041102,
+      "win_count": 13,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20241202",
+      "buy_date": "20241203",
+      "sell_date": "20250103",
+      "n_blacklist": 1288,
+      "n_pit_loss": 1214,
+      "gross_return": -0.007514,
+      "period_return": -0.008364,
+      "win_count": 12,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250102",
+      "buy_date": "20250103",
+      "sell_date": "20250206",
+      "n_blacklist": 1287,
+      "n_pit_loss": 1213,
+      "gross_return": -0.006163,
+      "period_return": -0.007011,
+      "win_count": 6,
+      "n_holdings": 19
+    },
+    {
+      "rebalance_date": "20250205",
+      "buy_date": "20250206",
+      "sell_date": "20250304",
+      "n_blacklist": 1286,
+      "n_pit_loss": 1212,
+      "gross_return": -0.001083,
+      "period_return": -0.001927,
+      "win_count": 9,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250303",
+      "buy_date": "20250304",
+      "sell_date": "20250402",
+      "n_blacklist": 1287,
+      "n_pit_loss": 1213,
+      "gross_return": 0.031837,
+      "period_return": 0.030887,
+      "win_count": 14,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250401",
+      "buy_date": "20250402",
+      "sell_date": "20250507",
+      "n_blacklist": 1283,
+      "n_pit_loss": 1209,
+      "gross_return": -0.002637,
+      "period_return": -0.003637,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250506",
+      "buy_date": "20250507",
+      "sell_date": "20250604",
+      "n_blacklist": 1458,
+      "n_pit_loss": 1387,
+      "gross_return": -0.007895,
+      "period_return": -0.008845,
+      "win_count": 12,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250603",
+      "buy_date": "20250604",
+      "sell_date": "20250702",
+      "n_blacklist": 1423,
+      "n_pit_loss": 1352,
+      "gross_return": 0.06275,
+      "period_return": 0.0618,
+      "win_count": 18,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250701",
+      "buy_date": "20250702",
+      "sell_date": "20250804",
+      "n_blacklist": 1422,
+      "n_pit_loss": 1346,
+      "gross_return": 0.040204,
+      "period_return": 0.039204,
+      "win_count": 16,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250801",
+      "buy_date": "20250804",
+      "sell_date": "20250902",
+      "n_blacklist": 1441,
+      "n_pit_loss": 1366,
+      "gross_return": 0.036224,
+      "period_return": 0.035224,
+      "win_count": 13,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20250901",
+      "buy_date": "20250902",
+      "sell_date": "20251010",
+      "n_blacklist": 1313,
+      "n_pit_loss": 1240,
+      "gross_return": 0.010147,
+      "period_return": 0.009147,
+      "win_count": 8,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20251009",
+      "buy_date": "20251010",
+      "sell_date": "20251104",
+      "n_blacklist": 1316,
+      "n_pit_loss": 1243,
+      "gross_return": 0.03396,
+      "period_return": 0.03296,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20251103",
+      "buy_date": "20251104",
+      "sell_date": "20251202",
+      "n_blacklist": 1321,
+      "n_pit_loss": 1255,
+      "gross_return": 0.037391,
+      "period_return": 0.036391,
+      "win_count": 8,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20251201",
+      "buy_date": "20251202",
+      "sell_date": "20260106",
+      "n_blacklist": 1323,
+      "n_pit_loss": 1257,
+      "gross_return": 0.03538,
+      "period_return": 0.03438,
+      "win_count": 11,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20260105",
+      "buy_date": "20260106",
+      "sell_date": "20260203",
+      "n_blacklist": 1323,
+      "n_pit_loss": 1257,
+      "gross_return": 0.005315,
+      "period_return": 0.004315,
+      "win_count": 12,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20260202",
+      "buy_date": "20260203",
+      "sell_date": "20260303",
+      "n_blacklist": 1323,
+      "n_pit_loss": 1257,
+      "gross_return": 0.020157,
+      "period_return": 0.019157,
+      "win_count": 10,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20260302",
+      "buy_date": "20260303",
+      "sell_date": "20260402",
+      "n_blacklist": 1323,
+      "n_pit_loss": 1257,
+      "gross_return": -0.053401,
+      "period_return": -0.054351,
+      "win_count": 6,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20260401",
+      "buy_date": "20260402",
+      "sell_date": "20260507",
+      "n_blacklist": 1333,
+      "n_pit_loss": 1267,
+      "gross_return": 0.071993,
+      "period_return": 0.070993,
+      "win_count": 15,
+      "n_holdings": 20
+    },
+    {
+      "rebalance_date": "20260506",
+      "buy_date": "20260507",
+      "sell_date": "20260602",
+      "n_blacklist": 1551,
+      "n_pit_loss": 1494,
+      "gross_return": -0.062749,
+      "period_return": -0.063749,
+      "win_count": 3,
+      "n_holdings": 20
+    }
+  ]
+}

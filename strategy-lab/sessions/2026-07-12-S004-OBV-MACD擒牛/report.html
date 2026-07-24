@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S004 OBV+MACD 擒牛 — 回测报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f8f9fa;
+  --border: #e9ecef;
+  --text: #212529;
+  --muted: #6c757d;
+  --red: #dc3545;
+  --green: #198754;
+  --blue: #0d6efd;
+  --purple: #6f42c1;
+  --orange: #fd7e14;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; padding: 0; }
+.header { background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; padding: 48px 32px; text-align: center; }
+.header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+.header p { color: #a0aec0; font-size: 14px; }
+.container { max-width: 960px; margin: 0 auto; padding: 32px 20px; }
+.section { margin-bottom: 40px; }
+.section h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.kpi { background: var(--surface); border-radius: 12px; padding: 20px; text-align: center; }
+.kpi .value { font-size: 28px; font-weight: 700; }
+.kpi .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.kpi.positive .value { color: var(--red); }
+.kpi.neutral .value { color: var(--blue); }
+.kpi.warn .value { color: var(--orange); }
+.chart-wrap { margin: 24px 0; background: var(--surface); border-radius: 12px; padding: 20px; }
+.chart-wrap h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; color: var(--muted); }
+.chart-wrap canvas { max-height: 280px; }
+.insight-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-size: 13px; }
+.insight-box strong { color: #856404; }
+.badge-red { background: #fce4ec; color: #c62828; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-green { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.condition-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.condition-table th { text-align: left; padding: 10px 12px; background: var(--surface); font-weight: 600; border-bottom: 2px solid var(--border); }
+.condition-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.condition-table .pass { color: var(--green); font-weight: 600; }
+@media (max-width: 768px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>S004: OBV + MACD 擒牛</h1>
+  <p>回测报告 | 2022-01 至 2026-07 | A股 Top 500 流动性</p>
+</div>
+
+<div class="container" id="app">
+
+  <div class="section">
+    <h2>策略条件回顾</h2>
+    <table class="condition-table">
+      <tr><th style="width:80px">条件</th><th style="width:200px">名称</th><th>量化规则</th><th style="width:60px">状态</th></tr>
+      <tr><td>1a</td><td>OBV 趋势</td><td>近20天 OBV &gt; MAOBV(20) 天数 ≥ 90%</td><td class="pass">启用</td></tr>
+      <tr><td>1b</td><td>OBV 加速</td><td>近5天 OBV/MAOBV 比值线性回归斜率 &gt; 0.001</td><td class="pass">启用</td></tr>
+      <tr><td>2</td><td>MACD 多头</td><td>近30天 DIF&gt;0 且 DEA&gt;0 天数 ≥ 67%</td><td class="pass">启用</td></tr>
+      <tr><td>3</td><td>MA 金叉</td><td>MA5 上穿 MA10、MA20</td><td class="pass">启用</td></tr>
+      <tr><td>4</td><td>平台整理</td><td>前30天区间振幅 &lt; 20%（<strong>加分项</strong>）</td><td><span class="badge-green">启用</span></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>核心指标（强信号·30天持有）</h2>
+    <div class="kpi-grid">
+      <div class="kpi positive"><div class="value" id="avgRet">--</div><div class="label">平均收益率</div></div>
+      <div class="kpi neutral"><div class="value" id="winRate">--</div><div class="label">胜率</div></div>
+      <div class="kpi positive"><div class="value" id="medRet">--</div><div class="label">中位收益率</div></div>
+      <div class="kpi warn"><div class="value" id="sigCount">--</div><div class="label">强信号总数</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>平台整理是关键！</h2>
+    <div class="chart-wrap">
+      <h3>含平台 vs 无平台 — 胜率对比</h3>
+      <canvas id="chartPlatform"></canvas>
+    </div>
+    <div class="insight-box">
+      <strong>关键发现：</strong>增加了平台整理条件后，中位收益从负转正。无平台整理的信号中位收益全部为负——说明大部分"突破"其实是假突破。平台整理是区分真突破和假突破的核心过滤器。
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>各信号强度对比（30天持有）</h2>
+    <div class="chart-wrap">
+      <h3>胜率与均收益</h3>
+      <canvas id="chartStrength"></canvas>
+    </div>
+    <div class="insight-box">
+      <strong>信号分级逻辑：</strong>Strong = 全条件+平台整理 / Solid = 全条件无平台 / Medium = 1a+2+3 / Weak = 仅2+3。<br>
+      四个条件越完整，胜率和收益率越高。条件3（MA金叉）单独使用几乎无效。
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>强信号收益分布（30天持有）</h2>
+    <div class="chart-wrap">
+      <h3>收益分桶</h3>
+      <canvas id="chartDist"></canvas>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>年度表现</h2>
+    <div class="chart-wrap">
+      <h3>强信号数量与30天均收益</h3>
+      <canvas id="chartYearly"></canvas>
+    </div>
+    <div class="insight-box">
+      <strong>2026年仅统计至7月。</strong>2025年信号最多（平均每月42个），2022年略少但收益率更高。策略在牛熊市中都有信号产出，2022年熊市中依然有不错表现。
+    </div>
+  </div>
+
+</div>
+
+<script>
+const CHART_DATA_FILE = 'chart_data.json';
+const COLORS = {
+  red: '#dc3545', green: '#198754', blue: '#0d6efd', purple: '#6f42c1',
+  orange: '#fd7e14', cyan: '#0dcaf0', gray: '#6c757d',
+  redBg: 'rgba(220,53,69,0.15)', greenBg: 'rgba(25,135,84,0.15)',
+};
+
+async function init() {
+  const resp = await fetch(CHART_DATA_FILE);
+  const data = await resp.json();
+
+  // KPI
+  const s = data.chart1['strong'];
+  document.getElementById('avgRet').textContent = (s.avg_return > 0 ? '+' : '') + s.avg_return + '%';
+  document.getElementById('winRate').textContent = s.win_rate + '%';
+  document.getElementById('medRet').textContent = (s.median_return > 0 ? '+' : '') + s.median_return + '%';
+  document.getElementById('sigCount').textContent = s.count;
+
+  // Chart 1: 平台整理效应
+  const holds = [5, 10, 20, 30, 60];
+  const platWin = holds.map(h => data.chart2.find(d => d.hold === h && d.label === '含平台')?.win_rate || 0);
+  const noPlatWin = holds.map(h => data.chart2.find(d => d.hold === h && d.label === '无平台')?.win_rate || 0);
+  new Chart(document.getElementById('chartPlatform'), {
+    type: 'bar',
+    data: {
+      labels: holds.map(h => h + '天'),
+      datasets: [
+        { label: '含平台整理', data: platWin, backgroundColor: COLORS.redBg, borderColor: COLORS.red, borderWidth: 1.5 },
+        { label: '无平台整理', data: noPlatWin, backgroundColor: COLORS.greenBg, borderColor: COLORS.green, borderWidth: 1.5 },
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' } },
+      scales: { y: { min: 35, max: 55, ticks: { callback: v => v + '%' } } }
+    }
+  });
+
+  // Chart 2: 信号强度对比
+  const strengths = ['strong', 'solid', 'medium', 'weak'];
+  const strengthLabels = ['Strong\n全条件+平台', 'Solid\n全条件', 'Medium\n1a+2+3', 'Weak\n仅2+3'];
+  const colors = [COLORS.red, COLORS.orange, COLORS.blue, COLORS.gray];
+  const bgColors = [COLORS.redBg, 'rgba(253,126,20,0.15)', 'rgba(13,110,253,0.15)', 'rgba(108,117,125,0.15)'];
+  const strWin = strengths.map(k => data.chart1[k]?.win_rate || 0);
+  const strAvg = strengths.map(k => data.chart1[k]?.avg_return || 0);
+  new Chart(document.getElementById('chartStrength'), {
+    type: 'bar',
+    data: {
+      labels: strengthLabels,
+      datasets: [
+        { label: '胜率(%)', data: strWin, backgroundColor: bgColors, borderColor: colors, borderWidth: 1.5, yAxisID: 'y' },
+        { label: '均收益(%)', data: strAvg, type: 'line', borderColor: COLORS.purple, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 5, pointBackgroundColor: COLORS.purple, yAxisID: 'y1', tension: 0.3 },
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y: { position: 'left', title: { display: true, text: '胜率(%)' }, min: 30, max: 60 },
+        y1: { position: 'right', title: { display: true, text: '均收益(%)' }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+
+  // Chart 3: 收益分布
+  const distLabels = data.chart3.map(d => d.range);
+  const distCounts = data.chart3.map(d => d.count);
+  const barColors = distLabels.map(l => {
+    if (l.startsWith('<') || l.startsWith('-')) return COLORS.greenBg;
+    if (l.startsWith('>') || l.startsWith('+')) return COLORS.redBg;
+    return COLORS.orange + '30';
+  });
+  const borderColors = distLabels.map(l => {
+    if (l.startsWith('<') || l.startsWith('-')) return COLORS.green;
+    if (l.startsWith('>') || l.startsWith('+')) return COLORS.red;
+    return COLORS.orange;
+  });
+  new Chart(document.getElementById('chartDist'), {
+    type: 'bar',
+    data: {
+      labels: distLabels,
+      datasets: [{ label: '信号数', data: distCounts, backgroundColor: barColors, borderColor: borderColors, borderWidth: 1 }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { title: { display: true, text: '信号数' } } }
+    }
+  });
+
+  // Chart 4: 年度表现
+  const years = data.chart4.map(d => d.year);
+  const yearSignals = data.chart4.map(d => d.signals);
+  const yearReturns = data.chart4.map(d => d.avg_return);
+  new Chart(document.getElementById('chartYearly'), {
+    type: 'bar',
+    data: {
+      labels: years,
+      datasets: [
+        { label: '强信号数', data: yearSignals, backgroundColor: COLORS.blueBg || 'rgba(13,110,253,0.15)', borderColor: COLORS.blue, borderWidth: 1.5, yAxisID: 'y' },
+        { label: '30天均收益(%)', data: yearReturns, type: 'line', borderColor: COLORS.red, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 6, pointBackgroundColor: COLORS.red, yAxisID: 'y1', tension: 0.3 },
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' } },
+      scales: {
+        y: { position: 'left', title: { display: true, text: '信号数' } },
+        y1: { position: 'right', title: { display: true, text: '均收益(%)' }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
+}
+
+init();
+</script>
+
+</body>
+</html>

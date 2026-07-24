@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>S014 Top精选集中策略 分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--red:#e03131;--green:#2f9e44;--blue:#1971c2;--orange:#e67700;--purple:#7048e8;--gray:#495057;--bg:#f8f9fa;--card:#fff;--border:#dee2e6;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'PingFang SC','Helvetica Neue',sans-serif;background:var(--bg);color:#212529;font-size:14px;}
+  .header{background:linear-gradient(135deg,#1c3d6e 0%,#1971c2 100%);color:#fff;padding:28px 40px;}
+  .header h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+  .header p{opacity:.8;font-size:13px;}
+  .container{max-width:1200px;margin:0 auto;padding:24px 20px;}
+  .section-title{font-size:17px;font-weight:700;color:#1c3d6e;margin:28px 0 14px;padding-bottom:6px;border-bottom:2px solid #1971c2;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
+  .kpi-card{text-align:center;border-radius:10px;padding:16px 12px;background:var(--card);border:1px solid var(--border);}
+  .kpi-label{font-size:12px;color:var(--gray);margin-bottom:4px;}
+  .kpi-val{font-size:22px;font-weight:700;}
+  .kpi-sub{font-size:11px;color:var(--gray);margin-top:3px;}
+  .red{color:var(--red);} .green{color:var(--green);} .blue{color:var(--blue);}
+  .orange{color:var(--orange);} .purple{color:var(--purple);}
+  .chart-wrap{position:relative;height:320px;}
+  .chart-wrap-tall{position:relative;height:420px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:#e9ecef;color:#495057;padding:9px 10px;text-align:center;font-weight:600;border-bottom:2px solid var(--border);}
+  td{padding:8px 10px;text-align:center;border-bottom:1px solid #f1f3f5;}
+  tr:nth-child(even) td{background:#f8f9fa;}
+  .tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;}
+  .tag-up{background:#fff0f0;color:var(--red);}
+  .tag-dn{background:#f0fff4;color:var(--green);}
+  .tag-blue{background:#e7f5ff;color:var(--blue);}
+  .warn-box{background:#fff9db;border:1px solid #ffd43b;border-radius:8px;padding:14px 18px;margin-top:16px;font-size:13px;line-height:1.7;}
+  .warn-box b{color:#e67700;}
+  .conclusion-box{background:#e7f5ff;border:1px solid #74c0fc;border-radius:8px;padding:16px 18px;margin-top:16px;font-size:13px;line-height:1.8;}
+  .conclusion-box b{color:#1971c2;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:600;}
+  .badge-s9{background:#ffe8cc;color:#e67700;}
+  .badge-s13{background:#d0ebff;color:#1971c2;}
+  @media(max-width:768px){.grid2,.grid4{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📊 S014 — Top精选集中策略 分析报告</h1>
+  <p>基于 S009 / S013b 历史持仓，对比 Top1 / Top2 / Top3 集中持股的收益与风险特征 | 2017–2026</p>
+</div>
+
+<div class="container">
+
+<!-- ═══ SECTION 1: 核心结论 ═══ -->
+<div class="section-title">🔍 核心结论</div>
+<div class="conclusion-box">
+  <b>S009（无止损版）:</b> Top1年化 <b class="red">+68.3%</b>，Top2 <b class="red">+60.0%</b>，Top3 <b class="red">+56.3%</b>，显著强于原策略 Top20（+41%）。代价是最大回撤从 -21% 放大到 -25～-29%。<br>
+  <b>S013b（喜神池+止损）:</b> Top1年化 <b class="red">+52.0%</b>，Top2/Top3约 +37%，与原策略持平。加上止损保护 Top2/Top3 的额外收益有限，但 Top1 仍有 +15pp 超额。<br>
+  <b>建议操作:</b> <b>可以另设一组仓位跟投 S009-Top2（或Top3）</b>——年化 60% / 56%，夏普保持 1.43/1.45，回撤仅放大 4pp。S013b 方向上 <b>Top1 单独跟投</b>有潜力，但回撤 -37% 较高，需配合止损纪律。
+</div>
+
+<!-- ═══ SECTION 2: S009 核心指标 ═══ -->
+<div class="section-title"><span class="badge badge-s9">S009</span> LightGBM多因子 — Top精选指标</div>
+<div class="grid4" id="kpi009"></div>
+<div class="grid2" style="margin-top:16px;">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📈 NAV净值曲线（S009）</div>
+    <div class="chart-wrap-tall"><canvas id="nav009"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📅 逐年收益热力图（S009）</div>
+    <div style="overflow-x:auto;margin-top:6px;"><table id="yr009_table"></table></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3: S013b 核心指标 ═══ -->
+<div class="section-title"><span class="badge badge-s13">S013b</span> 喜神池LightGBM — Top精选指标</div>
+<div class="grid4" id="kpi013"></div>
+<div class="grid2" style="margin-top:16px;">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📈 NAV净值曲线（S013b）</div>
+    <div class="chart-wrap-tall"><canvas id="nav013"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">📅 逐年收益热力图（S013b）</div>
+    <div style="overflow-x:auto;margin-top:6px;"><table id="yr013_table"></table></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: 综合对比 ═══ -->
+<div class="section-title">⚖️ 四维综合对比</div>
+<div class="grid2">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">年化收益对比</div>
+    <div class="chart-wrap"><canvas id="bar_annual"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">风险收益散点（每期）</div>
+    <div class="chart-wrap"><canvas id="scatter_rr"></canvas></div>
+  </div>
+</div>
+<div class="grid2" style="margin-top:16px;">
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">胜率对比</div>
+    <div class="chart-wrap"><canvas id="bar_wr"></canvas></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:10px;font-size:13px;">最大回撤对比</div>
+    <div class="chart-wrap"><canvas id="bar_dd"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5: 风险提示 ═══ -->
+<div class="warn-box">
+  ⚠️ <b>跟投风险提示</b>：(1) Top1/2/3 在历史回测中表现出色，但集中度越高波动越大，单期最大亏损可超 -30%；(2) 本分析未计滑点/冲击成本，实盘换手率高时摩擦成本将侵蚀收益；(3) S013b 止损参数在组合层面有效，但 Top1 单股止损需独立设置；(4) <b>强烈建议另设独立小仓位（如总仓 10-15%）跟投 Top2/3</b>，而非加大主仓。
+</div>
+
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:30px;padding-bottom:20px;">数据区间 2017-2026 | 基于历史回测 不构成投资建议</p>
+</div>
+
+<script>
+const DATA = {"stats": {"s009": {"original_return": {"n_periods": 113.0, "win_rate": 0.646018, "avg_return": 0.03173, "median_return": 0.02456, "p25": -0.012305, "p75": 0.068186, "total_return": 24.36639, "annual_return": 0.409694, "max_drawdown": -0.208597, "std": 0.07576, "sharpe": 1.450863}, "top1_return": {"n_periods": 113.0, "win_rate": 0.637168, "avg_return": 0.051299, "median_return": 0.020022, "p25": -0.026203, "p75": 0.096045, "total_return": 133.250293, "annual_return": 0.682571, "max_drawdown": -0.293126, "std": 0.126645, "sharpe": 1.403186}, "top2_return": {"n_periods": 113.0, "win_rate": 0.663717, "avg_return": 0.045394, "median_return": 0.035602, "p25": -0.015742, "p75": 0.097776, "total_return": 82.68394, "annual_return": 0.6002, "max_drawdown": -0.249614, "std": 0.109658, "sharpe": 1.433997}, "top3_return": {"n_periods": 113.0, "win_rate": 0.654867, "avg_return": 0.042681, "median_return": 0.029243, "p25": -0.007198, "p75": 0.087425, "total_return": 65.917539, "annual_return": 0.562653, "max_drawdown": -0.242779, "std": 0.102028, "sharpe": 1.449135}}, "s013b": {"original_return": {"n_periods": 114.0, "win_rate": 0.675439, "avg_return": 0.028523, "median_return": 0.017736, "p25": -0.009934, "p75": 0.060858, "total_return": 18.295631, "annual_return": 0.365562, "max_drawdown": -0.142911, "std": 0.068806, "sharpe": 1.436007}, "top1_return": {"n_periods": 113.0, "win_rate": 0.60177, "avg_return": 0.043175, "median_return": 0.018592, "p25": -0.027879, "p75": 0.093919, "total_return": 50.619915, "annual_return": 0.52017, "max_drawdown": -0.366992, "std": 0.131527, "sharpe": 1.137122}, "top2_return": {"n_periods": 114.0, "win_rate": 0.631579, "avg_return": 0.031852, "median_return": 0.018663, "p25": -0.023775, "p75": 0.065045, "total_return": 18.925304, "annual_return": 0.370186, "max_drawdown": -0.259432, "std": 0.107956, "sharpe": 1.022086}, "top3_return": {"n_periods": 114.0, "win_rate": 0.570175, "avg_return": 0.031313, "median_return": 0.0142, "p25": -0.02068, "p75": 0.070798, "total_return": 19.893553, "annual_return": 0.377047, "max_drawdown": -0.239331, "std": 0.096864, "sharpe": 1.119814}}}, "nav009": {"original_return": [1.0, 0.991, 1.0774, 1.073, 1.007, 1.0203, 1.1124, 1.1613, 1.2125, 1.21, 1.1928, 1.1852, 1.2401, 1.2769, 1.3369, 1.5264, 1.6031, 1.5961, 1.49, 1.536, 1.4933, 1.512, 1.5181, 1.7274, 1.6981, 1.7538, 2.1962, 2.4825, 2.2076, 2.2619, 2.3473, 2.0805, 2.3169, 2.3245, 2.5076, 2.43, 2.4775, 1.9845, 2.388, 2.2278, 2.6596, 2.8493, 3.3174, 3.7235, 3.8677, 3.721, 3.5718, 3.9697, 4.1152, 4.1296, 4.5641, 4.7273, 4.9735, 5.0151, 4.9835, 5.5093, 6.0663, 6.3633, 6.0417, 6.8684, 7.0962, 6.9573, 7.3846, 7.8232, 6.8231, 8.5144, 9.2111, 9.5895, 9.3931, 8.9027, 9.8579, 10.53, 10.3846, 11.176, 11.3292, 11.1456, 10.6956, 10.564, 10.8499, 11.4062, 10.953, 11.0212, 10.9086, 11.101, 11.0007, 11.4416, 12.3287, 14.2219, 14.8473, 14.0099, 13.778, 15.2112, 14.445, 18.7703, 17.8296, 18.2601, 18.5367, 18.3066, 18.704, 19.1367, 19.0315, 18.9411, 20.5048, 21.1374, 22.1965, 21.7243, 22.4495, 22.9191, 23.4958, 24.3508, 24.7479, 23.0708, 25.3796, 25.3664], "top1_return": [1.0, 0.982, 0.9805, 0.9649, 0.9348, 1.0014, 1.1791, 1.4508, 1.4599, 1.6231, 1.5785, 1.5226, 1.8286, 1.7982, 1.8286, 1.9168, 2.0732, 2.0153, 1.9908, 2.2571, 2.2327, 2.2413, 2.2876, 3.2945, 3.2532, 4.0066, 4.2677, 4.7465, 4.5035, 4.4875, 4.6079, 3.7807, 4.56, 4.6398, 5.6772, 5.3968, 5.6599, 4.8008, 5.756, 4.2291, 4.0687, 4.5989, 5.5302, 6.7691, 7.7553, 9.0056, 8.8833, 9.4606, 10.7039, 11.0438, 12.0243, 12.0656, 17.6164, 17.7542, 17.9268, 19.582, 28.2281, 29.485, 27.7816, 27.0071, 29.0337, 29.364, 32.8804, 28.2447, 24.0959, 25.7652, 24.5909, 23.9465, 24.1022, 24.6548, 26.9704, 28.9673, 28.9915, 30.8666, 29.5493, 27.0069, 31.8839, 30.6174, 33.2476, 36.4729, 34.781, 35.4774, 34.6563, 34.3149, 33.0908, 34.2434, 36.6962, 40.2207, 43.5492, 49.7052, 53.639, 85.0422, 77.0287, 103.6713, 110.3285, 110.0106, 122.0489, 123.3828, 149.5116, 152.0999, 142.8141, 138.8336, 141.4148, 143.8402, 148.8051, 142.1432, 148.9475, 138.5396, 154.501, 142.3138, 144.3218, 137.3339, 144.443, 134.2503], "top2_return": [1.0, 0.9735, 1.0127, 1.0136, 0.9798, 0.9098, 1.0465, 1.1652, 1.2296, 1.2587, 1.2246, 1.221, 1.3404, 1.1616, 1.1774, 1.257, 1.2197, 1.2821, 1.1535, 1.2797, 1.2653, 1.2839, 1.2802, 1.6658, 1.6485, 1.8875, 2.0264, 2.351, 1.9554, 1.9839, 2.1094, 1.8595, 2.1348, 2.146, 2.3781, 2.3814, 2.4768, 1.9782, 2.3379, 2.0005, 2.3911, 2.6034, 3.2158, 3.5686, 4.2026, 4.7073, 4.5522, 4.7754, 4.9441, 4.6261, 5.0913, 5.2435, 6.2883, 6.6478, 6.595, 6.7125, 8.6057, 9.2135, 8.496, 8.9907, 9.9135, 9.6649, 10.4513, 9.3157, 7.8425, 8.9005, 8.5724, 11.4631, 10.8941, 11.1065, 11.8072, 12.4405, 12.4892, 13.6776, 13.6021, 12.5534, 13.6097, 13.3955, 13.987, 15.0794, 14.4485, 14.6826, 14.8531, 14.8685, 14.5922, 15.3685, 16.1121, 21.3243, 22.9601, 24.1088, 27.2978, 40.2193, 37.329, 51.6114, 54.6351, 57.9728, 63.3912, 63.5302, 70.6606, 69.2558, 68.8628, 70.7051, 71.6206, 80.1538, 88.8029, 86.8992, 86.7621, 80.5554, 85.2031, 78.459, 88.6294, 88.0493, 91.184, 83.6839], "top3_return": [1.0, 0.9771, 1.0182, 1.0179, 0.9807, 0.9736, 1.091, 1.2127, 1.2479, 1.2682, 1.2793, 1.2762, 1.4078, 1.3177, 1.4149, 1.5459, 1.5467, 1.4951, 1.3253, 1.4154, 1.4175, 1.4387, 1.4581, 1.857, 1.8225, 1.9827, 2.1835, 2.5424, 2.2055, 2.2306, 2.3659, 2.0994, 2.2829, 2.3481, 2.6347, 2.6298, 2.7094, 2.1513, 2.4843, 2.0516, 2.6134, 2.8448, 3.5937, 4.3355, 5.003, 5.2882, 4.9885, 5.285, 5.6281, 5.4992, 6.1195, 6.1374, 7.175, 7.4597, 7.0656, 7.0455, 8.5796, 8.9864, 8.0651, 9.1399, 9.7745, 9.6414, 10.4859, 9.3781, 8.2226, 9.9718, 10.0107, 12.3248, 11.4552, 11.3747, 12.2151, 12.9977, 12.9216, 13.8436, 13.8623, 12.7184, 14.0956, 13.7579, 14.3157, 15.2679, 14.8431, 15.0638, 15.011, 14.9291, 14.6173, 15.5591, 16.2814, 19.9804, 21.1825, 19.6918, 21.196, 28.3903, 26.1006, 36.5622, 36.9848, 38.7751, 40.7927, 41.1818, 43.5816, 43.501, 43.375, 44.6435, 45.8131, 48.037, 51.6812, 50.1745, 50.6845, 64.6766, 66.9244, 62.3326, 68.1626, 67.1865, 72.1963, 66.9175]}, "nav013": {"original_return": [1.0, 0.9937, 1.0887, 1.0956, 1.0183, 1.0308, 1.1331, 1.1746, 1.2273, 1.2269, 1.2316, 1.2208, 1.2692, 1.3319, 1.3764, 1.53, 1.5899, 1.5884, 1.5225, 1.5562, 1.5307, 1.5544, 1.5773, 1.683, 1.6461, 1.6935, 2.0792, 2.3613, 2.1323, 2.2414, 2.383, 2.2734, 2.4141, 2.4389, 2.5877, 2.5199, 2.644, 2.2662, 2.6764, 2.4899, 2.9658, 3.0838, 3.5668, 3.938, 4.1154, 3.884, 3.6636, 4.0572, 4.1187, 4.1761, 4.4547, 4.5041, 4.668, 4.672, 4.6831, 5.1693, 5.5811, 5.867, 5.8067, 6.4668, 6.8151, 7.6066, 8.0361, 8.5212, 7.8125, 9.7769, 10.4307, 10.8617, 10.4525, 9.9498, 10.6865, 11.6946, 11.5331, 12.4091, 12.5275, 12.2748, 11.9195, 11.6865, 12.177, 12.8188, 12.3351, 12.5154, 12.3623, 12.4099, 12.2993, 12.8458, 12.9044, 14.6208, 15.2637, 14.4954, 14.2773, 15.4722, 14.6219, 18.5244, 16.5488, 16.852, 16.7873, 16.8243, 16.9672, 17.3655, 17.058, 16.9313, 18.0981, 18.5691, 19.1728, 19.2238, 20.0717, 19.8975, 20.2387, 21.0209, 21.0948, 19.5259, 21.5427, 20.2243, 19.2956], "top1_return": [1.0, 0.982, 0.9805, 0.9732, 0.9164, 0.9817, 1.1315, 1.3923, 1.5374, 1.7092, 1.6634, 1.6046, 1.596, 1.5695, 1.596, 1.7029, 1.463, 1.268, 1.0903, 1.183, 1.1702, 1.1747, 1.1989, 1.3934, 1.376, 1.6946, 1.8335, 2.0391, 1.9347, 1.9279, 1.9796, 1.6242, 1.9591, 2.1064, 2.4218, 2.3021, 2.4144, 1.8088, 2.1687, 1.5934, 1.533, 1.6679, 2.2005, 2.1902, 2.4236, 2.6149, 2.4781, 2.6769, 3.0287, 3.1249, 3.4024, 3.4141, 4.9847, 5.5156, 5.3744, 5.8706, 8.4627, 8.8395, 8.3288, 8.0966, 8.7042, 8.8032, 9.8574, 8.4676, 7.2239, 9.8847, 9.4342, 9.187, 9.187, 9.3977, 10.2803, 11.0414, 11.0507, 11.3131, 11.6711, 10.6669, 12.5931, 12.0929, 12.4959, 13.7082, 13.0723, 13.2342, 12.9279, 12.8006, 12.3439, 12.7739, 13.6889, 15.0037, 16.2453, 18.5417, 20.0091, 31.7236, 28.7343, 40.7837, 43.4026, 43.2775, 48.0133, 48.538, 49.1547, 50.0056, 46.9528, 45.6441, 46.4927, 56.7739, 55.1117, 55.2162, 57.8594, 53.8164, 60.0166, 55.2825, 56.0625, 53.348, 61.4832, 57.1446, 51.6199], "top2_return": [1.0, 0.9735, 1.0127, 1.0231, 0.9649, 0.8959, 1.0045, 1.0977, 1.142, 1.1937, 1.1775, 1.1558, 1.2185, 1.0559, 1.0703, 1.1879, 1.1404, 1.0534, 0.9501, 1.0223, 1.0108, 1.0256, 1.0227, 1.1067, 1.0953, 1.2541, 1.3064, 1.5158, 1.4307, 1.4318, 1.5224, 1.342, 1.5407, 1.608, 1.8863, 1.8889, 1.9646, 1.5067, 1.7806, 1.5236, 1.8211, 2.1935, 2.8174, 2.7987, 2.5891, 2.6018, 2.3982, 2.5121, 2.6009, 2.4336, 2.5788, 2.6559, 3.1852, 3.3623, 3.0795, 3.1343, 3.966, 4.2461, 3.9154, 4.1435, 4.5687, 4.4542, 4.8166, 4.2371, 3.567, 4.4145, 4.2517, 5.6855, 5.0841, 5.1832, 5.674, 5.9784, 6.0018, 6.0685, 6.2103, 5.7315, 6.2138, 6.116, 6.3472, 6.8429, 6.5566, 6.6372, 6.7143, 6.7212, 6.5963, 6.9472, 7.2834, 7.7591, 8.3543, 7.6449, 8.6562, 12.7536, 11.8371, 16.9068, 17.8973, 18.9907, 20.7656, 20.8111, 20.4266, 20.0205, 19.9069, 20.4395, 21.168, 22.5279, 22.6076, 23.5057, 23.4687, 21.7898, 22.9237, 21.4749, 21.8555, 21.7124, 22.9796, 21.5387, 19.9253], "top3_return": [1.0, 0.9188, 0.9733, 0.9739, 0.8986, 0.8921, 0.985, 1.1034, 1.1674, 1.2348, 1.2473, 1.2282, 1.3229, 1.2382, 1.3295, 1.4999, 1.4251, 1.3614, 1.2757, 1.3565, 1.3585, 1.3788, 1.3974, 1.4795, 1.452, 1.5796, 2.2318, 2.5521, 2.4254, 2.4005, 2.5064, 2.2767, 2.4757, 2.5344, 2.8428, 2.8235, 2.9061, 2.318, 2.6767, 2.2106, 2.519, 2.8251, 3.406, 3.2628, 3.1914, 3.1274, 2.7409, 3.2034, 3.4264, 3.348, 3.5394, 3.6556, 4.2737, 4.4269, 4.3999, 4.3874, 5.0169, 5.2548, 4.8823, 5.533, 5.9171, 5.8365, 6.3478, 5.857, 5.1354, 6.4042, 6.1376, 7.7526, 6.907, 6.8585, 7.4872, 7.9669, 7.9202, 8.2037, 8.0965, 7.4284, 8.2328, 8.0355, 8.405, 8.964, 8.7146, 8.6679, 8.6375, 8.5904, 8.411, 8.9529, 9.3685, 10.4483, 11.0769, 10.5572, 11.3637, 15.2207, 13.9931, 18.866, 18.578, 19.4772, 20.4907, 20.6862, 20.5053, 20.4674, 20.4081, 20.8592, 22.1047, 22.3082, 24.3207, 24.7922, 25.0442, 23.6394, 24.4731, 22.838, 23.021, 22.6914, 24.3067, 22.4781, 20.8936]}, "labels009": ["起始", "20170206", "20170302", "20170406", "20170503", "20170602", "20170704", "20170802", "20170904", "20171010", "20171102", "20171204", "20180103", "20180202", "20180302", "20180403", "20180503", "20180604", "20180703", "20180802", "20180904", "20181009", "20181105", "20181205", "20190107", "20190211", "20190304", "20190403", "20190507", "20190604", "20190702", "20190802", "20190903", "20191009", "20191104", "20191203", "20200103", "20200204", "20200303", "20200402", "20200507", "20200602", "20200702", "20200804", "20200902", "20201012", "20201103", "20201202", "20210105", "20210202", "20210302", "20210402", "20210507", "20210602", "20210702", "20210803", "20210902", "20211011", "20211102", "20211202", "20220105", "20220208", "20220302", "20220406", "20220506", "20220602", "20220704", "20220802", "20220902", "20221011", "20221102", "20221202", "20230104", "20230202", "20230302", "20230404", "20230505", "20230602", "20230704", "20230802", "20230904", "20231010", "20231102", "20231204", "20240103", "20240202", "20240304", "20240402", "20240507", "20240604", "20240702", "20240802", "20240903", "20241009", "20241104", "20241203", "20250103", "20250206", "20250304", "20250402", "20250507", "20250604", "20250702", "20250804", "20250902", "20251010", "20251104", "20251202", "20260106", "20260203", "20260303", "20260402", "20260507", "20260602"], "labels013": ["起始", "20170206", "20170302", "20170406", "20170503", "20170602", "20170704", "20170802", "20170904", "20171010", "20171102", "20171204", "20180103", "20180202", "20180302", "20180403", "20180503", "20180604", "20180703", "20180802", "20180904", "20181009", "20181105", "20181205", "20190107", "20190211", "20190304", "20190403", "20190507", "20190604", "20190702", "20190802", "20190903", "20191009", "20191104", "20191203", "20200103", "20200204", "20200303", "20200402", "20200507", "20200602", "20200702", "20200804", "20200902", "20201012", "20201103", "20201202", "20210105", "20210202", "20210302", "20210402", "20210507", "20210602", "20210702", "20210803", "20210902", "20211011", "20211102", "20211202", "20220105", "20220208", "20220302", "20220406", "20220506", "20220602", "20220704", "20220802", "20220902", "20221011", "20221102", "20221202", "20230104", "20230202", "20230302", "20230404", "20230505", "20230602", "20230704", "20230802", "20230904", "20231010", "20231102", "20231204", "20240103", "20240202", "20240304", "20240402", "20240507", "20240604", "20240702", "20240802", "20240903", "20241009", "20241104", "20241203", "20250103", "20250206", "20250304", "20250402", "20250507", "20250604", "20250702", "20250804", "20250902", "20251010", "20251104", "20251202", "20260106", "20260203", "20260303", "20260402", "20260507", "20260602", "20260702"], "yr009": {"original_return": {"2017": 0.1852, "2018": 0.4575, "2019": 0.4067, "2020": 0.6337, "2021": 0.7302, "2022": 0.5331, "2023": 0.0542, "2024": 0.6449, "2025": 0.2552, "2026": 0.1068}, "top1_return": {"2017": 0.5226, "2018": 1.1637, "2019": 0.6381, "2020": 0.753, "2021": 1.8547, "2022": 0.0726, "2023": 0.1846, "2024": 2.2059, "2025": 0.2593, "2026": -0.031}, "top2_return": {"2017": 0.221, "2018": 0.3642, "2019": 0.4296, "2020": 1.0053, "2021": 0.8827, "2022": 0.3837, "2023": 0.1952, "2024": 2.899, "2025": 0.3895, "2026": 0.0388}, "top3_return": {"2017": 0.2762, "2018": 0.4551, "2019": 0.4162, "2020": 1.0096, "2021": 0.7294, "2022": 0.4221, "2023": 0.1486, "2024": 1.5973, "2025": 0.668, "2026": 0.0346}}, "yr013": {"original_return": {"2017": 0.2208, "2018": 0.3786, "2019": 0.4973, "2020": 0.61, "2021": 0.5939, "2022": 0.8084, "2023": 0.0612, "2024": 0.3579, "2025": 0.1807, "2026": -0.0302}, "top1_return": {"2017": 0.6046, "2018": -0.1316, "2019": 0.6522, "2020": 0.1628, "2021": 2.0246, "2022": 0.3637, "2023": 0.1593, "2024": 2.3809, "2025": 0.2435, "2026": -0.0408}, "top2_return": {"2017": 0.1558, "2018": -0.0424, "2019": 0.7067, "2020": 0.33, "2021": 0.6494, "2022": 0.4428, "2023": 0.1243, "2024": 1.8255, "2025": 0.1474, "2026": -0.0856}, "top3_return": {"2017": 0.2282, "2018": 0.2046, "2019": 0.9085, "2020": 0.1345, "2021": 0.7272, "2022": 0.4399, "2023": 0.0783, "2024": 1.2673, "2025": 0.2137, "2026": -0.1162}}, "years": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]};
+
+const COLS = ["original_return","top1_return","top2_return","top3_return"];
+const CLABELS = {"original_return":"原策略Top20","top1_return":"Top1","top2_return":"Top2均权","top3_return":"Top3均权"};
+const COLORS = {"original_return":"#868e96","top1_return":"#e03131","top2_return":"#e67700","top3_return":"#1971c2"};
+
+function pct(v,d=1){return (v*100).toFixed(d)+'%';}
+function fmt(v,d=1){return (v>=0?'+':'')+pct(v,d);}
+
+// ─── KPI cards ───
+function buildKPI(divId, stratKey) {
+  const s = DATA.stats[stratKey];
+  const el = document.getElementById(divId);
+  COLS.forEach(col => {
+    const m = s[col];
+    const card = document.createElement('div');
+    card.className = 'kpi-card';
+    const isOrig = col==='original_return';
+    card.innerHTML = `
+      <div class="kpi-label">${CLABELS[col]}</div>
+      <div class="kpi-val ${m.annual_return>0?'red':'green'}">${fmt(m.annual_return)}</div>
+      <div class="kpi-sub">年化收益</div>
+      <hr style="margin:8px 0;border-color:#f1f3f5;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;color:#495057">
+        <div>胜率 <b>${pct(m.win_rate)}</b></div>
+        <div>夏普 <b>${m.sharpe.toFixed(2)}</b></div>
+        <div>回撤 <b style="color:#e03131">${pct(m.max_drawdown)}</b></div>
+        <div>期均 <b>${fmt(m.avg_return,2)}</b></div>
+      </div>
+    `;
+    el.appendChild(card);
+  });
+}
+buildKPI('kpi009','s009');
+buildKPI('kpi013','s013b');
+
+// ─── NAV 曲线 ───
+function buildNav(canvasId, nav, labels) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: labels,
+      datasets: COLS.map(c=>({
+        label: CLABELS[c],
+        data: nav[c],
+        borderColor: COLORS[c],
+        borderWidth: c==='original_return'?2:1.5,
+        borderDash: c==='original_return'?[4,3]:[],
+        pointRadius:0,
+        tension:0.1,
+        fill:false,
+      }))
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{ticks:{maxTicksLimit:10,maxRotation:0,font:{size:10}},grid:{display:false}},
+        y:{title:{display:true,text:'净值',font:{size:10}},ticks:{font:{size:10}},grid:{color:'#f1f3f5'}}
+      },
+      plugins:{legend:{position:'top',labels:{font:{size:11},boxWidth:20}}}
+    }
+  });
+}
+buildNav('nav009', DATA.nav009, DATA.labels009);
+buildNav('nav013', DATA.nav013, DATA.labels013);
+
+// ─── 逐年热力图表格 ───
+function buildYrTable(tableId, yr) {
+  const years = DATA.years;
+  const t = document.getElementById(tableId);
+  // header
+  let hdr = '<tr><th>类型</th>'+years.map(y=>`<th>${y}</th>`).join('')+'</tr>';
+  let body = '';
+  COLS.forEach(col=>{
+    const ydata = yr[col];
+    body += `<tr><td style="font-weight:600;text-align:left">${CLABELS[col]}</td>`;
+    years.forEach(y=>{
+      const v = ydata[y];
+      if(v===null||v===undefined){body+='<td>—</td>';return;}
+      const bg = v>=0?`rgba(224,49,49,${Math.min(v/0.8,1)*0.55})`:`rgba(47,158,68,${Math.min(-v/0.5,1)*0.55})`;
+      body+=`<td style="background:${bg};color:${v>=0?'#7d1a1a':'#1a4a2a'};font-weight:600">${fmt(v)}</td>`;
+    });
+    body+='</tr>';
+  });
+  t.innerHTML=hdr+body;
+}
+buildYrTable('yr009_table', DATA.yr009);
+buildYrTable('yr013_table', DATA.yr013);
+
+// ─── 年化收益柱状图 ───
+function buildBarAnnual(){
+  const s9 = DATA.stats.s009;
+  const s13 = DATA.stats.s013b;
+  const ctx = document.getElementById('bar_annual').getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['原策略\nTop20','Top1','Top2\n均权','Top3\n均权'],
+      datasets:[
+        {label:'S009',data:COLS.map(c=>(s9[c].annual_return*100).toFixed(1)),backgroundColor:'rgba(230,119,0,0.7)',borderRadius:4},
+        {label:'S013b',data:COLS.map(c=>(s13[c].annual_return*100).toFixed(1)),backgroundColor:'rgba(25,113,194,0.7)',borderRadius:4},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{y:{title:{display:true,text:'年化收益%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},x:{grid:{display:false}}},
+      plugins:{legend:{position:'top',labels:{font:{size:11}}}}
+    }
+  });
+}
+buildBarAnnual();
+
+// ─── 胜率对比 ───
+function buildBarWR(){
+  const s9=DATA.stats.s009; const s13=DATA.stats.s013b;
+  const ctx=document.getElementById('bar_wr').getContext('2d');
+  new Chart(ctx,{type:'bar',
+    data:{labels:['原策略Top20','Top1','Top2均权','Top3均权'],
+      datasets:[
+        {label:'S009',data:COLS.map(c=>(s9[c].win_rate*100).toFixed(1)),backgroundColor:'rgba(230,119,0,0.7)',borderRadius:4},
+        {label:'S013b',data:COLS.map(c=>(s13[c].win_rate*100).toFixed(1)),backgroundColor:'rgba(25,113,194,0.7)',borderRadius:4},
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{y:{title:{display:true,text:'胜率%'},min:40,ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},x:{grid:{display:false}}},
+      plugins:{legend:{position:'top',labels:{font:{size:11}}}}
+    }});
+}
+buildBarWR();
+
+// ─── 回撤对比 ───
+function buildBarDD(){
+  const s9=DATA.stats.s009; const s13=DATA.stats.s013b;
+  const ctx=document.getElementById('bar_dd').getContext('2d');
+  new Chart(ctx,{type:'bar',
+    data:{labels:['原策略Top20','Top1','Top2均权','Top3均权'],
+      datasets:[
+        {label:'S009',data:COLS.map(c=>(s9[c].max_drawdown*100).toFixed(1)),backgroundColor:'rgba(224,49,49,0.65)',borderRadius:4},
+        {label:'S013b',data:COLS.map(c=>(s13[c].max_drawdown*100).toFixed(1)),backgroundColor:'rgba(112,72,232,0.65)',borderRadius:4},
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{y:{title:{display:true,text:'最大回撤%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},x:{grid:{display:false}}},
+      plugins:{legend:{position:'top',labels:{font:{size:11}}}}
+    }});
+}
+buildBarDD();
+
+// ─── 散点图 ───
+function buildScatter(){
+  const ctx=document.getElementById('scatter_rr').getContext('2d');
+  const pts009={top1:[],top2:[],top3:[]};
+  const pts013={top1:[],top2:[],top3:[]};
+  // 这里放top1 per-period收益
+  // 从嵌入数据里造 - 我们用stats近似用 avg vs std
+  // 用4个点来表示4种组合
+  const defs = [
+    {k:'s009',col:'original_return',color:'rgba(134,142,150,0.8)',label:'S009-Top20'},
+    {k:'s009',col:'top1_return',color:'rgba(224,49,49,0.8)',label:'S009-Top1'},
+    {k:'s009',col:'top2_return',color:'rgba(230,119,0,0.8)',label:'S009-Top2'},
+    {k:'s009',col:'top3_return',color:'rgba(25,113,194,0.8)',label:'S009-Top3'},
+    {k:'s013b',col:'original_return',color:'rgba(134,142,150,0.4)',label:'S013b-Top20'},
+    {k:'s013b',col:'top1_return',color:'rgba(112,72,232,0.8)',label:'S013b-Top1'},
+    {k:'s013b',col:'top2_return',color:'rgba(25,113,194,0.4)',label:'S013b-Top2'},
+    {k:'s013b',col:'top3_return',color:'rgba(25,113,194,0.6)',label:'S013b-Top3'},
+  ];
+  new Chart(ctx,{type:'scatter',
+    data:{datasets:defs.map(d=>{
+      const s=DATA.stats[d.k][d.col];
+      return{label:d.label,data:[{x:parseFloat((s.std*100).toFixed(2)),y:parseFloat((s.annual_return*100).toFixed(2))}],
+        backgroundColor:d.color,pointRadius:8,pointHoverRadius:11};
+    })},
+    options:{responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{title:{display:true,text:'单期标准差%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}},
+        y:{title:{display:true,text:'年化收益%'},ticks:{callback:v=>v+'%'},grid:{color:'#f1f3f5'}}
+      },
+      plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}},
+        tooltip:{callbacks:{label:d=>`${d.dataset.label}: 年化${d.parsed.y}% | 波动${d.parsed.x}%`}}}
+    }});
+}
+buildScatter();
+</script>
+</body>
+</html>
