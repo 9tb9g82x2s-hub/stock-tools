@@ -63,21 +63,29 @@ if [ $PULL_OK -eq 0 ]; then
 fi
 echo ""
 
-# ---------- 第2步：检查本地是否有改动 ----------
-if [ -z "$(git status --porcelain)" ]; then
-    echo "✓ [2/3] 本地无改动，无需提交"
+# ---------- 第2步：检查本地是否有改动或积压的commit ----------
+UNCOMMITTED=$(git status --porcelain)
+UNPUSHED=$(git log origin/main..HEAD --oneline 2>/dev/null)
+
+if [ -z "$UNCOMMITTED" ] && [ -z "$UNPUSHED" ]; then
+    echo "✓ [2/3] 本地无改动、无积压提交，已是最新"
     echo ""
     echo "✅ 同步完成（本地已是最新）"
     exit 0
 fi
 
-echo "→ [2/3] 检测到本地改动："
-git status --short
-echo ""
-
-git add .
-git commit -m "$MSG"
-echo ""
+if [ -n "$UNCOMMITTED" ]; then
+    echo "→ [2/3] 检测到本地改动："
+    git status --short
+    echo ""
+    git add .
+    git commit -m "$MSG"
+    echo ""
+else
+    echo "✓ [2/3] 工作区无改动，但有积压的本地提交需要推送"
+    echo "$UNPUSHED"
+    echo ""
+fi
 
 # ---------- 第3步：推送到云端（带网络重试）----------
 echo "→ [3/3] 推送到云端..."
