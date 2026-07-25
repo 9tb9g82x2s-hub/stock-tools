@@ -104,10 +104,33 @@ update_market_table('moneyflow', 'moneyflow',
     ['ts_code','trade_date','buy_sm_vol','buy_sm_amount','sell_sm_vol','sell_sm_amount','buy_md_vol','buy_md_amount','sell_md_vol','sell_md_amount','buy_lg_vol','buy_lg_amount','sell_lg_vol','sell_lg_amount','buy_elg_vol','buy_elg_amount','sell_elg_vol','sell_elg_amount','net_mf_vol','net_mf_amount'],
     'ts_code,trade_date,buy_sm_vol,buy_sm_amount,sell_sm_vol,sell_sm_amount,buy_md_vol,buy_md_amount,sell_md_vol,sell_md_amount,buy_lg_vol,buy_lg_amount,sell_lg_vol,sell_lg_amount,buy_elg_vol,buy_elg_amount,sell_elg_vol,sell_elg_amount,net_mf_vol,net_mf_amount')
 
-# 4. stk_factor 复权因子
-update_market_table('stk_factor', 'adj_factor',
-    ['ts_code','trade_date','adj_factor'],
-    'ts_code,trade_date,adj_factor')
+# 4. stk_factor 复权因子（特殊：只追加不覆盖，保护指标列）
+log(f"  stk_factor: 更新复权因子...")
+cur.execute("SELECT MAX(trade_date) FROM stk_factor")
+last_sf = cur.fetchone()[0] or '20260101'
+dates_sf = get_trade_dates(last_sf, TODAY)
+total_sf = 0
+for date in dates_sf:
+    try:
+        _, items = call('adj_factor', {'trade_date': date}, 'ts_code,trade_date,adj_factor')
+        n = 0
+        for r in items:
+            try:
+                # 先INSERT新行（ts_code,trade_date,adj_factor三列）
+                conn.execute("""INSERT OR IGNORE INTO stk_factor (ts_code, trade_date, adj_factor)
+                    VALUES(?,?,?)""", [r[0], r[1], float(r[2] or 0)])
+                # 再确保adj_factor是最新的（已存在的行只更新adj_factor列）
+                conn.execute("""UPDATE stk_factor SET adj_factor=? WHERE ts_code=? AND trade_date=?""",
+                    [float(r[2] or 0), r[0], r[1]])
+                n += 1
+            except: pass
+        conn.commit()
+        total_sf += n
+    except Exception as e:
+        log(f"  stk_factor {date} 失败: {e}")
+    time.sleep(0.4)
+cur.execute("SELECT MAX(trade_date) FROM stk_factor")
+log(f"  ✅ stk_factor: +{total_sf}行，最新={cur.fetchone()[0]}")
 
 # 5. top_list 龙虎榜
 update_market_table('top_list', 'top_list',
