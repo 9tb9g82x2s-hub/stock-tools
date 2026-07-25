@@ -26,6 +26,9 @@ XISHEN_PATH = f"{BASE_DIR}/xishen_plus_pool.csv"
 HORIZON = int(sys.argv[1]) if len(sys.argv) > 1 else 40      # label窗口(交易日)
 HOLD_MONTHS = int(sys.argv[2]) if len(sys.argv) > 2 else 2   # 每N个月调仓
 SOURCE = sys.argv[3] if len(sys.argv) > 3 else "s013"        # s013(喜神池) 或 s009(全市场)
+START_OFFSET = int(sys.argv[4]) if len(sys.argv) > 4 else 0  # 起始月相位偏移(调仓日期扰动测试用)
+HOLD_DAYS = int(sys.argv[5]) if len(sys.argv) > 5 else 0     # >0时按交易日步长调仓(高频版,绕开月度逻辑)
+STOP_LOSS_ARG = float(sys.argv[6]) if len(sys.argv) > 6 else None  # 止损线,如-0.05;为None时用默认-0.12;传0表示无止损
 
 if SOURCE == "s009":
     PANEL_PATH = "/Users/ziruzhu/stock-tools/strategy-lab/sessions/2026-07-16-S009-LightGBM多因子选股/features_panel.pkl"
@@ -33,13 +36,20 @@ if SOURCE == "s009":
 else:
     USE_XISHEN = True
 
-CKPT_PATH = f"{OUT_DIR}/ckpt_{SOURCE}_h{HORIZON}.json"
-LOG_PATH = f"{OUT_DIR}/long_{SOURCE}_h{HORIZON}_run.log"
+_SUFFIX = f"_h{HORIZON}"
+if HOLD_DAYS > 0:
+    _SUFFIX += f"_d{HOLD_DAYS}"
+if START_OFFSET:
+    _SUFFIX += f"_off{START_OFFSET}"
+if STOP_LOSS_ARG is not None:
+    _SUFFIX += f"_sl{int(abs(STOP_LOSS_ARG)*100)}"
+CKPT_PATH = f"{OUT_DIR}/ckpt_{SOURCE}{_SUFFIX}.json"
+LOG_PATH = f"{OUT_DIR}/long_{SOURCE}{_SUFFIX}_run.log"
 
 BACKTEST_START = "20170101"
 TRAIN_MONTHS = 12
 TOP_N = 20
-STOP_LOSS = -0.12
+STOP_LOSS = STOP_LOSS_ARG if STOP_LOSS_ARG is not None else -0.12
 BUY_COMMISSION = 0.00025
 SELL_COMMISSION = 0.00025
 STAMP_TAX = 0.0005
@@ -106,11 +116,17 @@ def main():
     log(f"面板清洗后: {len(panel):,} 行")
 
     all_trade_dates = sorted(panel["trade_date"].unique())
-    month_dates = get_month_start_dates(all_trade_dates)
-    rebalance_all = [d for d in month_dates if d >= BACKTEST_START]
-    # 每 HOLD_MONTHS 个月取一个调仓日
-    rebalance_dates = rebalance_all[::HOLD_MONTHS]
-    log(f"调仓日: {len(rebalance_dates)}个 (每{HOLD_MONTHS}月), 首={rebalance_dates[0]} 末={rebalance_dates[-1]}")
+    if HOLD_DAYS > 0:
+        # 高频模式：按交易日步长取调仓日（5天版等）
+        all_backtest_dates = [d for d in all_trade_dates if d >= BACKTEST_START]
+        rebalance_dates = all_backtest_dates[START_OFFSET::HOLD_DAYS]
+        log(f"调仓日: {len(rebalance_dates)}个 (每{HOLD_DAYS}交易日,相位off={START_OFFSET}), 首={rebalance_dates[0]} 末={rebalance_dates[-1]}")
+    else:
+        month_dates = get_month_start_dates(all_trade_dates)
+        rebalance_all = [d for d in month_dates if d >= BACKTEST_START]
+        # 每 HOLD_MONTHS 个月取一个调仓日；START_OFFSET 改变起始相位(扰动测试)
+        rebalance_dates = rebalance_all[START_OFFSET::HOLD_MONTHS]
+        log(f"调仓日: {len(rebalance_dates)}个 (每{HOLD_MONTHS}月,相位off={START_OFFSET}), 首={rebalance_dates[0]} 末={rebalance_dates[-1]}")
 
     panel_by_date = {d: sub for d, sub in panel.groupby("trade_date")}
     open_lookup = panel.set_index(["ts_code", "trade_date"])["open_qfq"].sort_index()
@@ -177,17 +193,19 @@ def main():
                 if pd.isna(entry_px) or entry_px <= 0:
                     continue
                 stop_hit, stop_px, d = False, None, buy_date
-                while d < sell_date:
-                    d_next = next_trade_date.get(d)
-                    if d_next is None:
-                        break
-                    try:
-                        cl = close_lookup.loc[(code, d_next)]
-                    except KeyError:
-                        d = d_next; continue
-                    if not pd.isna(cl) and cl > 0 and cl / entry_px - 1 <= STOP_LOSS:
-                        stop_hit, stop_px = True, cl; break
-                    d = d_next
+                # STOP_LOSS >= 0 视为无止损（跳过日内检查）
+                if STOP_LOSS < 0:
+                    while d < sell_date:
+                        d_next = next_trade_date.get(d)
+                        if d_next is None:
+                            break
+                        try:
+                            cl = close_lookup.loc[(code, d_next)]
+                        except KeyError:
+                            d = d_next; continue
+                        if not pd.isna(cl) and cl > 0 and cl / entry_px - 1 <= STOP_LOSS:
+                            stop_hit, stop_px = True, cl; break
+                        d = d_next
                 if stop_hit:
                     r = float(stop_px) / float(entry_px) - 1; stop_count += 1
                 else:
@@ -243,21 +261,31 @@ def main():
     dd = (nav_arr / np.maximum.accumulate(nav_arr) - 1).min()
     ann_ret = nav ** (1 / n_years) - 1 if n_years > 0 and nav > 0 else 0.0
     win_rate = float(np.mean(period_rets > 0))
-    # 夏普：按调仓频率年化
-    periods_per_year = 12 / HOLD_MONTHS
+    # 夏普：按调仓频率年化（高频模式用交易日估算）
+    if HOLD_DAYS > 0:
+        periods_per_year = 250 / HOLD_DAYS
+        freq_desc = f"每{HOLD_DAYS}交易日"
+    else:
+        periods_per_year = 12 / HOLD_MONTHS
+        freq_desc = f"每{HOLD_MONTHS}月"
     sharpe = float(period_rets.mean() / period_rets.std() * np.sqrt(periods_per_year)) if period_rets.std() > 0 else 0.0
 
-    log(f"[结果] HORIZON={HORIZON} 每{HOLD_MONTHS}月: 期数{n_periods} 年化{ann_ret*100:.2f}% 回撤{dd*100:.2f}% 夏普{sharpe:.2f} 胜率{win_rate*100:.1f}%")
+    log(f"[结果] HORIZON={HORIZON} {freq_desc}: 期数{n_periods} 年化{ann_ret*100:.2f}% 回撤{dd*100:.2f}% 夏普{sharpe:.2f} 胜率{win_rate*100:.1f}%")
     log(f"[基准] S013b原版(10天/月度): 年化36.6% 回撤-14.3% 夏普1.44")
 
     result = {
-        "config": {"horizon": HORIZON, "hold_months": HOLD_MONTHS, "top_n": TOP_N, "stop_loss": STOP_LOSS},
+        "config": {"horizon": HORIZON, "hold_months": HOLD_MONTHS, "hold_days": HOLD_DAYS,
+                   "top_n": TOP_N, "stop_loss": STOP_LOSS, "start_offset": START_OFFSET},
         "metrics": {"annual_return": round(float(ann_ret), 4), "max_drawdown": round(float(dd), 4),
                     "sharpe_ratio": round(sharpe, 4), "win_rate": round(win_rate, 4),
                     "total_return": round(float(nav - 1), 4), "n_periods": n_periods},
         "nav_curve": nav_curve, "trades": trades,
     }
-    out = f"{OUT_DIR}/{SOURCE}_long_h{HORIZON}_result.json"
+    _out_suffix = f"_d{HOLD_DAYS}" if HOLD_DAYS > 0 else ""
+    _out_suffix += f"_off{START_OFFSET}" if START_OFFSET else ""
+    if STOP_LOSS_ARG is not None:
+        _out_suffix += f"_sl{int(abs(STOP_LOSS_ARG)*100)}"
+    out = f"{OUT_DIR}/{SOURCE}_long_h{HORIZON}{_out_suffix}_result.json"
     json.dump(result, open(out, "w"), ensure_ascii=False, indent=2, default=str)
     log(f"结果已写出: {out}  耗时{time.time()-t0:.0f}s")
     if os.path.exists(CKPT_PATH):
