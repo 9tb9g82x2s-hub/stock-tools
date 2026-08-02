@@ -1,0 +1,1 @@
+DIR=/Users/ziruzhu/stock-tools/_weekday_run

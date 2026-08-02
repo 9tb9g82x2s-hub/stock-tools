@@ -27,10 +27,10 @@ if HOLD_DAYS < 1:
     sys.exit(1)
 WORKER_PHASE = int(sys.argv[2]) if len(sys.argv) >= 3 else None  # None=主控模式
 
-BASE_DIR = "/Users/ziruzhu/stock-tools/strategy-lab/sessions/2026-07-19-S013-喜神池LightGBM选股"
-OUT_DIR  = "/Users/ziruzhu/stock-tools/strategy-lab/sessions/2026-07-26-S023-周度5天换仓"
+BASE_DIR = "/Users/ziruzhu/stock-tools/_hold_sweep"
+OUT_DIR  = "/Users/ziruzhu/stock-tools/_hold_sweep"
 PANEL_PATH = f"{BASE_DIR}/features_panel.pkl"
-DB_PATH = "/Users/ziruzhu/stock-data/stock_all.db"
+DB_PATH = "/Users/ziruzhu/stock-tools/_weekday_4d_run/stock_mini.db"
 XISHEN_PATH = f"{BASE_DIR}/xishen_plus_pool.csv"
 
 HORIZON = HOLD_DAYS
@@ -275,29 +275,28 @@ def run_worker():
 
 
 def run_master():
-    """主控模式：并行启动N个worker跑阶段A，全部完成后跑阶段B合并"""
-    import subprocess
-    t0 = time.time()
-    log("="*60)
-    log(f"S023网格并行: {HOLD_DAYS}天持有 {N_PHASES}phase并行 × {len(STOP_LOSS_GRID)}止损 (每worker {LGB_THREADS}线程)")
-
-    # 并行启动N_PHASES个worker
-    procs = []
-    for phase in range(N_PHASES):
-        ck = f"{OUT_DIR}/signals_{HOLD_DAYS}d_phase{phase}.pkl"
-        if os.path.exists(ck):
-            log(f"[主控] Phase{phase}已有缓存，跳过")
-            continue
-        p = subprocess.Popen(
-            ["/Users/ziruzhu/stock-tools.old.20260725_204255/.venv/bin/python3",
-             os.path.abspath(__file__), str(HOLD_DAYS), str(phase)])
-        procs.append((phase, p))
-        log(f"[主控] 启动Phase{phase} worker PID={p.pid}")
-    # 等全部完成
-    for phase, p in procs:
-        p.wait()
-        log(f"[主控] Phase{phase} worker退出(code={p.returncode})")
-
+    import subprocess, math
+    BATCH = 8
+    log(f"[主控] 分批{BATCH}个并行: {N_PHASES}phase")
+    phases = list(range(N_PHASES))
+    for i in range(0, len(phases), BATCH):
+        batch = phases[i:i+BATCH]
+        procs = []
+        for phase in batch:
+            ck = f"{OUT_DIR}/signals_{HOLD_DAYS}d_phase{phase}.pkl"
+            if os.path.exists(ck):
+                log(f"[主控] Phase{phase}已有缓存")
+                continue
+            p = subprocess.Popen(
+                ["/Users/ziruzhu/stock-tools.old.20260725_204255/.venv/bin/python3",
+                 os.path.abspath(__file__), str(HOLD_DAYS), str(phase)])
+            procs.append((phase, p))
+            log(f"[主控] Phase{phase} PID={p.pid}")
+        for phase, p in procs:
+            p.wait()
+            log(f"[主控] Phase{phase} code={p.returncode}")
+        import gc; gc.collect()
+    log(f"[主控] 全部{N_PHASES}phase完成")
     # 加载各phase的信号缓存
     all_signals = {}
     for phase in range(N_PHASES):

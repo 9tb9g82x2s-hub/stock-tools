@@ -23,15 +23,16 @@ if len(sys.argv) < 2:
     sys.exit(1)
 HOLD_DAYS = int(sys.argv[1])
 if HOLD_DAYS < 1:
-    print(f"错误：持有天数{HOLD_DAYS}不在支持范围[1,2,3,5]")
+    print(f"错误：持有天数{HOLD_DAYS}非法")
     sys.exit(1)
 WORKER_PHASE = int(sys.argv[2]) if len(sys.argv) >= 3 else None  # None=主控模式
 
-BASE_DIR = "/Users/ziruzhu/stock-tools/strategy-lab/sessions/2026-07-19-S013-喜神池LightGBM选股"
-OUT_DIR  = "/Users/ziruzhu/stock-tools/strategy-lab/sessions/2026-07-26-S023-周度5天换仓"
-PANEL_PATH = f"{BASE_DIR}/features_panel.pkl"
-DB_PATH = "/Users/ziruzhu/stock-data/stock_all.db"
-XISHEN_PATH = f"{BASE_DIR}/xishen_plus_pool.csv"
+WORK_DIR = "/Users/ziruzhu/stock-tools/_s024_run"
+BASE_DIR = WORK_DIR
+OUT_DIR  = WORK_DIR
+PANEL_PATH = f"{WORK_DIR}/features_panel.pkl"
+DB_PATH = "/Users/ziruzhu/stock-tools/_weekday_4d_run/stock_mini.db"
+XISHEN_PATH = f"{WORK_DIR}/xishen_plus_pool.csv"
 
 HORIZON = HOLD_DAYS
 N_PHASES = HOLD_DAYS
@@ -51,7 +52,7 @@ if WORKER_PHASE is None:
     LOG  = f"{OUT_DIR}/grid_{HOLD_DAYS}d_run.log"
 else:
     LOG  = f"{OUT_DIR}/grid_{HOLD_DAYS}d_p{WORKER_PHASE}.log"
-OUT_FILE = f"{OUT_DIR}/s023_grid_{HOLD_DAYS}d_result.json"
+OUT_FILE = f"{OUT_DIR}/s024_grid_{HOLD_DAYS}d_result.json"
 
 FEATURE_COLS = [
     "mom_5","mom_10","mom_20","mom_60","mom_120",
@@ -61,6 +62,8 @@ FEATURE_COLS = [
     "rsi_6","rsi_12","rsi_24","cci","boll_pct","boll_width",
     "pe","pe_ttm","pb","ps","ps_ttm","dv_ttm",
     "net_mf_ratio","lg_buy_ratio",
+    # S024新增：时间特征(月内日期/月份/星期)
+    "day_of_month","month","weekday",
 ]
 
 def log(msg):
@@ -243,6 +246,11 @@ def load_all_data():
     bl = load_blacklist()
     panel = panel[~panel["ts_code"].isin(bl)].reset_index(drop=True)
     panel = panel[~panel["ts_code"].str.endswith(".BJ")].reset_index(drop=True)
+    # S024新增：生成时间特征
+    _dt = pd.to_datetime(panel["trade_date"], format="%Y%m%d")
+    panel["day_of_month"] = _dt.dt.day.astype("float32")
+    panel["month"] = _dt.dt.month.astype("float32")
+    panel["weekday"] = _dt.dt.dayofweek.astype("float32")
     panel = panel.dropna(subset=FEATURE_COLS, how="all")
     panel = panel[panel["trade_date"] <= DATA_END].reset_index(drop=True)
     log(f"面板清洗后(截至{DATA_END}): {len(panel):,} 行")
