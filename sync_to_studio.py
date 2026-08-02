@@ -48,10 +48,10 @@ for t in TABLES:
     if table in ('daily','daily_basic','moneyflow','stk_factor','margin_detail'):
         date_col = col_list[1]
 
-    # 查Studio最新日期
+    # 查Studio最新日期（用管道输入SQL，避免引号转义问题）
     try:
-        _, o, _ = ssh.exec_command(f"sqlite3 '{STUDIO_DB}' \"SELECT MAX({date_col}) FROM {table};\" 2>/dev/null")
-        slast = o.read().decode().strip()
+        stdin, stdout, _ = ssh.exec_command(f"echo 'SELECT MAX({date_col}) FROM {table};' | sqlite3 {STUDIO_DB} 2>/dev/null")
+        slast = stdout.read().decode().strip()
     except:
         slast = '19000101'
     if not slast: slast = '19000101'

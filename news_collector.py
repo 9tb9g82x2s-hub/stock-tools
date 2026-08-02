@@ -78,19 +78,27 @@ def parse_markdown_table(text):
     return result
 
 
-def calc_sentiment_from_rating(rating):
-    """根据研报评级计算情绪分数"""
-    rating = rating.lower()
+def calc_sentiment_from_rating(rating, title=""):
+    """根据研报评级计算情绪分数，评级为空时用标题关键词推断"""
+    rating_lower = rating.lower().strip() if rating else ""
     rating_map = {
-        '买入': 0.8, 'buy': 0.8, '强烈推荐': 0.9,
+        '买入': 0.8, 'buy': 0.8, '强烈推荐': 0.9, '强推': 0.8,
         '增持': 0.5, 'accumulate': 0.5, '推荐': 0.6,
         '中性': 0.0, 'hold': 0.0, '持有': 0.0,
         '减持': -0.5, 'reduce': -0.5,
         '卖出': -0.8, 'sell': -0.8,
     }
     for key, score in rating_map.items():
-        if key in rating:
+        if key and key in rating_lower:
             return score
+    if title:
+        text = title.lower()
+        pos_kw = ['买入', '增持', '强推', '推荐', '买进', '看好', '超预期', '增长']
+        neg_kw = ['减持', '卖出', '中性', '风险', '下滑', '低于预期', '亏损', '谨慎']
+        pos = sum(1 for kw in pos_kw if kw in text)
+        neg = sum(1 for kw in neg_kw if kw in text)
+        if pos + neg > 0:
+            return round((pos - neg) / (pos + neg), 2)
     return 0.0
 
 
